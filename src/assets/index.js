@@ -1,5 +1,6 @@
 const images = {
-	logoUAH: require('./logoUAH.png'),
+  logoUAH: require("./logoUAH.png"),
+  bgHome: require("./backgrHome.jpg"),
 };
 const icons = {};
 
