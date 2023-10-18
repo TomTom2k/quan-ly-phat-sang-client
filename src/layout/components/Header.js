@@ -11,7 +11,6 @@ import { AuthToken } from '../../authToken';
 const HeaderStyled = styled(Navbar)`
 	background-color: #fff !important;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-	height: 68px;
 `;
 const LogoStyled = styled.div`
 	display: flex;
@@ -56,34 +55,34 @@ const Header = () => {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<NavStyled id="basic-navbar-nav">
 					<Nav>
-						<Nav.Link as={LinkStyled} to="/">
-							Trang chủ
+						<Nav.Link>
+							<LinkStyled to="/">Trang chủ</LinkStyled>
 						</Nav.Link>
 						<NavDropdown title="Dữ liệu" id="data-dropdown">
-							<NavDropdown.Item as={LinkStyled} to="/">
-								Cập nhật dữ liệu
+							<NavDropdown.Item href="#">
+								<LinkStyled to="#">Cập nhật dữ liệu</LinkStyled>
 							</NavDropdown.Item>
-							<NavDropdown.Item as={LinkStyled} to="/">
-								Dữ liệu tiêu thụ
+							<NavDropdown.Item href="#">
+								<LinkStyled to="#">Dữ liệu tiêu thụ</LinkStyled>
 							</NavDropdown.Item>
-							<NavDropdown.Item as={LinkStyled} to="/">
-								Dữ liệu hóa đơn
+							<NavDropdown.Item href="#">
+								<LinkStyled to="#">Dữ liệu hóa đơn</LinkStyled>
 							</NavDropdown.Item>
-							<NavDropdown.Item as={LinkStyled} to="/">
-								Dữ liệu thiết bị
+							<NavDropdown.Item href="#">
+								<LinkStyled to="#">Dữ liệu thiết bị</LinkStyled>
 							</NavDropdown.Item>
 						</NavDropdown>
 						{!user ? (
-							<Nav.Link as={LinkStyled} to="/login">
-								Đăng nhập
+							<Nav.Link>
+								<LinkStyled to="/login">Đăng nhập</LinkStyled>
 							</Nav.Link>
 						) : (
 							<NavDropdown title="Tài khoản" id="account">
-								<NavDropdown.Item as={LinkStyled} to="/">
+								<NavDropdown.Item href="#action/3.1">
 									Admin
 								</NavDropdown.Item>
 								<NavDropdown.Divider />
-								<NavDropdown.Item as={LinkStyled} to="/">
+								<NavDropdown.Item href="#action/3.2">
 									Đăng xuất
 								</NavDropdown.Item>
 							</NavDropdown>
