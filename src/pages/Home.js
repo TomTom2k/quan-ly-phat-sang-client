@@ -42,7 +42,7 @@ const TextStyle = styled.div`
     margin: 0;
     width: 30%;
     padding: 2rem 0;
-    color: var(--primary);
+    color: rgb(197, 47, 51, 1);
     font-size: 1.7rem;
     font-style: normal;
     font-weight: 700;
