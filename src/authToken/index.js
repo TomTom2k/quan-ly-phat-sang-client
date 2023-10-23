@@ -1,10 +1,12 @@
 import React, { createContext } from 'react';
 
+import authApi from '../api/authApi';
+
 export let AuthToken = createContext();
 
 const AuthProvider = ({ children }) => {
-	const login = (data) => {
-		console.log(data);
+	const login = async (data) => {
+		const res = await authApi.login(data);
 	};
 	let authData = {
 		user: null,
