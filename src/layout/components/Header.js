@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { images } from '../../assets';
 import { useContext } from 'react';
 import { AuthToken } from '../../authToken';
+import route from '../../configs/route';
 
 const HeaderStyled = styled(Navbar)`
 	background-color: #fff !important;
@@ -48,37 +49,49 @@ const Header = () => {
 	return (
 		<HeaderStyled expand="lg" className="bg-body-tertiary">
 			<Container>
-				<LogoStyled href="#home">
+				<LogoStyled href="#">
 					<img src={images.logoUAH} alt="" />
 					<p> Quản lý chiếu sáng</p>
 				</LogoStyled>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<NavStyled id="basic-navbar-nav">
 					<Nav>
-						<Nav.Link>
-							<LinkStyled to="/">Trang chủ</LinkStyled>
+						<Nav.Link as={LinkStyled} to="/">
+							Trang chủ
 						</Nav.Link>
 						<NavDropdown title="Dữ liệu" id="data-dropdown">
-							<NavDropdown.Item href="#">
-								<LinkStyled to="#">Cập nhật dữ liệu</LinkStyled>
+							<NavDropdown.Item>
+								<LinkStyled to={route.update}>
+									Cập nhật dữ liệu
+								</LinkStyled>
 							</NavDropdown.Item>
-							<NavDropdown.Item href="#">
-								<LinkStyled to="#">Dữ liệu tiêu thụ</LinkStyled>
+							<NavDropdown.Item>
+								<LinkStyled to={route.consume}>
+									Dữ liệu tiêu thụ
+								</LinkStyled>
 							</NavDropdown.Item>
-							<NavDropdown.Item href="#">
-								<LinkStyled to="#">Dữ liệu hóa đơn</LinkStyled>
+							<NavDropdown.Item>
+								<LinkStyled to={route.invoice}>
+									Dữ liệu hóa đơn
+								</LinkStyled>
 							</NavDropdown.Item>
-							<NavDropdown.Item href="#">
-								<LinkStyled to="#">Dữ liệu thiết bị</LinkStyled>
+							<NavDropdown.Item>
+								<LinkStyled to={route.device}>
+									Dữ liệu thiết bị
+								</LinkStyled>
 							</NavDropdown.Item>
 						</NavDropdown>
 						{!user ? (
-							<Nav.Link>
-								<LinkStyled to="/login">Đăng nhập</LinkStyled>
+							<Nav.Link as={LinkStyled} to={route.login}>
+								Đăng nhập
 							</Nav.Link>
 						) : (
 							<NavDropdown title="Tài khoản" id="account">
-								<NavDropdown.Item href="#action/3.1">
+								<NavDropdown.Item
+									href={
+										process.env.REACT_APP_API_URL + '/admin'
+									}
+								>
 									Admin
 								</NavDropdown.Item>
 								<NavDropdown.Divider />
