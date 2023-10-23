@@ -3,6 +3,7 @@ import { Button, Form, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { AuthToken } from '../authToken';
+import route from '../configs/route';
 
 const slideDown = keyframes`
 	0% {
@@ -83,7 +84,7 @@ const Login = () => {
 				user_name: usernameRef.current.value,
 				password: passwordRef.current.value,
 			});
-			// navigate('/');
+			navigate(route.home);
 		} catch (error) {
 			if (error.response && error.response.status === 401) {
 				setShowError(true);
