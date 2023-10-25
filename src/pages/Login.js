@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Button, Form, Alert } from 'react-bootstrap';
+import { Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { AuthToken } from '../authToken';
@@ -22,6 +22,7 @@ const WrapperStyled = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 `;
 
 const FormStyled = styled(Form)`
@@ -71,21 +72,36 @@ const AlertStyled = styled(Alert)`
 	animation: ${slideDown} 0.5s ease-out;
 `;
 
+const LoadingStyled = styled.div`
+	width: 100%;
+	height: 100%;
+	backdrop-filter: blur(2px);
+	position: absolute;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
 const Login = () => {
 	const navigate = useNavigate();
 	const usernameRef = useRef(null);
 	const passwordRef = useRef(null);
 	const [showError, setShowError] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const { login } = useContext(AuthToken);
 	const handlerLoginBtn = async () => {
 		try {
+			setIsLoading(true);
 			await login({
 				user_name: usernameRef.current.value,
 				password: passwordRef.current.value,
 			});
+			setIsLoading(false);
 			navigate(route.home);
 		} catch (error) {
+			setIsLoading(false);
 			if (error.response && error.response.status === 401) {
 				setShowError(true);
 				// Sau 1 giây, ẩn thông báo lỗi
@@ -115,6 +131,13 @@ const Login = () => {
 				<AlertStyled variant="danger">
 					Tài khoản hoặc mật khẩu không hợp lệ
 				</AlertStyled>
+			)}
+			{isLoading && (
+				<LoadingStyled>
+					<Spinner animation="border" variant="secondary">
+						<span className="visually-hidden">Loading...</span>
+					</Spinner>
+				</LoadingStyled>
 			)}
 		</WrapperStyled>
 	);
