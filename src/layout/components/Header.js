@@ -46,6 +46,7 @@ const LinkStyled = styled(Link)`
 
 const Header = () => {
 	let { user } = useContext(AuthToken);
+
 	return (
 		<HeaderStyled expand="lg" className="bg-body-tertiary">
 			<Container>
