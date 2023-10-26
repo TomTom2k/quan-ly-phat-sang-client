@@ -20,17 +20,16 @@ const BannerImg = styled.div`
     position: absolute;
     bottom: 0;
     color: #fff;
-    align-items: center;
     font-size: 2.2rem;
     text-align: center;
     letter-spacing: 2px;
     font-weight: 600;
-    line-height: 1.5;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 11rem;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.65);
   }
 `;
 const BodyStyles = styled.div`
@@ -97,14 +96,30 @@ const Home = () => {
               <TextStyle>
                 <h3>Giới thiệu nhiệm vụ</h3>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                Trang web này có nhiệm vụ chính là tính toán và theo dõi tiền điện tiêu thụ của các cột đèn đường trên toàn quốc. Chúng tôi cung cấp một giao diện dễ sử dụng cho việc quản lý các thông tin quan trọng sau:
+                </p>
+                <p>
+                <h5>Thu thập dữ liệu:</h5>
+                <ol type="a" start="1">
+                  <li>Thu thập dữ liệu về mức độ chiếu sáng ở các vị trí khác nhau trên toàn quốc.</li>
+                  <li>Ghi nhận các thông số kỹ thuật liên quan đến ánh sáng, chẳng hạn như cường độ, loại đèn sử dụng, và nguồn cung cấp ánh sáng.</li>
+                </ol>
+                <h5>Xây dựng hệ thống ghi dữ liệu:</h5>
+                <ol type="a" start="1">
+                  <li>Phát triển hệ thống quản lý dữ liệu để lưu trữ thông tin về chiếu sáng được thu thập.</li>
+                  <li>Đảm bảo tính bảo mật và quyền riêng tư của dữ liệu được thu thập.</li>
+                </ol>
+                <h5>Hiển thị dữ liệu:</h5>
+                <ol type="a" start="1">
+                  <li>Tạo giao diện trang web để hiển thị dữ liệu về chiếu sáng theo các biểu đồ, bản đồ và báo cáo thống kê.</li>
+                  <li>Cho phép người dùng tìm kiếm và so sánh dữ liệu chiếu sáng ở các vị trí khác nhau.</li>
+                </ol>
+                <h5>Thúc đẩy nghiên cứu và phân tích:</h5>
+                <ol type="a" start="1">
+                  <li>Cung cấp công cụ để phân tích số liệu chiếu sáng.</li>
+                  <li>Hỗ trợ việc nghiên cứu và đánh giá tác động của ánh sáng đối với môi trường và sức khỏe con người.</li>
+                </ol>
+                <p>Mục tiêu của trang web này là cung cấp thông tin chính xác, hữu ích và hỗ trợ trong việc quản lý chiếu sáng và hiểu rõ tác động của nó đối với môi trường và xã hội.</p>
                 </p>
               </TextStyle>
               <LinkStyles>
