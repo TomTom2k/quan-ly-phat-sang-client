@@ -89,15 +89,7 @@ const Header = () => {
 							</Nav.Link>
 						) : (
 							<NavDropdown title="Tài khoản" id="account">
-								<NavDropdown.Item
-									href={
-										process.env.REACT_APP_API_URL + '/admin'
-									}
-								>
-									Admin
-								</NavDropdown.Item>
-								<NavDropdown.Divider />
-								<NavDropdown.Item href="#action/3.2">
+								<NavDropdown.Item href="#">
 									Đăng xuất
 								</NavDropdown.Item>
 							</NavDropdown>

@@ -9,6 +9,11 @@
     "axios": "^1.5.1",
     "bootstrap": "^5.3.2",
     "js-cookie": "^3.0.5",
+<<<<<<< HEAD
+=======
+    "jsonwebtoken": "^9.0.2",
+    "node-sass": "^7.0.3",
+>>>>>>> 44d3a7980b00c29acb357c8e5d1e18d7fc32a8f1
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0",
