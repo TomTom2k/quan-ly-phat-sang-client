@@ -1,20 +1,10 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Button, Form, Alert, Spinner } from 'react-bootstrap';
+import { Button, Form, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { AuthToken } from '../authToken';
 import route from '../configs/route';
-
-const slideDown = keyframes`
-	0% {
-		transform: translateY(-100%);
-		opacity: 0;
-	}
-	100% {
-		transform: translateY(0);
-		opacity: 1;
-	}
-`;
+import AlterCus from '../components/AlterCus';
 
 const WrapperStyled = styled.div`
 	width: 100%;
@@ -62,14 +52,6 @@ const InputGroupStyled = styled(Form.Group)`
 
 const ButtonStyled = styled(Button)`
 	margin-top: 2rem;
-`;
-
-const AlertStyled = styled(Alert)`
-	width: 22rem;
-	position: fixed;
-	top: 80px;
-	left: calc(50% - 11rem);
-	animation: ${slideDown} 0.5s ease-out;
 `;
 
 const LoadingStyled = styled.div`
@@ -128,9 +110,9 @@ const Login = () => {
 				</ButtonStyled>
 			</FormStyled>
 			{showError && (
-				<AlertStyled variant="danger">
+				<AlterCus variant="danger">
 					Tài khoản hoặc mật khẩu không hợp lệ
-				</AlertStyled>
+				</AlterCus>
 			)}
 			{isLoading && (
 				<LoadingStyled>

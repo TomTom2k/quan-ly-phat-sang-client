@@ -1,7 +1,11 @@
 const images = {
-  logoUAH: require("./logoUAH.png"),
-  bgHome: require("./backgrHome.jpg"),
+	logoUAH: require('./images/logoUAH.png'),
+	bgHome: require('./images/backgrHome.jpg'),
 };
 const icons = {};
 
-export { images, icons };
+const files = {
+	nullTemp: require('./files/null-template.xlsx'),
+};
+
+export { images, icons, files };
