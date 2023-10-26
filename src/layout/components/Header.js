@@ -16,6 +16,7 @@ const HeaderStyled = styled(Navbar)`
 const LogoStyled = styled.div`
 	display: flex;
 	align-items: center;
+	cursor: pointer;
 	p {
 		margin-bottom: 0;
 		font-size: 1.25rem;
@@ -51,7 +52,7 @@ const Header = () => {
 		<HeaderStyled expand="lg" className="bg-body-tertiary">
 			<Container>
 				<LogoStyled href="#">
-					<img src={images.logoUAH} alt="" />
+					<img src={images.logoUAH} alt="#" />
 					<p> Quản lý chiếu sáng</p>
 				</LogoStyled>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
