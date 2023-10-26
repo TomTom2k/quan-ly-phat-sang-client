@@ -9,11 +9,7 @@
     "axios": "^1.5.1",
     "bootstrap": "^5.3.2",
     "js-cookie": "^3.0.5",
-<<<<<<< HEAD
-=======
     "jsonwebtoken": "^9.0.2",
-    "node-sass": "^7.0.3",
->>>>>>> 44d3a7980b00c29acb357c8e5d1e18d7fc32a8f1
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0",
@@ -21,6 +17,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
     "react-scripts": "^5.0.1",
+    "sass": "^1.69.5",
+    "scss": "^0.2.4",
     "styled-components": "^6.1.0",
     "w3-css": "^4.1.0",
     "web-vitals": "^2.1.4"
