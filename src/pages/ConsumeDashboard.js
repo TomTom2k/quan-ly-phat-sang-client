@@ -20,12 +20,13 @@ import {
     Pie,
     Cell,
 } from "recharts";
+
 const ConsumeDashboardStyle = styled.div`
     .form-control {
         cursor: pointer;
     }
     .form-control:hover {
-        #f9fdf9
+        color:#f9fdf9;
     }
     .form-select {
         cursor: pointer;
@@ -194,43 +195,6 @@ const data2 = [
         "Điện năng tiêu thụ": 3490,
     },
 ];
-const data3 = [
-    {
-        name: "Trạm 1",
-        "Điện năng tiêu thụ(Kwh)": 1000,
-        fill: "#8884d8",
-    },
-    {
-        name: "Trạm 2",
-        "Điện năng tiêu thụ(Kwh)": 900,
-        fill: "#83a6ed",
-    },
-    {
-        name: "Trạm 3",
-        "Điện năng tiêu thụ(Kwh)": 1700,
-        fill: "#8dd1e1",
-    },
-    {
-        name: "Trạm 4",
-        "Điện năng tiêu thụ(Kwh)": 1300,
-        fill: "#82ca9d",
-    },
-    {
-        name: "Trạm 5",
-        "Điện năng tiêu thụ(Kwh)": 2000,
-        fill: "#a4de6c",
-    },
-    {
-        name: "Trạm 6",
-        "Điện năng tiêu thụ(Kwh)": 1700,
-        fill: "#d0ed57",
-    },
-    {
-        name: "Trạm 7",
-        "Điện năng tiêu thụ(Kwh)": 800,
-        fill: "#ffc658",
-    },
-];
 const data4 = [
     {
         name: "Page A",
@@ -276,32 +240,58 @@ const data4 = [
     },
 ];
 
-const data5 = [
-  {
-    "name": "Group A",
-    "value": 400
-  },
-  {
-    "name": "Group B",
-    "value": 300
-  },
-  {
-    "name": "Group C",
-    "value": 500
-  },
-  {
-    "name": "Group D",
-    "value": 200
-  },
-  {
-    "name": "Group E",
-    "value": 278
-  },
-  {
-    "name": "Group F",
-    "value": 189
-  }
-]
+const data01 = [
+    {
+        name: "Group A",
+        value: 400,
+    },
+    {
+        name: "Group B",
+        value: 300,
+    },
+    {
+        name: "Group C",
+        value: 300,
+    },
+    {
+        name: "Group D",
+        value: 200,
+    },
+    {
+        name: "Group E",
+        value: 278,
+    },
+    {
+        name: "Group F",
+        value: 189,
+    },
+];
+const data02 = [
+    {
+        name: "Group A",
+        value: 2400,
+    },
+    {
+        name: "Group B",
+        value: 4567,
+    },
+    {
+        name: "Group C",
+        value: 1398,
+    },
+    {
+        name: "Group D",
+        value: 9800,
+    },
+    {
+        name: "Group E",
+        value: 3908,
+    },
+    {
+        name: "Group F",
+        value: 4800,
+    },
+];
 
 const ConsumeDashboard = () => {
     const diaPhuongRef = useRef(null);
@@ -497,39 +487,6 @@ const ConsumeDashboard = () => {
                         </ComposedChart>
                     </Col>
                     <Col lg={12}>
-                        <RadialBarChart
-                            width={730}
-                            height={300}
-                            innerRadius="20%"
-                            outerRadius="100%"
-                            data={data3}
-                            startAngle={540}
-                            endAngle={0}
-                        >
-                            <RadialBar
-                                minAngle={15}
-                                type="number"
-                                domain={["0,dataMax + 1000"]}
-                                label={{
-                                    fill: "#666",
-                                    position: "insideStart",
-                                }}
-                                background
-                                clockWise={true}
-                                dataKey="Điện năng tiêu thụ(Kwh)"
-                            />
-                            <Legend
-                                iconSize={10}
-                                width={120}
-                                height={140}
-                                layout="vertical"
-                                verticalAlign="middle"
-                                align="right"
-                            />
-                            <Tooltip />
-                        </RadialBarChart>
-                    </Col>
-                    <Col lg={12}>
                         <ComposedChart width={730} height={300} data={data4}>
                             <XAxis dataKey="name" />
                             <YAxis />
@@ -550,19 +507,31 @@ const ConsumeDashboard = () => {
                             />
                         </ComposedChart>
                     </Col>
-                    <Col>
-                    </Col>
                     <Col lg={12}>
-                    <PieChart width={730} height={250}>
-                      <Pie data={data5} cx="50%" cy="50%" outerRadius={80} label>
-                        {
-                          data.map((entry, index) => (
-                            <Cell key={`cell-${index}`}   />
-                          ))
-                        }
-                      </Pie>
-                    </PieChart>
+                        <PieChart width={730} height={250}>
+                            <Pie
+                                data={data01}
+                                dataKey="value"
+                                nameKey="name"
+                                cx="50%"
+                                cy="50%"
+                                outerRadius={50}
+                                fill="#8884d8"
+                            />
+                            <Pie
+                                data={data02}
+                                dataKey="value"
+                                nameKey="name"
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={60}
+                                outerRadius={80}
+                                fill="#82ca9d"
+                                label
+                            />
+                        </PieChart>
                     </Col>
+                    <Col lg={12}></Col>
                 </Row>
             </Container>
             <FooterStyle>
