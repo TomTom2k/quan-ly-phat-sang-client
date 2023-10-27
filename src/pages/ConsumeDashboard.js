@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import "w3-css/w3.css";
-import styled from "styled-components";
-import { images } from "../assets";
+import React, { useState, useRef } from 'react';
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import 'w3-css/w3.css';
+import styled from 'styled-components';
+import { images } from '../assets';
 import {
     ComposedChart,
     XAxis,
@@ -36,208 +36,196 @@ const ConsumeDashboardStyle = styled.div`
     }
 `;
 const BannerImgCD = styled.div`
-  position: relative;
-  height: 7.5rem;
-  width: 100%;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.5);
-  }
-  p {
-    position: absolute;
-    bottom: 0;
-    color: white;
-    align-items: center;
-    font-size: 2.2rem;
-    text-align: center;
-    letter-spacing: 2px;
-    font-weight: 700;
-    line-height: 2.5;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 10rem;
-    margin: 0;
-  }
-}`;
-const TitleStyled = styled.h3`
-    margin: 0;
-    width: 30%;
-    padding: 2rem 0;
-    color: #0b5394;
-    font-size: 1.6rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 1.56;
+	position: relative;
+	height: 7.5rem;
+	width: 100%;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: brightness(0.5);
+	}
+	p {
+		position: absolute;
+		bottom: 0;
+		color: white;
+		align-items: center;
+		font-size: 2.2rem;
+		text-align: center;
+		letter-spacing: 2px;
+		font-weight: 700;
+		line-height: 2.5;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 10rem;
+		margin: 0;
+	}
 `;
-const ButtonStyle = styled(Button)`
-    width: 100%;
-    margin-top: 2.4rem;
-    margin-bottom: 4rem;
-    a {
-        margin: 0;
-        color: #fff;
-        padding: 0.5rem 3rem;
-        width: 100%;
-        text-decoration: none;
-    }
+const TitleStyled = styled.h3`
+	margin: 0;
+	width: 30%;
+	padding: 2rem 0;
+	color: var(--primary);
+	font-size: 1.6rem;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 1.56;
 `;
 const FooterStyle = styled.div`
-    width: 100%;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: rgba(33, 33, 33, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 1rem;
+	width: 100%;
+	font-size: 0.8rem;
+	font-weight: 400;
+	color: rgba(33, 33, 33, 1);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: 1rem;
 `;
 
 const data = [
-    {
-        name: "Tháng 1",
-        "Tiền điện": 1000,
-        "Điện năng tiêu thụ": 2400,
-    },
-    {
-        name: "Tháng 2",
-        "Tiền điện": 3000,
-        "Điện năng tiêu thụ": 1398,
-    },
-    {
-        name: "Tháng 3",
-        "Tiền điện": 2000,
-        "Điện năng tiêu thụ": 9800,
-    },
-    {
-        name: "Tháng 4",
-        "Tiền điện": 2780,
-        "Điện năng tiêu thụ": 3908,
-    },
-    {
-        name: "Tháng 5",
-        "Tiền điện": 1890,
-        "Điện năng tiêu thụ": 4800,
-    },
-    {
-        name: "Tháng 6",
-        "Tiền điện": 2390,
-        "Điện năng tiêu thụ": 3800,
-    },
-    {
-        name: "Tháng 7",
-        "Tiền điện": 3490,
-        "Điện năng tiêu thụ": 4300,
-    },
-    {
-        name: "Tháng 8",
-        "Tiền điện": 0,
-        "Điện năng tiêu thụ": 0,
-    },
-    {
-        name: "Tháng 9",
-        "Tiền điện": 0,
-        "Điện năng tiêu thụ": 0,
-    },
-    {
-        name: "Tháng 10",
-        "Tiền điện": 0,
-        "Điện năng tiêu thụ": 0,
-    },
-    {
-        name: "Tháng 11",
-        "Tiền điện": 0,
-        "Điện năng tiêu thụ": 0,
-    },
-    {
-        name: "Tháng 12",
-        "Tiền điện": 0,
-        "Điện năng tiêu thụ": 0,
-    },
+	{
+		name: 'Tháng 1',
+		'Tiền điện': 1000,
+		'Điện năng tiêu thụ': 2400,
+	},
+	{
+		name: 'Tháng 2',
+		'Tiền điện': 3000,
+		'Điện năng tiêu thụ': 1398,
+	},
+	{
+		name: 'Tháng 3',
+		'Tiền điện': 2000,
+		'Điện năng tiêu thụ': 9800,
+	},
+	{
+		name: 'Tháng 4',
+		'Tiền điện': 2780,
+		'Điện năng tiêu thụ': 3908,
+	},
+	{
+		name: 'Tháng 5',
+		'Tiền điện': 1890,
+		'Điện năng tiêu thụ': 4800,
+	},
+	{
+		name: 'Tháng 6',
+		'Tiền điện': 2390,
+		'Điện năng tiêu thụ': 3800,
+	},
+	{
+		name: 'Tháng 7',
+		'Tiền điện': 3490,
+		'Điện năng tiêu thụ': 4300,
+	},
+	{
+		name: 'Tháng 8',
+		'Tiền điện': 0,
+		'Điện năng tiêu thụ': 0,
+	},
+	{
+		name: 'Tháng 9',
+		'Tiền điện': 0,
+		'Điện năng tiêu thụ': 0,
+	},
+	{
+		name: 'Tháng 10',
+		'Tiền điện': 0,
+		'Điện năng tiêu thụ': 0,
+	},
+	{
+		name: 'Tháng 11',
+		'Tiền điện': 0,
+		'Điện năng tiêu thụ': 0,
+	},
+	{
+		name: 'Tháng 12',
+		'Tiền điện': 0,
+		'Điện năng tiêu thụ': 0,
+	},
 ];
 const data2 = [
-    {
-        name: "Trạm 1",
-        "Độ biến thiên": 1000,
-        "Điện năng tiêu thụ": 1000,
-    },
-    {
-        name: "Trạm 2",
-        "Độ biến thiên": 3000,
-        "Điện năng tiêu thụ": 3000,
-    },
-    {
-        name: "Trạm 3",
-        "Độ biến thiên": 2000,
-        "Điện năng tiêu thụ": 2000,
-    },
-    {
-        name: "Trạm 4",
-        "Độ biến thiên": 2780,
-        "Điện năng tiêu thụ": 2780,
-    },
-    {
-        name: "Trạm 5",
-        "Độ biến thiên": 1890,
-        "Điện năng tiêu thụ": 1890,
-    },
-    {
-        name: "Trạm 6",
-        "Độ biến thiên": 2390,
-        "Điện năng tiêu thụ": 2390,
-    },
-    {
-        name: "Trạm 7",
-        "Độ biến thiên": 3490,
-        "Điện năng tiêu thụ": 3490,
-    },
+	{
+		name: 'Trạm 1',
+		'Độ biến thiên': 1000,
+		'Điện năng tiêu thụ': 1000,
+	},
+	{
+		name: 'Trạm 2',
+		'Độ biến thiên': 3000,
+		'Điện năng tiêu thụ': 3000,
+	},
+	{
+		name: 'Trạm 3',
+		'Độ biến thiên': 2000,
+		'Điện năng tiêu thụ': 2000,
+	},
+	{
+		name: 'Trạm 4',
+		'Độ biến thiên': 2780,
+		'Điện năng tiêu thụ': 2780,
+	},
+	{
+		name: 'Trạm 5',
+		'Độ biến thiên': 1890,
+		'Điện năng tiêu thụ': 1890,
+	},
+	{
+		name: 'Trạm 6',
+		'Độ biến thiên': 2390,
+		'Điện năng tiêu thụ': 2390,
+	},
+	{
+		name: 'Trạm 7',
+		'Độ biến thiên': 3490,
+		'Điện năng tiêu thụ': 3490,
+	},
 ];
 const data4 = [
-    {
-        name: "Page A",
-        uv: 4000,
-        pv: 2400,
-        amt: 2400,
-    },
-    {
-        name: "Page B",
-        uv: 3000,
-        pv: 1398,
-        amt: 2210,
-    },
-    {
-        name: "Page C",
-        uv: 2000,
-        pv: 9800,
-        amt: 2290,
-    },
-    {
-        name: "Page D",
-        uv: 2780,
-        pv: 3908,
-        amt: 2000,
-    },
-    {
-        name: "Page E",
-        uv: 1890,
-        pv: 4800,
-        amt: 2181,
-    },
-    {
-        name: "Page F",
-        uv: 2390,
-        pv: 3800,
-        amt: 2500,
-    },
-    {
-        name: "Page G",
-        uv: 3490,
-        pv: 4300,
-        amt: 2100,
-    },
+	{
+		name: 'Page A',
+		uv: 4000,
+		pv: 2400,
+		amt: 2400,
+	},
+	{
+		name: 'Page B',
+		uv: 3000,
+		pv: 1398,
+		amt: 2210,
+	},
+	{
+		name: 'Page C',
+		uv: 2000,
+		pv: 9800,
+		amt: 2290,
+	},
+	{
+		name: 'Page D',
+		uv: 2780,
+		pv: 3908,
+		amt: 2000,
+	},
+	{
+		name: 'Page E',
+		uv: 1890,
+		pv: 4800,
+		amt: 2181,
+	},
+	{
+		name: 'Page F',
+		uv: 2390,
+		pv: 3800,
+		amt: 2500,
+	},
+	{
+		name: 'Page G',
+		uv: 3490,
+		pv: 4300,
+		amt: 2100,
+	},
 ];
 
 const data01 = [
@@ -294,11 +282,11 @@ const data02 = [
 ];
 
 const ConsumeDashboard = () => {
-    const diaPhuongRef = useRef(null);
-    const khuVucRef = useRef(null);
-    const tramRef = useRef(null);
-    const timeStartRef = useRef(null);
-    const timeEndRef = useRef(null);
+	const diaPhuongRef = useRef(null);
+	const khuVucRef = useRef(null);
+	const tramRef = useRef(null);
+	const timeStartRef = useRef(null);
+	const timeEndRef = useRef(null);
 
     const [selectedFile, setSelectedFile] = useState(null);
     const [showError, setShowError] = useState(false);
@@ -390,13 +378,13 @@ const ConsumeDashboard = () => {
                             </Row>
                             <Row className="justify-content-end border-top mt-5">
                                 <Col md={2}>
-                                    <ButtonStyle
-                                        variant="danger"
+                                    <Button
+                                        variant="primary"
                                         type="submit"
-                                        className="mt-5"
+                                        className="mt-5 w-100"
                                     >
                                         Truy cập
-                                    </ButtonStyle>
+                                    </Button>
                                 </Col>
                             </Row>
                         </Form>

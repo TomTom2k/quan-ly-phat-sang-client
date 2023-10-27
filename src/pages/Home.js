@@ -41,11 +41,10 @@ const TextStyle = styled.div`
         margin: 0;
         width: auto;
         padding: 2rem 0;
-        color: #0c6a0c;
-        font-size: 1.7rem;
-        font-style: normal;
+        color: var(--primary);
+        font-size: 2rem;
         font-weight: 700;
-        line-height: 1.56;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     }
     h4 {
         font-weight: 700;
@@ -65,7 +64,6 @@ const LinkStyles = styled.div`
     p,
     a {
         color: rgba(33, 33, 33, 1);
-        padding-bottom: 0.4rem;
     }
 `;
 const FooterStyle = styled.div`
@@ -91,9 +89,9 @@ const Home = () => {
             </BannerImg>
             <BodyStyles>
                 <Container fluid="md">
-                    <Row className="justify-content-md-center">
-                        <Col lg="12">
-                            {/* Phần giới thiệu nhiệm vụ */}
+                    {/* Phần giới thiệu nhiệm vụ */}
+                    <Row className="border-bottom border-primary">
+                        <Col>
                             <TextStyle>
                                 <h3>Giới thiệu nhiệm vụ</h3>
                                 <p>
@@ -225,67 +223,81 @@ const Home = () => {
                                     3. <a href="#">Văn bản 456</a>
                                 </p>
                             </LinkStyles>
-                            {/* Phần tổng quan web */}
+                        </Col>
+                    </Row>
+                    {/* Phần tổng quan web */}
+                    <Row className="border-bottom border-primary">
+                        <Col>
                             <TextStyle>
                                 <h3>Tổng quan về quản lý chiếu sáng</h3>
                                 <Row>
                                     <Col lg={12}>
-                                        <Row>
-                                            <Col lg={4} className="p-4">
-                                                <h4>Trang chủ</h4>
-                                                <p>
-                                                    Trang chủ của trang web là
-                                                    điểm xuất phát, nơi chúng
-                                                    tôi trình bày nhiệm vụ quan
-                                                    trọng của trang web, cung
-                                                    cấp thông tin về các thông
-                                                    tư, quyết định và văn bản
-                                                    của Bộ liên quan đến quản lý
-                                                    điện năng tiêu thụ đèn
-                                                    đường. Trang chủ cũng cung
-                                                    cấp một cái nhìn tổng quan
-                                                    về chức năng và mục tiêu của
-                                                    trang web để giúp người dùng
-                                                    hiểu rõ hơn về ý đồ và lợi
-                                                    ích của dự án.
-                                                    <br />
-                                                    <br />
-                                                    Ngoài ra, trang chủ cung cấp
-                                                    một phần hướng dẫn sử dụng
-                                                    web, giúp người dùng mới tìm
-                                                    hiểu cách thao tác trên
-                                                    trang web để truy cập và sử
-                                                    dụng dữ liệu liên quan đến
-                                                    điện năng tiêu thụ và đèn
-                                                    đường.
-                                                </p>
-                                                <h4>Đăng Nhập</h4>
-                                                <p>
-                                                    Để truy cập và sử dụng các
-                                                    chức năng của trang web,
-                                                    người dùng cần đăng nhập
-                                                    bằng tài khoản và mật khẩu
-                                                    của họ. Quá trình đăng nhập
-                                                    đảm bảo tính bảo mật của dữ
-                                                    liệu và thông tin quản lý.
-                                                </p>
+                                        <Row className="gx-5">
+                                            <Col lg={4}>
+                                                <Row className="mb-2">
+                                                    <h4>Trang chủ</h4>
+                                                    <p>
+                                                        Trang chủ của trang web
+                                                        là điểm xuất phát, nơi
+                                                        chúng tôi trình bày
+                                                        nhiệm vụ quan trọng của
+                                                        trang web, cung cấp
+                                                        thông tin về các thông
+                                                        tư, quyết định và văn
+                                                        bản của Bộ liên quan đến
+                                                        quản lý điện năng tiêu
+                                                        thụ đèn đường. Trang chủ
+                                                        cũng cung cấp một cái
+                                                        nhìn tổng quan về chức
+                                                        năng và mục tiêu của
+                                                        trang web để giúp người
+                                                        dùng hiểu rõ hơn về ý đồ
+                                                        và lợi ích của dự án.
+                                                        <br />
+                                                        <br />
+                                                        Ngoài ra, trang chủ cung
+                                                        cấp một phần hướng dẫn
+                                                        sử dụng web, giúp người
+                                                        dùng mới tìm hiểu cách
+                                                        thao tác trên trang web
+                                                        để truy cập và sử dụng
+                                                        dữ liệu liên quan đến
+                                                        điện năng tiêu thụ và
+                                                        đèn đường.
+                                                    </p>
+                                                </Row>
+                                                <Row>
+                                                    <h4>Đăng Nhập</h4>
+                                                    <p>
+                                                        Để truy cập và sử dụng
+                                                        các chức năng của trang
+                                                        web, người dùng cần đăng
+                                                        nhập bằng tài khoản và
+                                                        mật khẩu của họ. Quá
+                                                        trình đăng nhập đảm bảo
+                                                        tính bảo mật của dữ liệu
+                                                        và thông tin quản lý.
+                                                    </p>
+                                                </Row>
                                             </Col>
-                                            <Col lg={8} className="p-4">
+                                            <Col
+                                                lg={8}
+                                            >
                                                 <h4>Dữ Liệu trang web</h4>
                                                 <ol>
                                                     <Row>
                                                         <Col lg={12}>
                                                             <li>
-                                                                Cập Nhật Dữ Liệu
+                                                              Cập Nhật Dữ Liệu
+                                                              <p>
+                                                                  Trang "Cập Nhật
+                                                                  Dữ Liệu" cho
+                                                                  phép người dùng
+                                                                  cập nhật các
+                                                                  thông tin quan
+                                                                  trọng như:
+                                                              </p>
                                                             </li>
-                                                            <p>
-                                                                Trang "Cập Nhật
-                                                                Dữ Liệu" cho
-                                                                phép người dùng
-                                                                cập nhật các
-                                                                thông tin quan
-                                                                trọng như:
-                                                            </p>
                                                             <ul>
                                                                 <li>
                                                                     Lượng Điện
@@ -344,68 +356,92 @@ const Home = () => {
                                                             </ul>
                                                         </Col>
                                                         <Row className="pt-4">
-                                                        <Col>
-                                                            <li>
-                                                                Dữ Liệu Tiêu Thụ
-                                                            </li>
-                                                            <p>
-                                                                Trang "Dữ Liệu
-                                                                Tiêu Thụ" chứa
-                                                                thông tin về
-                                                                lượng điện tiêu
-                                                                thụ trong tháng
-                                                                tại mỗi tỉnh
-                                                                thành trên toàn
-                                                                quốc. Dữ liệu
-                                                                này cho phép
-                                                                người dùng xem
-                                                                thống kê và phân
-                                                                tích xu hướng
-                                                                tiêu thụ để đưa
-                                                                ra các quyết
-                                                                định quản lý
-                                                                hiệu quả về đèn
-                                                                đường.
-                                                            </p>
-                                                        </Col>
-                                                        <Col>
-                                                        <li>Dữ Liệu Hóa Đơn</li>
-                                                        <p>
-                                                            Trang "Dữ Liệu Hóa
-                                                            Đơn" bao gồm thông
-                                                            tin về hóa đơn tiền
-                                                            điện của từng tháng.
-                                                            Người dùng có thể
-                                                            xem và tải xuống hóa
-                                                            đơn của họ từ trang
-                                                            này. Hóa đơn này dựa
-                                                            trên dữ liệu tiêu
-                                                            thụ điện năng và giá
-                                                            điện tương ứng.
-                                                        </p>
-                                                        </Col>
-                                                        <Col>
-                                                            <li>
-                                                                Dữ Liệu Thiết Bị
-                                                            </li>
-                                                            <p>
-                                                                Trang "Dữ Liệu
-                                                                Thiết Bị" cho
-                                                                phép người dùng
-                                                                theo dõi số
-                                                                lượng thiết bị
-                                                                phát sáng (bóng
-                                                                đèn đường) cùng
-                                                                với các loại đèn
-                                                                khác nhau. Điều
-                                                                này giúp quản lý
-                                                                tình trạng và
-                                                                cải thiện hiệu
-                                                                suất của thiết
-                                                                bị chiếu sáng
-                                                                trên đường phố.
-                                                            </p>
-                                                        </Col>
+                                                            <Col>
+                                                                <li>
+                                                                    Dữ Liệu Tiêu
+                                                                    Thụ
+                                                                </li>
+                                                                <p>
+                                                                    Trang "Dữ
+                                                                    Liệu Tiêu
+                                                                    Thụ" chứa
+                                                                    thông tin về
+                                                                    lượng điện
+                                                                    tiêu thụ
+                                                                    trong tháng
+                                                                    tại mỗi tỉnh
+                                                                    thành trên
+                                                                    toàn quốc.
+                                                                    Dữ liệu này
+                                                                    cho phép
+                                                                    người dùng
+                                                                    xem thống kê
+                                                                    và phân tích
+                                                                    xu hướng
+                                                                    tiêu thụ để
+                                                                    đưa ra các
+                                                                    quyết định
+                                                                    quản lý hiệu
+                                                                    quả về đèn
+                                                                    đường.
+                                                                </p>
+                                                            </Col>
+                                                            <Col>
+                                                                <li>
+                                                                    Dữ Liệu Hóa
+                                                                    Đơn
+                                                                </li>
+                                                                <p>
+                                                                    Trang "Dữ
+                                                                    Liệu Hóa
+                                                                    Đơn" bao gồm
+                                                                    thông tin về
+                                                                    hóa đơn tiền
+                                                                    điện của
+                                                                    từng tháng.
+                                                                    Người dùng
+                                                                    có thể xem
+                                                                    và tải xuống
+                                                                    hóa đơn của
+                                                                    họ từ trang
+                                                                    này. Hóa đơn
+                                                                    này dựa trên
+                                                                    dữ liệu tiêu
+                                                                    thụ điện
+                                                                    năng và giá
+                                                                    điện tương
+                                                                    ứng.
+                                                                </p>
+                                                            </Col>
+                                                            <Col>
+                                                                <li>
+                                                                    Dữ Liệu
+                                                                    Thiết Bị
+                                                                </li>
+                                                                <p>
+                                                                    Trang "Dữ
+                                                                    Liệu Thiết
+                                                                    Bị" cho phép
+                                                                    người dùng
+                                                                    theo dõi số
+                                                                    lượng thiết
+                                                                    bị phát sáng
+                                                                    (bóng đèn
+                                                                    đường) cùng
+                                                                    với các loại
+                                                                    đèn khác
+                                                                    nhau. Điều
+                                                                    này giúp
+                                                                    quản lý tình
+                                                                    trạng và cải
+                                                                    thiện hiệu
+                                                                    suất của
+                                                                    thiết bị
+                                                                    chiếu sáng
+                                                                    trên đường
+                                                                    phố.
+                                                                </p>
+                                                            </Col>
                                                         </Row>
                                                     </Row>
                                                 </ol>
@@ -414,8 +450,11 @@ const Home = () => {
                                     </Col>
                                 </Row>
                             </TextStyle>
-                            <LinkStyles> </LinkStyles>
-                            {/* phần Hướng dẫn sử dụng */}
+                        </Col>
+                    </Row>
+                    {/* phần Hướng dẫn sử dụng */}
+                    <Row className="border-bottom border-primary">
+                        <Col>
                             <TextStyle>
                                 <h3>Hướng dẫn sử dụng</h3>
                                 <p>
@@ -443,7 +482,7 @@ const Home = () => {
                     </Row>
                 </Container>
             </BodyStyles>
-            <FooterStyle>
+            <FooterStyle className="p-4">
                 <p>
                     Bản quyền © 2023 thuộc về Trường Đại Học Kiến Trúc Thành phố
                     Hồ Chí Minh

@@ -30,17 +30,17 @@ const LogoStyled = styled.div`
 const NavStyled = styled(Navbar.Collapse)`
 	justify-content: end;
 	.nav-link {
-		color: #0c6a0c;
-		font-weight: 700;
-		font-size: 1.125rem;
+		color: #333;
+		font-weight: 600;
+		font-size: 1.225rem;
 		margin-left: 1rem;
 
 		&.active {
 			font-weight: 600;
 		}
 	}
-	.nav-link:hover{
-		color: #02a40b;
+	.nav-link:hover {
+		color: var(--primary);
 	}
 `;
 const LinkStyled = styled(Link)`
