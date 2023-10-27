@@ -37,23 +37,11 @@ const TitleStyled = styled.h3`
     margin: 0;
     width: 30%;
     padding: 2rem 0;
-    color: #0b5394;
+    color: var(--primary);
     font-size: 1.6rem;
     font-style: normal;
     font-weight: 700;
     line-height: 1.56;
-`;
-const ButtonStyle = styled(Button)`
-    width: 100%;
-    margin-top: 2.4rem;
-    margin-bottom: 4rem;
-    a {
-        margin: 0;
-        color: #fff;
-        padding: 0.5rem 3rem;
-        width: 100%;
-        text-decoration: none;
-    }
 `;
 const FooterStyle = styled.div`
     width: 100%;
@@ -72,9 +60,6 @@ const ConsumeDashboard = () => {
     const tramRef = useRef(null);
     const timeStartRef = useRef(null);
     const timeEndRef = useRef(null);
-
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [showError, setShowError] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -163,13 +148,13 @@ const ConsumeDashboard = () => {
                             </Row>
                             <Row className="justify-content-end border-top mt-5">
                                 <Col md={2}>
-                                    <ButtonStyle
-                                        variant="danger"
+                                    <Button
+                                        variant="primary"
                                         type="submit"
-                                        className="mt-5"
+                                        className="mt-5 w-100"
                                     >
                                         Truy cập
-                                    </ButtonStyle>
+                                    </Button>
                                 </Col>
                             </Row>
                         </Form>

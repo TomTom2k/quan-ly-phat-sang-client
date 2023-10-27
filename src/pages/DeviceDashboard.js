@@ -43,18 +43,6 @@ const TitleStyled = styled.h3`
     font-weight: 700;
     line-height: 1.56;
 `;
-const ButtonStyle = styled(Button)`
-    width: 100%;
-    margin-top: 2.4rem;
-    margin-bottom: 4rem;
-    a {
-        margin: 0;
-        color: #fff;
-        padding: 0.5rem 3rem;
-        width: 100%;
-        text-decoration: none;
-    }
-`;
 const FooterStyle = styled.div`
     width: 100%;
     font-size: 0.8rem;
@@ -173,13 +161,13 @@ const ConsumeDashboard = () => {
                             </Row>
                             <Row className="justify-content-end border-top mt-5">
                                 <Col md={2}>
-                                    <ButtonStyle
-                                        variant="danger"
+                                    <Button
+                                        variant="primary"
                                         type="submit"
-                                        className="mt-5"
+                                        className="mt-5 w-100"
                                     >
                                         Truy cập
-                                    </ButtonStyle>
+                                    </Button>
                                 </Col>
                             </Row>
                         </Form>

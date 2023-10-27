@@ -31,8 +31,8 @@ const NavStyled = styled(Navbar.Collapse)`
 	justify-content: end;
 	.nav-link {
 		color: #333;
-		font-weight: 500;
-		font-size: 1.125rem;
+		font-weight: 600;
+		font-size: 1.225rem;
 		margin-left: 1rem;
 
 		&.active {
