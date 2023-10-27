@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, Form, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import * as XLSX from 'xlsx';
 import styled from 'styled-components';
+
 import { files } from '../assets';
 import AlterCus from '../components/AlterCus';
 
@@ -13,8 +15,55 @@ const FullWidthButton = styled(Button)`
 `;
 
 const UpdateData = () => {
+	const [filesData, setFilesData] = useState(null);
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [showError, setShowError] = useState(false);
+
+	const mergeFilesData = () => {
+		let mergedData = [];
+		filesData.forEach((data) => {
+			mergedData = [...mergedData, ...data];
+		});
+		return mergedData;
+	};
+
+	const handleFilesTmpChange = (event) => {
+		const files = event.target.files;
+		let loadedFilesData = [];
+
+		Array.from(files).forEach((file, index) => {
+			const reader = new FileReader();
+			reader.onload = (evt) => {
+				const bstr = evt.target.result;
+				const wb = XLSX.read(bstr, { type: 'binary' });
+				const wsname = wb.SheetNames[0];
+				const ws = wb.Sheets[wsname];
+				const data = XLSX.utils.sheet_to_json(ws);
+
+				loadedFilesData.push(data);
+
+				// Ensure all files are read
+				if (index === files.length - 1) {
+					setFilesData(loadedFilesData);
+				}
+			};
+			reader.readAsBinaryString(file);
+		});
+
+		console.log(files);
+	};
+
+	const handleMergeFiles = (event) => {
+		event.preventDefault();
+
+		const mergedData = mergeFilesData();
+		const ws = XLSX.utils.json_to_sheet(mergedData);
+		const wb = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(wb, ws, 'MergedData');
+
+		// Tải file lên máy chủ hoặc lưu trực tiếp vào máy tính của người dùng
+		XLSX.writeFile(wb, 'merged_data.xlsx');
+	};
 
 	const handleFileChange = (event) => {
 		if (event.target.files.length > 0) {
@@ -50,10 +99,25 @@ const UpdateData = () => {
 								<TitleStyled>
 									Tạo file dữ liệu tự động
 								</TitleStyled>
-								<p>COMING SOON</p>
+								<Col>
+									<Form.Group>
+										<Form.Control
+											type="file"
+											className="w-50"
+											multiple
+											onChange={handleFilesTmpChange}
+										/>
+									</Form.Group>
+									<Button
+										variant="outline-primary"
+										onClick={handleMergeFiles}
+									>
+										Download dữ liệu đã chọn
+									</Button>
+								</Col>
 							</Col>
 						</Row>
-						<Row>
+						<Row className="mt-5">
 							<Col>
 								<TitleStyled>Cập nhật dữ liệu</TitleStyled>
 								<p>
