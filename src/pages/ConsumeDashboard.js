@@ -21,68 +21,56 @@ import {
 	Cell,
 } from 'recharts';
 const ConsumeDashboardStyle = styled.div`
-    .form-control {
-        cursor: pointer;
-    }
-    .form-control:hover {
-        #f9fdf9
-    }
-    .form-select {
-        cursor: pointer;
-    }
-    .form-select:hover {
-        #f9fdf9
-    }
+	.form-control {
+		cursor: pointer;
+	}
+	.form-control:hover {
+		color: #f9fdf9;
+	}
+	.form-select {
+		cursor: pointer;
+	}
+	.form-select:hover {
+		color: #f9fdf9;
+	}
 `;
 const BannerImgCD = styled.div`
-  position: relative;
-  height: 7.5rem;
-  width: 100%;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.5);
-  }
-  p {
-    position: absolute;
-    bottom: 0;
-    color: white;
-    align-items: center;
-    font-size: 2.2rem;
-    text-align: center;
-    letter-spacing: 2px;
-    font-weight: 700;
-    line-height: 2.5;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 10rem;
-    margin: 0;
-  }
-}`;
+	position: relative;
+	height: 7.5rem;
+	width: 100%;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: brightness(0.5);
+	}
+	p {
+		position: absolute;
+		bottom: 0;
+		color: white;
+		align-items: center;
+		font-size: 2.2rem;
+		text-align: center;
+		letter-spacing: 2px;
+		font-weight: 700;
+		line-height: 2.5;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 10rem;
+		margin: 0;
+	}
+`;
 const TitleStyled = styled.h3`
 	margin: 0;
 	width: 30%;
 	padding: 2rem 0;
-	color: #0b5394;
+	color: var(--primary);
 	font-size: 1.6rem;
 	font-style: normal;
 	font-weight: 700;
 	line-height: 1.56;
-`;
-const ButtonStyle = styled(Button)`
-	width: 100%;
-	margin-top: 2.4rem;
-	margin-bottom: 4rem;
-	a {
-		margin: 0;
-		color: #fff;
-		padding: 0.5rem 3rem;
-		width: 100%;
-		text-decoration: none;
-	}
 `;
 const FooterStyle = styled.div`
 	width: 100%;
@@ -310,9 +298,6 @@ const ConsumeDashboard = () => {
 	const timeStartRef = useRef(null);
 	const timeEndRef = useRef(null);
 
-	const [selectedFile, setSelectedFile] = useState(null);
-	const [showError, setShowError] = useState(false);
-
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = {
@@ -400,13 +385,13 @@ const ConsumeDashboard = () => {
 							</Row>
 							<Row className="justify-content-end border-top mt-5">
 								<Col md={2}>
-									<ButtonStyle
-										variant="danger"
+									<Button
+										variant="primary"
 										type="submit"
-										className="mt-5"
+										className="mt-5 w-100"
 									>
 										Truy cập
-									</ButtonStyle>
+									</Button>
 								</Col>
 							</Row>
 						</Form>

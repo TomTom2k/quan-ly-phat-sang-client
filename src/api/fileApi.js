@@ -2,9 +2,9 @@ import axiosClient from './axiosClient';
 
 const fileApi = {
 	uploadExcel: (file) => {
-		const url = '/upload-excel';
+		const url = '/upload';
 		const formData = new FormData(); // Using FormData to handle files
-		formData.append('excel', file); // 'excel' is the field name, similar to <input name="excel" type="file" />
+		formData.append('file', file); // 'excel' is the field name, similar to <input name="excel" type="file" />
 
 		// Update headers for multipart/form-data
 		const config = {
