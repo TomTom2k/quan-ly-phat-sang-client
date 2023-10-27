@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { AuthToken } from '../authToken';
 import route from '../configs/route';
 import AlterCus from '../components/AlterCus';
+import LoadingCus from '../components/LoadingCus';
 
 const WrapperStyled = styled.div`
 	width: 100%;
@@ -52,17 +53,6 @@ const InputGroupStyled = styled(Form.Group)`
 
 const ButtonStyled = styled(Button)`
 	margin-top: 2rem;
-`;
-
-const LoadingStyled = styled.div`
-	width: 100%;
-	height: 100%;
-	backdrop-filter: blur(2px);
-	position: absolute;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
 `;
 
 const Login = () => {
@@ -115,11 +105,9 @@ const Login = () => {
 				</AlterCus>
 			)}
 			{isLoading && (
-				<LoadingStyled>
-					<Spinner animation="border" variant="secondary">
-						<span className="visually-hidden">Loading...</span>
-					</Spinner>
-				</LoadingStyled>
+				<LoadingCus animation="border" variant="secondary">
+					<span className="visually-hidden">Loading...</span>
+				</LoadingCus>
 			)}
 		</WrapperStyled>
 	);
