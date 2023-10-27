@@ -3,7 +3,7 @@ const images = {
 	bgData2: require('./bg_data2.jpg'),
 	bgData3: require('./bg_data3.jpg'),
 	logoUAH: require('./images/logoUAH.png'),
-	bgHome: require('./images/backgrHome.jpg'),
+	bgHome: require('./bg.png'),
 };
 const icons = {};
 

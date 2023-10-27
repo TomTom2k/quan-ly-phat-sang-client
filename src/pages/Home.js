@@ -9,7 +9,7 @@ import { images } from '../assets';
 const HomeStyles = styled.div``;
 const BannerImg = styled.div`
   position: relative;
-  height: 18rem;
+  height: 22rem;
   width: 100%;
   img {
     width: 100%;
@@ -19,11 +19,11 @@ const BannerImg = styled.div`
   p {
     position: absolute;
     bottom: 0;
-    color: #fff;
-    font-size: 2.2rem;
+    color: #ffff;
+    font-size: 2.4rem;
     text-align: center;
     letter-spacing: 2px;
-    font-weight: 600;
+    font-weight: 700;
     height: 100%;
     display: flex;
     align-items: center;
@@ -40,7 +40,7 @@ const TextStyle = styled.div`
     margin: 0;
     width: auto;
     padding: 2rem 0;
-    color: #00bc00;
+    color: #0c6a0c;
     font-size: 1.7rem;
     font-style: normal;
     font-weight: 700;
@@ -49,6 +49,10 @@ const TextStyle = styled.div`
   h4 {
     font-weight: 700;
     font-size: 1.4rem;
+    color: #0e4e1b;
+  }
+  h5 {
+    color: #0e4e1b;
   }
   p {
     margin: 0;
@@ -84,14 +88,14 @@ const Home = () => {
       <BannerImg>
         <img src={images.bgHome} alt=""></img>
         <p>
-          Nghiên cứu xây dựng công cụ quản lý tiêu thụ năng lượng trong chiếu
-          sáng công cộng tại Việt Nam
+          Nghiên Cứu Xây Dựng Công Cụ Quản Lý Tiêu Thụ Năng Lượng Trong Chiếu
+          Sáng Công Cộng Tại Việt Nam
         </p>
       </BannerImg>
       <BodyStyles>
         <Container fluid="md">
           <Row className="justify-content-md-center">
-            <Col lg="10">
+            <Col lg="12">
               {/* Phần giới thiệu nhiệm vụ */}
               <TextStyle>
                 <h3>Giới thiệu nhiệm vụ</h3>
