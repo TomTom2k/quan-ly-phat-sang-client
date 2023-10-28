@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Table } from 'react-bootstrap';
+import Cookies from 'js-cookie';
 import styled from 'styled-components';
 
 import { files } from '../assets';
@@ -10,22 +11,50 @@ import LoadingCus from '../components/LoadingCus';
 const WrapperStyled = styled.div`
 	position: relative;
 `;
+
 const TitleStyled = styled.h4`
 	color: var(--primary);
 `;
+
 const FullWidthButton = styled(Button)`
 	width: 100%;
 `;
 
+const renderTable = (sheet) => {
+	const cols = Object.keys(sheet);
+
+	return (
+		<Table striped bordered hover size="sm" responsive>
+			<thead>
+				<tr>
+					{cols.map((col, index) => (
+						<th key={index}>{col}</th>
+					))}
+				</tr>
+			</thead>
+			<tbody>
+				{Array.from({ length: 10 }).map((_, rowIndex) => (
+					<tr key={rowIndex}>
+						{cols.map((col, colIndex) => (
+							<td key={colIndex}>{sheet[col][rowIndex]}</td>
+						))}
+					</tr>
+				))}
+			</tbody>
+		</Table>
+	);
+};
+
 const UpdateData = () => {
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [data, setData] = useState(null);
+	const [sheet, setSheet] = useState(0);
 	const [showError, setShowError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleFileChange = (event) => {
-		if (event.target.files.length > 0) {
-			const file = event.target.files[0];
+		const file = event.target.files[0];
+		if (file) {
 			setSelectedFile(file);
 		} else {
 			setSelectedFile(null);
@@ -35,23 +64,20 @@ const UpdateData = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		if (selectedFile) {
-			try {
-				setIsLoading(true);
-				const response = await fileApi.uploadExcel(selectedFile);
-				setData(response);
-				setIsLoading(false);
-			} catch (error) {
-				console.log(error);
-				setIsLoading(false);
-			}
-		} else {
+		if (!selectedFile) {
 			setShowError(true);
-			// Sau 1 giây, ẩn thông báo lỗi
-			setTimeout(() => {
-				setShowError(false);
-			}, 1000);
+			setTimeout(() => setShowError(false), 1000);
+			return;
 		}
+
+		setIsLoading(true);
+		try {
+			const response = await fileApi.uploadExcel(selectedFile);
+			setData(response);
+		} catch (error) {
+			console.error('Error uploading file:', error);
+		}
+		setIsLoading(false);
 	};
 
 	return (
@@ -105,6 +131,27 @@ const UpdateData = () => {
 						</div>
 					</Col>
 				</Row>
+				{data?.file && (
+					<>
+						<Row className="mt-2">
+							<Col md={4}>
+								<Form.Select
+									aria-label="Default select example"
+									onChange={(e) => setSheet(e.target.value)}
+								>
+									{data.file.map((sheet, index) => (
+										<option value={index} key={index}>
+											sheet {index + 1}
+										</option>
+									))}
+								</Form.Select>
+							</Col>
+						</Row>
+						<Row className="mt-2">
+							{renderTable(data.file[sheet])}
+						</Row>
+					</>
+				)}
 			</Container>
 			{showError && (
 				<AlterCus variant="danger">

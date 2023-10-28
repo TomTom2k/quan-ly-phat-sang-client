@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 import styled from 'styled-components';
@@ -49,7 +49,8 @@ const LinkStyled = styled(Link)`
 `;
 
 const Header = () => {
-	let { user } = useContext(AuthToken);
+	let { user, logout } = useContext(AuthToken);
+	let navigate = useNavigate();
 
 	return (
 		<HeaderStyled expand="lg" className="bg-body-tertiary">
@@ -92,7 +93,14 @@ const Header = () => {
 							</Nav.Link>
 						) : (
 							<NavDropdown title="Tài khoản" id="account">
-								<NavDropdown.Item href="#">
+								<NavDropdown.Item
+									onClick={() => {
+										logout();
+										navigate(route.login);
+									}}
+									href={route.login}
+									as={LinkStyled}
+								>
 									Đăng xuất
 								</NavDropdown.Item>
 							</NavDropdown>
