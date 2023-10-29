@@ -463,7 +463,9 @@ const ConsumeDashboard = () => {
                                 </p>
                             </Col>
                         </Col>
-                        <Col lg={4}></Col>
+                        <Col lg={4}>
+                            
+                        </Col>
                     </Row>
                     <Row className="mt-5">
                         <Col>
