@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import Cookies from 'js-cookie';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import 'w3-css/w3.css';
@@ -33,6 +33,7 @@ import {
 import userApi from '../api/userApi';
 import analysisApi from '../api/analysisApi';
 import AlterCus from '../components/AlterCus';
+import { AuthToken } from '../authToken';
 
 const ConsumeDashboardStyle = styled.div`
 	.form-control,
@@ -302,7 +303,7 @@ const data4 = [
 ];
 
 const ConsumeDashboard = () => {
-	const role = JSON.parse(Cookies.get('role'));
+	const { role } = useContext(AuthToken);
 	const diaPhuongRef = useRef(null);
 	const yearRef = useRef(null);
 	const monthRef = useRef(null);
@@ -419,6 +420,7 @@ const ConsumeDashboard = () => {
 										<b>Ngày</b>
 										<Form.Control
 											type="number"
+											disabled
 											ref={dayRef}
 										></Form.Control>
 									</Col>
