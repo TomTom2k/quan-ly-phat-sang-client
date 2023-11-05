@@ -1,4 +1,10 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { useContext } from 'react';
+import {
+	createBrowserRouter,
+	RouterProvider,
+	Routes,
+	Navigate,
+} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Layout from './layout/Layout';
@@ -9,7 +15,19 @@ import InvoiceDashboard from './pages/InvoiceDashboard';
 import DeviceDashboard from './pages/DeviceDashboard';
 import ConsumeDashboard from './pages/ConsumeDashboard';
 import UpdateData from './pages/UpdateData';
+import { AuthToken } from './authToken';
 
+const PrivateRoute = ({ children, requiredRole }) => {
+	const { role } = useContext(AuthToken);
+	if (
+		(requiredRole === undefined && role !== null) ||
+		requiredRole === role
+	) {
+		return children;
+	} else {
+		return <Navigate to={route.login} />;
+	}
+};
 const router = createBrowserRouter([
 	{
 		path: route.home,
@@ -31,7 +49,9 @@ const router = createBrowserRouter([
 		path: route.update,
 		element: (
 			<Layout>
-				<UpdateData />
+				<PrivateRoute requiredRole={false}>
+					<UpdateData />
+				</PrivateRoute>
 			</Layout>
 		),
 	},
@@ -39,7 +59,9 @@ const router = createBrowserRouter([
 		path: route.invoice,
 		element: (
 			<Layout>
-				<InvoiceDashboard />
+				<PrivateRoute requiredRole={undefined}>
+					<InvoiceDashboard />
+				</PrivateRoute>
 			</Layout>
 		),
 	},
@@ -47,7 +69,9 @@ const router = createBrowserRouter([
 		path: route.device,
 		element: (
 			<Layout>
-				<DeviceDashboard />
+				<PrivateRoute requiredRole={undefined}>
+					<DeviceDashboard />
+				</PrivateRoute>
 			</Layout>
 		),
 	},
@@ -55,7 +79,9 @@ const router = createBrowserRouter([
 		path: route.consume,
 		element: (
 			<Layout>
-				<ConsumeDashboard />
+				<PrivateRoute requiredRole={undefined}>
+					<ConsumeDashboard />
+				</PrivateRoute>
 			</Layout>
 		),
 	},
@@ -63,7 +89,9 @@ const router = createBrowserRouter([
 function App() {
 	return (
 		<>
-			<RouterProvider router={router} />
+			<RouterProvider router={router}>
+				<Routes />
+			</RouterProvider>
 		</>
 	);
 }
