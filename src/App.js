@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import {
 	createBrowserRouter,
 	RouterProvider,
-	Route,
 	Routes,
 	Navigate,
 } from 'react-router-dom';
@@ -20,7 +19,6 @@ import { AuthToken } from './authToken';
 
 const PrivateRoute = ({ children, requiredRole }) => {
 	const { role } = useContext(AuthToken);
-	console.log(role, requiredRole);
 	if (
 		(requiredRole === undefined && role !== null) ||
 		requiredRole === role

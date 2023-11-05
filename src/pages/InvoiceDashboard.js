@@ -6,33 +6,33 @@ import { images } from '../assets';
 
 const ConsumeDashboardStyle = styled.div``;
 const BannerImgID = styled.div`
-  position: relative;
-  height: 7.5rem;
-  width: 100%;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.5);
-  }
-  p {
-    position: absolute;
-    bottom: 0;
-    color: white;
-    align-items: center;
-    font-size: 2.2rem;
-    text-align: center;
-    letter-spacing: 2px;
-    font-weight: 700;
-    line-height: 2.5;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 10rem;
-    margin: 0;
-  }
-}`;
+	position: relative;
+	height: 7.5rem;
+	width: 100%;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: brightness(0.5);
+	}
+	p {
+		position: absolute;
+		bottom: 0;
+		color: white;
+		align-items: center;
+		font-size: 2.2rem;
+		text-align: center;
+		letter-spacing: 2px;
+		font-weight: 700;
+		line-height: 2.5;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 10rem;
+		margin: 0;
+	}
+`;
 const TitleStyled = styled.h3`
 	margin: 0;
 	width: 30%;

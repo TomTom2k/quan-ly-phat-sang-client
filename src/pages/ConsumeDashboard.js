@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import Cookies from 'js-cookie';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Table } from 'react-bootstrap';
 import 'w3-css/w3.css';
 import styled from 'styled-components';
 
@@ -34,6 +34,7 @@ import userApi from '../api/userApi';
 import analysisApi from '../api/analysisApi';
 import AlterCus from '../components/AlterCus';
 import { AuthToken } from '../authToken';
+import ConvertToTable from '../components/ConvertToTable';
 
 const ConsumeDashboardStyle = styled.div`
 	.form-control,
@@ -316,6 +317,9 @@ const ConsumeDashboard = () => {
 	const [selectedTram, setSelectedTram] = useState('');
 
 	const [dataChart, setDataChart] = useState(null);
+	const [barsName, setBarsName] = useState('ngay_do__year');
+	const [describe, setDescribe] = useState(null);
+	const [showDes, setShowDes] = useState(false);
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
@@ -325,6 +329,7 @@ const ConsumeDashboard = () => {
 		fetchListTram();
 	}, []);
 
+	// lấy danh sách khu vực
 	const fetchListKhuVuc = async () => {
 		try {
 			setIsLoading(true);
@@ -337,6 +342,7 @@ const ConsumeDashboard = () => {
 		}
 	};
 
+	// lấy danh sách trạm
 	const fetchListTram = async (tramId) => {
 		try {
 			setIsLoading(true);
@@ -344,46 +350,55 @@ const ConsumeDashboard = () => {
 			setListTram(res.data);
 			setIsLoading(false);
 		} catch (error) {
-			console.log(error);
 			setIsLoading(false);
 		}
 	};
 
 	const handleChangeKhuVuc = (e) => {
 		setSelectedKhuVuc(e.target.value);
+		setSelectedTram('-1');
 		if (e.target.value !== '-1') fetchListTram(e.target.value);
 		else fetchListTram();
 	};
 
 	const handlerChangeTram = (e) => {
-		setSelectedKhuVuc(e.target.value);
+		setSelectedTram(e.target.value);
 	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		if (selectedKhuVuc) {
-			setIsLoading(true);
-			const data = {
-				nam: yearRef.current.value,
-				khuVuc: selectedKhuVuc,
-				tram: selectedTram,
-			};
+		setIsLoading(true);
+		const data = {};
 
-			try {
-				console.log(selectedKhuVuc);
-				const res = await analysisApi.chartDienNangTieuThuThanhTien(
-					data
-				);
-				console.log(res);
-				setDataChart(res.data);
-				setIsLoading(false);
-			} catch (error) {
-				console.log(error);
-				setIsLoading(false);
+		if (yearRef.current.value) {
+			setBarsName('ngay_do__month');
+			data.nam = yearRef.current.value;
+			if (monthRef.current.value) {
+				setBarsName('ngay_do__day');
+				data.thang = monthRef.current.value;
 			}
-		} else {
-			setErrorMessage('Vui lòng chọn khu vực');
-			setTimeout(() => setErrorMessage(''), 1000);
+		}
+		if (selectedKhuVuc) data.khuVuc = selectedKhuVuc;
+		if (selectedTram) data.tram = selectedTram;
+
+		try {
+			const res = await analysisApi.chartDienNangTieuThuThanhTien(data);
+			console.log(res);
+			if (res.data) {
+				setDataChart(res.data.data);
+				setDescribe(res.data.describe);
+				console.log(res.data.describe);
+			} else {
+				setDataChart(null);
+				setDescribe(null);
+			}
+			setIsLoading(false);
+		} catch (error) {
+			console.log(error);
+			setIsLoading(false);
+
+			setErrorMessage('Truy vấn không thành công');
+			setTimeout(() => setErrorMessage(''), 2000);
 		}
 	};
 
@@ -395,7 +410,7 @@ const ConsumeDashboard = () => {
 			</BannerImgCD>
 			<WrapperStyled>
 				<Container fluid="md" className="mt-5">
-					<Row>
+					<Row className="mb-5">
 						<Col>
 							<Form onSubmit={handleSubmit}>
 								<TitleStyled className="mb-2">
@@ -413,6 +428,7 @@ const ConsumeDashboard = () => {
 										<b>Tháng</b>
 										<Form.Control
 											type="number"
+											disabled
 											ref={monthRef}
 										></Form.Control>
 									</Col>
@@ -461,7 +477,7 @@ const ConsumeDashboard = () => {
 											onChange={handleChangeKhuVuc}
 										>
 											<option hidden>Khu vực</option>
-											<option value="-1">Tất cả</option>
+											<option value="">Tất cả</option>
 											{listKhuVuc.map((khuvuc) => (
 												<option
 													key={khuvuc.khu_vuc_id}
@@ -477,9 +493,8 @@ const ConsumeDashboard = () => {
 											aria-label="Default select example"
 											onChange={handlerChangeTram}
 										>
-											<option value="" hidden>
-												Trạm
-											</option>
+											<option hidden>Trạm</option>
+											<option value="">Tất cả</option>
 											{listTram.map((tram) => (
 												<option
 													key={tram.tram_id}
@@ -508,71 +523,89 @@ const ConsumeDashboard = () => {
 					</Row>
 					{dataChart && (
 						<Row>
-							<Row>
-								<Col lg={8}>
-									<ComposedChart
-										width={830}
-										height={300}
-										data={dataChart}
-									>
-										<XAxis
-											dataKey="ngay_do__month"
-											fontSize={10}
-										></XAxis>
-										<YAxis
-											unit="kWh"
-											type="number"
-											fontSize={10}
-											domain={[0, 'dataMax + 1000']}
-											label={{
-												value: 'Điện năng (Kwh)',
-												angle: -90,
-												position: 'insideLeft',
-												textAnchor: 'middle',
-												fontSize: 12,
-											}}
-										/>
-										<YAxis
-											unit="vnd"
-											yAxisId="right"
-											fontSize={10}
-											orientation="right"
-											domain={[0, 'dataMax + 1000']}
-											label={{
-												value: 'Tổng tiền (VND)',
-												angle: -90,
-												position: 'insideRight',
-												textAnchor: 'middle',
-												fontSize: 12,
-											}}
-										/>
-										<Tooltip />
-										<Legend
-											verticalAlign="top"
-											height={36}
-										/>
-										<CartesianGrid stroke="#f5f5f5" />
-										<Bar
-											dataKey="tong_gia_tri"
-											barSize={30}
-											fill="#413ea0"
-										/>
-										<Line
-											yAxisId="right"
-											type="monotone"
-											dataKey="tong_thanh_tien"
-											stroke="#FF3030"
-										/>
-									</ComposedChart>
-									<Col lg={12} className="text-center r-2">
-										<p>
-											BIểu đồ thể hiện lượng điện năng
-											tiêu thụ và thành tiền theo năm(Kwh)
-										</p>
+							<Container>
+								<Row className="justify-content-md-center">
+									<Col lg={8}>
+										<ComposedChart
+											width={800}
+											height={300}
+											data={dataChart}
+										>
+											<XAxis
+												dataKey={barsName}
+												fontSize={10}
+											></XAxis>
+											<YAxis
+												unit="kWh"
+												type="number"
+												fontSize={10}
+												domain={[0, 'dataMax + 1000']}
+												label={{
+													value: 'Điện năng (Kwh)',
+													angle: -90,
+													position: 'insideLeft',
+													textAnchor: 'middle',
+													fontSize: 12,
+												}}
+											/>
+											<YAxis
+												unit="vnd"
+												yAxisId="right"
+												fontSize={10}
+												orientation="right"
+												domain={[0, 'dataMax + 1000']}
+												label={{
+													value: 'Tổng tiền (VND)',
+													angle: -90,
+													position: 'insideRight',
+													textAnchor: 'middle',
+													fontSize: 12,
+												}}
+											/>
+											<Tooltip />
+											<Legend
+												verticalAlign="top"
+												height={36}
+											/>
+											<CartesianGrid stroke="#f5f5f5" />
+											<Bar
+												dataKey="tong_gia_tri"
+												barSize={30}
+												fill="#413ea0"
+											/>
+											<Line
+												yAxisId="right"
+												type="monotone"
+												dataKey="tong_thanh_tien"
+												stroke="#FF3030"
+											/>
+										</ComposedChart>
+										<Col
+											lg={12}
+											className="text-center r-2"
+										>
+											<p>
+												BIểu đồ thể hiện lượng điện năng
+												tiêu thụ và thành tiền theo
+												năm(Kwh)
+											</p>
+										</Col>
 									</Col>
-								</Col>
-								<Col lg={4}></Col>
-							</Row>
+									{showDes && (
+										<Col lg={4}>
+											<ConvertToTable df={describe} />
+										</Col>
+									)}
+								</Row>
+								<Row className="justify-content-md-center">
+									<Button
+										className="w-25"
+										onClick={() => setShowDes(!showDes)}
+									>
+										{showDes ? 'Đóng mô tả' : 'Hiện mô tả'}
+									</Button>
+								</Row>
+							</Container>
 							<Row className="mt-5">
 								<Col>
 									<ResponsiveContainer
