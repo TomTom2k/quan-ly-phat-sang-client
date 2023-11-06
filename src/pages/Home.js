@@ -2,7 +2,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ChevronDoubleRight, CaretRightFill } from "react-bootstrap-icons";
+import { CaretRightFill } from "react-bootstrap-icons";
 import styled from "styled-components";
 
 import { images } from "../assets";
