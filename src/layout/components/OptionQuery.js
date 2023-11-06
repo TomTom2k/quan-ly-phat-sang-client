@@ -17,7 +17,7 @@ const TitleStyled = styled.h3`
     line-height: 1.56;
 `;
 
-const OptionQuery = () => {
+const OptionQuery = ({}) => {
     const { role } = useContext(AuthToken);
     const diaPhuongRef = useRef(null);
     const yearRef = useRef(null);
