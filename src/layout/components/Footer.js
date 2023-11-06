@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const FooterStyle = styled.div`
+    height: 32px;
     width: 100%;
     font-size: 0.8rem;
     font-weight: 400;
