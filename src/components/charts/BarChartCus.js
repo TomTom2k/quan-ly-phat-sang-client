@@ -12,7 +12,7 @@ import {
     Rectangle,
 } from "recharts";
 
-const BarCharts = () => {
+const BarChartCus = () => {
     return (
         <Row className="mt-5">
             <Col lg={12}>
@@ -58,4 +58,4 @@ const BarCharts = () => {
         </Row>
     );
 };
-export default BarCharts;
+export default BarChartCus;

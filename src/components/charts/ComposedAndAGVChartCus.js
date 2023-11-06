@@ -80,7 +80,7 @@ const averageEnergyConsumption =
     data.reduce((total, item) => total + item["Điện năng tiêu thụ"], 0) /
     data.length;
 
-const ComposedAndAGVChart = () => {
+const ComposedAndAGVChartCus = () => {
     return (
         <Row className="mt-5">
             <Col>
@@ -144,4 +144,4 @@ const ComposedAndAGVChart = () => {
     );
 };
 
-export default ComposedAndAGVChart;
+export default ComposedAndAGVChartCus;

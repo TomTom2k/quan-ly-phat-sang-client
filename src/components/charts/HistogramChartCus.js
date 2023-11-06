@@ -1,5 +1,5 @@
 import React from "react";
-import {Row, Col} from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 import {
     ComposedChart,
@@ -74,7 +74,7 @@ const data4 = [
     },
 ];
 
-const HistogramChart = () => {
+const HistogramChartCus = () => {
     return (
         <Row className="mt-5">
             <Col>
@@ -136,4 +136,4 @@ const HistogramChart = () => {
         </Row>
     );
 };
-export default HistogramChart;
+export default HistogramChartCus;

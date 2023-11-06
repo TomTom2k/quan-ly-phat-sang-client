@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col} from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import ReactApexChart from "react-apexcharts";
 
 const data6 = [
@@ -49,7 +49,7 @@ const options = {
     },
 };
 
-const BoxPlotChart = () => {
+const BoxPlotChartCus = () => {
     return (
         <Row className="mt-5">
             <Col>
@@ -64,4 +64,4 @@ const BoxPlotChart = () => {
         </Row>
     );
 };
-export default BoxPlotChart;
+export default BoxPlotChartCus;

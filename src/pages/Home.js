@@ -44,7 +44,7 @@ const TextStyle = styled.div`
         color: var(--primary);
         font-size: 2rem;
         font-weight: 700;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     }
     h4 {
         font-weight: 700;
@@ -66,20 +66,10 @@ const LinkStyles = styled.div`
         color: rgba(33, 33, 33, 1);
     }
 `;
-const FooterStyle = styled.div`
-    width: 100%;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: rgba(33, 33, 33, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 1rem;
-`;
 
 const Home = () => {
     return (
-        <HomeStyles>
+        <HomeStyles className="mb-4">
             <BannerImg>
                 <img src={images.bgHome} alt=""></img>
                 <p>
@@ -280,23 +270,24 @@ const Home = () => {
                                                     </p>
                                                 </Row>
                                             </Col>
-                                            <Col
-                                                lg={8}
-                                            >
+                                            <Col lg={8}>
                                                 <h4>Dữ Liệu trang web</h4>
                                                 <ol>
                                                     <Row>
                                                         <Col lg={12}>
                                                             <li>
-                                                              Cập Nhật Dữ Liệu
-                                                              <p>
-                                                                  Trang "Cập Nhật
-                                                                  Dữ Liệu" cho
-                                                                  phép người dùng
-                                                                  cập nhật các
-                                                                  thông tin quan
-                                                                  trọng như:
-                                                              </p>
+                                                                Cập Nhật Dữ Liệu
+                                                                <p>
+                                                                    Trang "Cập
+                                                                    Nhật Dữ
+                                                                    Liệu" cho
+                                                                    phép người
+                                                                    dùng cập
+                                                                    nhật các
+                                                                    thông tin
+                                                                    quan trọng
+                                                                    như:
+                                                                </p>
                                                             </li>
                                                             <ul>
                                                                 <li>
@@ -482,12 +473,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </BodyStyles>
-            <FooterStyle className="p-4">
-                <p>
-                    Bản quyền © 2023 thuộc về Trường Đại Học Kiến Trúc Thành phố
-                    Hồ Chí Minh
-                </p>
-            </FooterStyle>
         </HomeStyles>
     );
 };

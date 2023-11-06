@@ -49,7 +49,7 @@ const LinkStyled = styled(Link)`
 `;
 
 const Header = () => {
-	let { user, logout } = useContext(AuthToken);
+	let { user, role, logout } = useContext(AuthToken);
 	let navigate = useNavigate();
 
 	return (
@@ -66,11 +66,13 @@ const Header = () => {
 							Trang chủ
 						</Nav.Link>
 						<NavDropdown title="Dữ liệu" id="data-dropdown">
-							<NavDropdown.Item>
-								<LinkStyled to={route.update}>
-									Cập nhật dữ liệu
-								</LinkStyled>
-							</NavDropdown.Item>
+							{!role && (
+								<NavDropdown.Item>
+									<LinkStyled to={route.update}>
+										Cập nhật dữ liệu
+									</LinkStyled>
+								</NavDropdown.Item>
+							)}
 							<NavDropdown.Item>
 								<LinkStyled to={route.consume}>
 									Dữ liệu tiêu thụ

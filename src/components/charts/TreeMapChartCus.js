@@ -54,7 +54,7 @@ const data3 = [
     },
 ];
 
-const TreeMapChart = () => {
+const TreeMapChartCus = () => {
     return (
         <Row className="mt-5">
             <Col>
@@ -77,4 +77,4 @@ const TreeMapChart = () => {
         </Row>
     );
 };
-export default TreeMapChart;
+export default TreeMapChartCus;
