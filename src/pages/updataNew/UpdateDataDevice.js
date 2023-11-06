@@ -1,25 +1,16 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Button, Form, Table } from "react-bootstrap";
+import { Row, Col, Container, Button, Form, Table } from "react-bootstrap";
 import styled from "styled-components";
-
-import { files } from "../assets";
-import fileApi from "../api/fileApi";
-import AlterCus from "../components/AlterCus";
-import LoadingCus from "../components/LoadingCus";
-
-const WrapperStyled = styled.div`
-    height: calc(100vh - 100px);
-    position: relative;
-`;
-
+import fileApi from "./../../api/fileApi";
+import { files } from "../../assets";
+import AlterCus from "./../../components/AlterCus";
+import LoadingCus from "./../../components/LoadingCus";
 const TitleStyled = styled.h4`
     color: var(--primary);
 `;
-
 const FullWidthButton = styled(Button)`
     width: 100%;
 `;
-
 const renderTable = (sheet) => {
     const cols = Object.keys(sheet);
 
@@ -44,8 +35,7 @@ const renderTable = (sheet) => {
         </Table>
     );
 };
-
-const UpdateData = () => {
+const UpdateDataDevice = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [data, setData] = useState(null);
     const [sheet, setSheet] = useState(0);
@@ -78,15 +68,16 @@ const UpdateData = () => {
         }
         setIsLoading(false);
     };
-
     return (
-        <WrapperStyled className="py-5">
+        <>
             <Container>
                 <Row className="justify-content-center">
                     <Col lg={8}>
                         <Row>
                             <Col>
-                                <TitleStyled>Cập nhật dữ liệu</TitleStyled>
+                                <TitleStyled>
+                                    Cập nhật dữ liệu thiết bị mới
+                                </TitleStyled>
                                 <p>
                                     Tải lên file dữ liệu hoàn chỉnh để tiến hành
                                     lưu trữ
@@ -162,8 +153,8 @@ const UpdateData = () => {
                     <span className="visually-hidden">Loading...</span>
                 </LoadingCus>
             )}
-        </WrapperStyled>
+        </>
     );
 };
 
-export default UpdateData;
+export default UpdateDataDevice;
