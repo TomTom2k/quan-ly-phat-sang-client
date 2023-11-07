@@ -74,66 +74,66 @@ const data4 = [
     },
 ];
 
-const HistogramChartCus = () => {
-    return (
-        <Row className="mt-5">
-            <Col>
-                <ComposedChart
-                    width={800}
-                    height={300}
-                    data={data4}
-                    margin={{
-                        top: 20,
-                        right: 80,
-                        bottom: 20,
-                        left: 20,
-                    }}
-                >
-                    <CartesianGrid stroke="#f5f5f5" />
-                    <XAxis
-                        dataKey="name"
-                        fontSize={10}
-                        label={{
-                            value: "Tháng",
-                            position: "insideBottomRight",
-                            fontSize: 10,
-                        }}
-                    />
-                    <YAxis
-                        type="number"
-                        fontSize={10}
-                        domain={[0, "dataMax + 1000"]}
-                        label={{
-                            value: "Bóng đèn(cái)",
-                            angle: -90,
-                            position: "insideLeft",
-                            textAnchor: "middle",
-                            fontSize: 12,
-                        }}
-                    />
-                    <Tooltip />
-                    <Legend verticalAlign="top" height={36} />
-                    <Area
-                        type="step"
-                        dataKey="Số lượng bóng đèn"
-                        stroke="#008905"
-                        fill="#008905"
-                    />
-                    <Area
-                        name="Mật độ bóng đèn"
-                        type="monotone"
-                        dataKey="Số lượng bóng đèn"
-                        stroke="#F40000"
-                        fill="rgba(255, 255, 255, 0.00)"
-                    />
-                </ComposedChart>
-                <Col lg={8} className="text-center r-2">
-                    <p>
-                        Biểu đồ thể hiện số lượng bóng đèn và mật độ xuất hiện
-                    </p>
-                </Col>
-            </Col>
-        </Row>
-    );
+const HistogramChartCus = ({ data, dataKey }) => {
+	return (
+		<Row className="mt-5">
+			<Col>
+				<ComposedChart
+					width={800}
+					height={300}
+					data={data4}
+					margin={{
+						top: 20,
+						right: 80,
+						bottom: 20,
+						left: 20,
+					}}
+				>
+					<CartesianGrid stroke="#f5f5f5" />
+					<XAxis
+						dataKey="name"
+						fontSize={10}
+						label={{
+							value: 'Tháng',
+							position: 'insideBottomRight',
+							fontSize: 10,
+						}}
+					/>
+					<YAxis
+						type="number"
+						fontSize={10}
+						domain={[0, 'dataMax + 1000']}
+						label={{
+							value: 'Bóng đèn(cái)',
+							angle: -90,
+							position: 'insideLeft',
+							textAnchor: 'middle',
+							fontSize: 12,
+						}}
+					/>
+					<Tooltip />
+					<Legend verticalAlign="top" height={36} />
+					<Area
+						type="step"
+						dataKey="Số lượng bóng đèn"
+						stroke="#008905"
+						fill="#008905"
+					/>
+					<Area
+						name="Mật độ bóng đèn"
+						type="monotone"
+						dataKey="Số lượng bóng đèn"
+						stroke="#F40000"
+						fill="rgba(255, 255, 255, 0.00)"
+					/>
+				</ComposedChart>
+				<Col lg={8} className="text-center r-2">
+					<p>
+						Biểu đồ thể hiện số lượng bóng đèn và mật độ xuất hiện
+					</p>
+				</Col>
+			</Col>
+		</Row>
+	);
 };
 export default HistogramChartCus;
