@@ -49,7 +49,7 @@ const options = {
     },
 };
 
-const BoxPlotChartCus = () => {
+const BoxPlotChartCus = ({ data, dataKey }) => {
     return (
         <Row className="mt-5">
             <Col>

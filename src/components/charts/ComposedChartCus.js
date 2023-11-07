@@ -32,38 +32,38 @@ const data5 = [
     { index: 10000, redLine: 1800 },
 ];
 
-const ComposedChartCus = () => {
-    return (
-        <Row className="mt-5">
-            <Col>
-                <ComposedChart
-                    width={800}
-                    height={300}
-                    data={data5}
-                    margin={{
-                        top: 20,
-                        right: 80,
-                        bottom: 20,
-                        left: 20,
-                    }}
-                >
-                    <CartesianGrid stroke="#f5f5f5" />
-                    <Tooltip />
-                    <Legend />
+const ComposedChartCus = ({ data, dataKey }) => {
+	return (
+		<Row className="mt-5">
+			<Col>
+				<ComposedChart
+					width={800}
+					height={300}
+					data={data5}
+					margin={{
+						top: 20,
+						right: 80,
+						bottom: 20,
+						left: 20,
+					}}
+				>
+					<CartesianGrid stroke="#f5f5f5" />
+					<Tooltip />
+					<Legend />
 
-                    <XAxis dataKey="index" type="number" />
-                    <YAxis type="number" />
-                    <Scatter name="red" dataKey="red" fill="red" />
-                    <Line
-                        dataKey="redLine"
-                        stroke="#FF7777"
-                        dot={false}
-                        activeDot={false}
-                        legendType="none"
-                    />
-                </ComposedChart>
-            </Col>
-        </Row>
-    );
+					<XAxis dataKey="index" type="number" />
+					<YAxis type="number" />
+					<Scatter name="red" dataKey="red" fill="red" />
+					<Line
+						dataKey="redLine"
+						stroke="#FF7777"
+						dot={false}
+						activeDot={false}
+						legendType="none"
+					/>
+				</ComposedChart>
+			</Col>
+		</Row>
+	);
 };
 export default ComposedChartCus;
