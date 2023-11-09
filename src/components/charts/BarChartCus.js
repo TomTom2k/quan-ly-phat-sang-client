@@ -12,7 +12,9 @@ import {
 	Rectangle,
 } from 'recharts';
 
-const BarChartCus = ({ data, dataKey }) => {
+const BarChartCus = ({ data, dataKey, nameData }) => {
+	console.log(dataKey);
+	console.log(data);
 	return (
 		<>
 			<BarChart
@@ -33,8 +35,8 @@ const BarChartCus = ({ data, dataKey }) => {
 				<Tooltip />
 				<Legend verticalAlign="top" height={36} />
 				<Bar
-					name="Điện năng"
-					dataKey="tong_gia_tri"
+					name={nameData}
+					dataKey={dataKey}
 					fill="#F66161"
 					activeBar={<Rectangle fill="pink" stroke="blue" />}
 				/>

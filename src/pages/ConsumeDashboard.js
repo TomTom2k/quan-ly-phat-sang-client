@@ -78,7 +78,7 @@ const ConsumeDashboard = () => {
 		try {
 			setIsLoading(true);
 			const res = await userApi.getKhuVuc();
-			setListKhuVuc(res.data);
+			setListKhuVuc(res.data.khu_vuc_data);
 			setIsLoading(false);
 		} catch (error) {
 			console.log(error);
@@ -90,7 +90,7 @@ const ConsumeDashboard = () => {
 		try {
 			setIsLoading(true);
 			const res = await userApi.getTram(tramId);
-			setListTram(res.data);
+			setListTram(res.data.tram_data);
 			setIsLoading(false);
 		} catch (error) {
 			setIsLoading(false);
@@ -100,8 +100,8 @@ const ConsumeDashboard = () => {
 	// Cập nhật giá trị của khu vực và danh sách trạm khi đổi khu vực
 	const handleChangeKhuVuc = (e) => {
 		setSelectedKhuVuc(e.target.value);
-		setSelectedTram('-1');
-		if (e.target.value !== '-1') fetchListTram(e.target.value);
+		setSelectedTram('');
+		if (e.target.value !== '') fetchListTram(e.target.value);
 		else fetchListTram();
 	};
 
@@ -122,7 +122,7 @@ const ConsumeDashboard = () => {
 		if (selectedKhuVuc) data.khuVuc = selectedKhuVuc;
 		if (selectedTram) data.tram = selectedTram;
 		try {
-			const res = await analysisApi.dienNangTieuThuThoiGian(data);
+			const res = await analysisApi.ChartThoiGian(data, 'tong_gia_tri');
 			if (res.data) {
 				setDataChart(res.data.data);
 				setDescribe(res.data.describe);
@@ -150,9 +150,9 @@ const ConsumeDashboard = () => {
 							<Form onSubmit={handleSubmit}>
 								<Row className="justify-content-between">
 									<Col md={12}>
-										<TitleStyled>
+										<p className="text-primary h3">
 											Thời gian truy cập
-										</TitleStyled>
+										</p>
 									</Col>
 									<Col md={3}>
 										<Input label="Năm">
@@ -181,15 +181,15 @@ const ConsumeDashboard = () => {
 								</Row>
 								<Row className="justify-content-between mt-5">
 									<Col md={12}>
-										<TitleStyled>
-											Khu vực truy cập
-										</TitleStyled>
+										<p className="text-primary h3">
+											Vị trí truy cập
+										</p>
 									</Col>
 									{role && (
 										<Col md={2}>
 											<Input label="Địa phương">
 												<Form.Select aria-label="Default select example">
-													<option value="-1">
+													<option value="">
 														Tất cả
 													</option>
 													<option value="1">
@@ -214,10 +214,8 @@ const ConsumeDashboard = () => {
 												aria-label="Default select example"
 												onChange={handleChangeKhuVuc}
 											>
-												<option value="-1">
-													Tất cả
-												</option>
-												{listKhuVuc.map((khuvuc) => (
+												<option value="">Tất cả</option>
+												{listKhuVuc?.map((khuvuc) => (
 													<option
 														key={khuvuc.khu_vuc_id}
 														value={
@@ -236,10 +234,8 @@ const ConsumeDashboard = () => {
 												aria-label="Default select example"
 												onChange={handlerChangeTram}
 											>
-												<option value="-1">
-													Tất cả
-												</option>
-												{listTram.map((tram) => (
+												<option value="">Tất cả</option>
+												{listTram?.map((tram) => (
 													<option
 														key={tram.tram_id}
 														value={tram.tram_id}
@@ -280,7 +276,7 @@ const ConsumeDashboard = () => {
 										<BarChart
 											data={dataChart}
 											dataKey={dataKey}
-											title="Biểu đồ thể hiển thị điện năng tiêu thụ theo thời gian"
+											nameData="Điện năng"
 										/>
 									</Col>
 									{showDes && (
