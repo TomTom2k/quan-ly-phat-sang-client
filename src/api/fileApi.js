@@ -18,6 +18,17 @@ const fileApi = {
 
 		return axiosClient.post(url, formData, config);
 	},
+	confirmThietBi: () => {
+		const url = '/thiet-bi-upload';
+		const token = Cookies.get('authToken');
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+
+		return axiosClient.put(url, { confirm: true }, config);
+	},
 	uploadTieuThu: (file) => {
 		const url = '/dien-nang-upload';
 		const formData = new FormData(); // Using FormData to handle files
@@ -33,6 +44,17 @@ const fileApi = {
 		};
 
 		return axiosClient.post(url, formData, config);
+	},
+	confirmTieuThu: () => {
+		const url = '/dien-nang-upload';
+		const token = Cookies.get('authToken');
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+
+		return axiosClient.put(url, { confirm: true }, config);
 	},
 };
 
