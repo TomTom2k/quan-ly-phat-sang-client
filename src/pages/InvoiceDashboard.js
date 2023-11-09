@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row, Tab, Tabs } from 'react-bootstrap';
 import 'w3-css/w3.css';
 import styled from 'styled-components';
 
@@ -10,14 +10,48 @@ import analysisApi from '../api/analysisApi';
 
 import LoadingCus from '../components/LoadingCus';
 import AlterCus from '../components/AlterCus';
+import RowChart from '../components/RowChart';
 import Banner from './../components/Banner';
 import Input from '../components/Input';
-import { BarChart } from '../components/charts';
-import ConvertToTable from '../components/ConvertToTable';
+import {
+	AreaChart,
+	BarChart,
+	LineChart,
+	PieChart,
+	TreeMapChart,
+} from '../components/charts';
 
 const WrapperStyled = styled.div`
 	position: relative;
 `;
+
+const charts = [
+	{
+		key: 'barsChart',
+		title: 'Bars Chart',
+		Chart: BarChart,
+	},
+	{
+		key: 'areaChart',
+		title: 'Area Chart',
+		Chart: AreaChart,
+	},
+	{
+		key: 'lineChart',
+		title: 'Line Chart',
+		Chart: LineChart,
+	},
+	{
+		key: 'pieChart',
+		title: 'Pis Chart',
+		Chart: PieChart,
+	},
+	{
+		key: 'treemapChart',
+		title: 'Treemap Chart',
+		Chart: TreeMapChart,
+	},
+];
 
 const ConsumeDashboard = () => {
 	const { role } = useContext(AuthToken);
@@ -126,37 +160,6 @@ const ConsumeDashboard = () => {
 								<Row className="justify-content-between">
 									<Col md={12}>
 										<p className="text-primary h3">
-											Thời gian truy cập
-										</p>
-									</Col>
-									<Col md={3}>
-										<Input label="Năm">
-											<Form.Control
-												type="number"
-												ref={yearRef}
-											/>
-										</Input>
-									</Col>
-									<Col md={3}>
-										<Input label="Tháng">
-											<Form.Control
-												type="number"
-												disabled
-											/>
-										</Input>
-									</Col>
-									<Col md={3}>
-										<Input label="Ngày">
-											<Form.Control
-												type="number"
-												disabled
-											/>
-										</Input>
-									</Col>
-								</Row>
-								<Row className="justify-content-between mt-5">
-									<Col md={12}>
-										<p className="text-primary h3">
 											Vị trí truy cập
 										</p>
 									</Col>
@@ -223,55 +226,84 @@ const ConsumeDashboard = () => {
 										</Input>
 									</Col>
 								</Row>
-								<Row className="justify-content-end border-top mt-5">
-									<Col md={2}>
-										<Button
-											variant="primary"
-											type="submit"
-											className="mt-5 w-100"
-										>
-											Truy cập
-										</Button>
-									</Col>
+								<Row className=" mt-5">
+									<Container md={12}>
+										<p className="text-primary h3">
+											Thời gian truy cập
+										</p>
+									</Container>
+									<Container md={12}>
+										<Row className="justify-content-between ">
+											<Col md={3}>
+												<Input label="Năm">
+													<Form.Control
+														type="number"
+														ref={yearRef}
+													/>
+												</Input>
+											</Col>
+											<Col md={3}>
+												<Input label="Tháng">
+													<Form.Control
+														type="number"
+														disabled
+													/>
+												</Input>
+											</Col>
+											<Col md={3}>
+												<Input label="Ngày">
+													<Form.Control
+														type="number"
+														disabled
+													/>
+												</Input>
+											</Col>
+										</Row>
+									</Container>
+									<Container md={12}>
+										<Row className="justify-content-end border-top mt-5">
+											<Col md={2}>
+												<Button
+													variant="primary"
+													type="submit"
+													className="mt-5 w-100"
+												>
+													Truy cập
+												</Button>
+											</Col>
+										</Row>
+									</Container>
 								</Row>
 							</Form>
 						</Col>
 					</Row>
 					{dataChart && (
 						<>
-							<Container className="my-5">
-								<Row className="justify-content-center mb-2">
-									<p className="text-center h5">
-										Biểu đồ thể hiện tổng thành tiền theo
-										thời gian
-									</p>
-								</Row>
-								<Row className="justify-content-center">
-									<Col md={8}>
-										<BarChart
-											data={dataChart}
-											dataKey={dataKey}
-											nameData="Thành tiền"
+							<Tabs
+								defaultActiveKey="barsChart"
+								id="listChart"
+								className="mb-3"
+							>
+								{charts.map((chart) => (
+									<Tab
+										eventKey={chart.key}
+										title={chart.title}
+									>
+										<RowChart
+											title="Biểu đồ thể hiện thành tiền theo thời gian"
+											describe={describe}
+											chart={
+												<chart.Chart
+													data={dataChart}
+													xKey={dataKey}
+													dataKey="tong_thanh_tien"
+													nameData="Thành tiền"
+												/>
+											}
 										/>
-									</Col>
-									{showDes && (
-										<Col md={{ span: 4 }}>
-											<ConvertToTable df={describe} />
-										</Col>
-									)}
-								</Row>
-
-								<Row className="justify-content-center">
-									<Col md={2}>
-										<Button
-											onClick={() => setShowDes(!showDes)}
-										>
-											{showDes ? 'Ẩn' : 'Hiện'} hảng thông
-											kê
-										</Button>
-									</Col>
-								</Row>
-							</Container>
+									</Tab>
+								))}
+							</Tabs>
 						</>
 					)}
 				</Container>

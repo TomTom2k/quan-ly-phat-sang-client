@@ -1,50 +1,56 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Tabs, Tab } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { images } from '../assets';
-import LoadingCus from '../components/LoadingCus';
-import AlterCus from '../components/AlterCus';
-
-import {
-	AreaChart,
-	BarChart,
-	BoxPlotChart,
-	ComposedAndAGVChart,
-	ComposedChart,
-	HistogramChart,
-	LineChart,
-	PieChart,
-	SactterChart,
-	TreeMapChart,
-} from '../components/charts';
-import ConvertToTable from '../components/ConvertToTable';
-
-import Banner from '../components/Banner';
 import { AuthToken } from '../authToken';
 import userApi from '../api/userApi';
 import analysisApi from '../api/analysisApi';
+
+import {
+	BarChart,
+	AreaChart,
+	LineChart,
+	PieChart,
+	TreeMapChart,
+} from '../components/charts';
+import Banner from '../components/Banner';
+import Input from '../components/Input';
+import RowChart from '../components/RowChart';
+import LoadingCus from '../components/LoadingCus';
+import AlterCus from '../components/AlterCus';
 
 const WrapperStyled = styled.div`
 	position: relative;
 `;
 
-const TitleStyled = styled.h3`
-	color: var(--primary);
-	font-size: 1.6rem;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 1.56;
-`;
-
-const Input = ({ label, children }) => {
-	return (
-		<>
-			<p className="mb-1 fw-bolder">{label}</p>
-			{children}
-		</>
-	);
-};
+const charts = [
+	{
+		key: 'barsChart',
+		title: 'Bars Chart',
+		Chart: BarChart,
+	},
+	{
+		key: 'areaChart',
+		title: 'Area Chart',
+		Chart: AreaChart,
+	},
+	{
+		key: 'lineChart',
+		title: 'Line Chart',
+		Chart: LineChart,
+	},
+	{
+		key: 'pieChart',
+		title: 'Pis Chart',
+		Chart: PieChart,
+	},
+	{
+		key: 'treemapChart',
+		title: 'Treemap Chart',
+		Chart: TreeMapChart,
+	},
+];
 
 const ConsumeDashboard = () => {
 	const { role } = useContext(AuthToken);
@@ -63,7 +69,6 @@ const ConsumeDashboard = () => {
 	const [dataChart, setDataChart] = useState(null);
 	const [dataKey, setDataKey] = useState('ngay_do__year');
 	const [describe, setDescribe] = useState(null);
-	const [showDes, setShowDes] = useState(false);
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
@@ -104,7 +109,6 @@ const ConsumeDashboard = () => {
 		if (e.target.value !== '') fetchListTram(e.target.value);
 		else fetchListTram();
 	};
-
 	const handlerChangeTram = (e) => {
 		setSelectedTram(e.target.value);
 	};
@@ -151,37 +155,6 @@ const ConsumeDashboard = () => {
 								<Row className="justify-content-between">
 									<Col md={12}>
 										<p className="text-primary h3">
-											Thời gian truy cập
-										</p>
-									</Col>
-									<Col md={3}>
-										<Input label="Năm">
-											<Form.Control
-												type="number"
-												ref={yearRef}
-											/>
-										</Input>
-									</Col>
-									<Col md={3}>
-										<Input label="Tháng">
-											<Form.Control
-												type="number"
-												disabled
-											/>
-										</Input>
-									</Col>
-									<Col md={3}>
-										<Input label="Ngày">
-											<Form.Control
-												type="number"
-												disabled
-											/>
-										</Input>
-									</Col>
-								</Row>
-								<Row className="justify-content-between mt-5">
-									<Col md={12}>
-										<p className="text-primary h3">
 											Vị trí truy cập
 										</p>
 									</Col>
@@ -215,7 +188,7 @@ const ConsumeDashboard = () => {
 												onChange={handleChangeKhuVuc}
 											>
 												<option value="">Tất cả</option>
-												{listKhuVuc?.map((khuvuc) => (
+												{listKhuVuc.map((khuvuc) => (
 													<option
 														key={khuvuc.khu_vuc_id}
 														value={
@@ -235,7 +208,7 @@ const ConsumeDashboard = () => {
 												onChange={handlerChangeTram}
 											>
 												<option value="">Tất cả</option>
-												{listTram?.map((tram) => (
+												{listTram.map((tram) => (
 													<option
 														key={tram.tram_id}
 														value={tram.tram_id}
@@ -248,58 +221,89 @@ const ConsumeDashboard = () => {
 										</Input>
 									</Col>
 								</Row>
-								<Row className="justify-content-end border-top mt-5">
-									<Col md={2}>
-										<Button
-											variant="primary"
-											type="submit"
-											className="mt-5 w-100"
-										>
-											Truy cập
-										</Button>
-									</Col>
+								<Row className="mt-5">
+									<Container md={12}>
+										<p className="text-primary h3">
+											Thời gian truy cập
+										</p>
+									</Container>
+									<Container md={12}>
+										<Row className="justify-content-between ">
+											<Col md={3}>
+												<Input label="Năm">
+													<Form.Control
+														type="number"
+														ref={yearRef}
+													/>
+												</Input>
+											</Col>
+											<Col md={3}>
+												<Input label="Tháng">
+													<Form.Control
+														type="number"
+														disabled
+													/>
+												</Input>
+											</Col>
+											<Col md={3}>
+												<Input label="Ngày">
+													<Form.Control
+														type="number"
+														disabled
+													/>
+												</Input>
+											</Col>
+										</Row>
+									</Container>
+									<Container md={12}>
+										<Row className="justify-content-end border-top mt-5">
+											<Col md={2}>
+												<Button
+													variant="primary"
+													type="submit"
+													className="mt-5 w-100"
+												>
+													Truy cập
+												</Button>
+											</Col>
+										</Row>
+									</Container>
 								</Row>
 							</Form>
 						</Col>
 					</Row>
 					{dataChart && (
 						<>
-							<Container className="my-5">
-								<Row className="justify-content-center mb-2">
-									<p className="text-center h5">
-										Biểu đồ thể hiện điện năng tiêu thụ theo
-										thời gian
-									</p>
-								</Row>
-								<Row className="justify-content-center">
-									<Col md={8}>
-										<BarChart
-											data={dataChart}
-											dataKey={dataKey}
-											nameData="Điện năng"
+							<Tabs
+								defaultActiveKey="barsChart"
+								id="listChart"
+								className="mb-3"
+							>
+								{charts.map((chart) => (
+									<Tab
+										eventKey={chart.key}
+										title={chart.title}
+									>
+										<RowChart
+											title="Biểu đồ thể hiện điện năng tiêu
+												thụ theo thời gian"
+											describe={describe}
+											chart={
+												<chart.Chart
+													data={dataChart}
+													xKey={dataKey}
+													dataKey="tong_gia_tri"
+													nameData="Điện năng"
+												/>
+											}
 										/>
-									</Col>
-									{showDes && (
-										<Col md={{ span: 4 }}>
-											<ConvertToTable df={describe} />
-										</Col>
-									)}
-								</Row>
-
-								<Row className="justify-content-center">
-									<Col md={2}>
-										<Button
-											onClick={() => setShowDes(!showDes)}
-										>
-											{showDes ? 'Ẩn' : 'Hiện'} hảng thông
-											kê
-										</Button>
-									</Col>
-								</Row>
-							</Container>
+									</Tab>
+								))}
+							</Tabs>
 						</>
 					)}
 				</Container>
+
 				{errorMessage && (
 					<AlterCus variant="danger">{errorMessage}</AlterCus>
 				)}

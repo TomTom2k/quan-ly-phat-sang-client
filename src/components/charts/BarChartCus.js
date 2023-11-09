@@ -1,6 +1,4 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
-
 import {
 	XAxis,
 	YAxis,
@@ -10,16 +8,13 @@ import {
 	Bar,
 	BarChart,
 	Rectangle,
+	ResponsiveContainer,
 } from 'recharts';
 
-const BarChartCus = ({ data, dataKey, nameData }) => {
-	console.log(dataKey);
-	console.log(data);
+const BarChartCus = ({ data, xKey, nameData, dataKey }) => {
 	return (
-		<>
+		<ResponsiveContainer width="100%" height={400}>
 			<BarChart
-				width={800}
-				height={300}
 				data={data}
 				margin={{
 					top: 5,
@@ -29,19 +24,20 @@ const BarChartCus = ({ data, dataKey, nameData }) => {
 				}}
 			>
 				<CartesianGrid strokeDasharray="3 3" />
-				<XAxis dataKey={dataKey} fontSize={10} />
-				<YAxis fontSize={10} />
+				<XAxis dataKey={xKey} fontSize={10} />
+				<YAxis unit="kWh" fontSize={10} />
 
 				<Tooltip />
 				<Legend verticalAlign="top" height={36} />
 				<Bar
+					barSize={40}
 					name={nameData}
 					dataKey={dataKey}
 					fill="#F66161"
 					activeBar={<Rectangle fill="pink" stroke="blue" />}
 				/>
 			</BarChart>
-		</>
+		</ResponsiveContainer>
 	);
 };
 export default BarChartCus;
