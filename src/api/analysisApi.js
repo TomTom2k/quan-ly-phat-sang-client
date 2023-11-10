@@ -16,12 +16,31 @@ const analysisApi = {
 	},
 
 	ChartViTri: (reqData, calculationType) => {
-		const url = `/chart/dien-nang-tieu-thu/vi-tri?calculation_type=${calculationType}`;
+		const url = `/chart/dien-nang-tieu-thu/vi-tri`;
 		const token = Cookies.get('authToken');
 
 		const config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
+			},
+			params: {
+				calculation_type: calculationType,
+			},
+		};
+
+		return axiosClient.post(url, reqData, config);
+	},
+
+	ChartKetHop: (reqData, calculationType) => {
+		const url = `/chart/tieu-thu`;
+		const token = Cookies.get('authToken');
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+			params: {
+				calculation_type: calculationType,
 			},
 		};
 

@@ -57,37 +57,7 @@ const router = createBrowserRouter([
 		),
 	},
 	{
-		path: route.invoice,
-		element: (
-			<Layout>
-				<PrivateRoute requiredRole={undefined}>
-					<InvoiceDashboard />
-				</PrivateRoute>
-			</Layout>
-		),
-	},
-	{
-		path: route.device,
-		element: (
-			<Layout>
-				<PrivateRoute requiredRole={undefined}>
-					<DeviceDashboard />
-				</PrivateRoute>
-			</Layout>
-		),
-	},
-	{
-		path: route.consume,
-		element: (
-			<Layout>
-				<PrivateRoute requiredRole={undefined}>
-					<ConsumeDashboard />
-				</PrivateRoute>
-			</Layout>
-		),
-	},
-	{
-		path: route.test,
+		path: route.chart,
 		element: (
 			<Layout>
 				<PrivateRoute requiredRole={undefined}>
@@ -96,6 +66,36 @@ const router = createBrowserRouter([
 			</Layout>
 		),
 	},
+	// {
+	// 	path: route.invoice,
+	// 	element: (
+	// 		<Layout>
+	// 			<PrivateRoute requiredRole={undefined}>
+	// 				<InvoiceDashboard />
+	// 			</PrivateRoute>
+	// 		</Layout>
+	// 	),
+	// },
+	// {
+	// 	path: route.device,
+	// 	element: (
+	// 		<Layout>
+	// 			<PrivateRoute requiredRole={undefined}>
+	// 				<DeviceDashboard />
+	// 			</PrivateRoute>
+	// 		</Layout>
+	// 	),
+	// },
+	// {
+	// 	path: route.consume,
+	// 	element: (
+	// 		<Layout>
+	// 			<PrivateRoute requiredRole={undefined}>
+	// 				<ConsumeDashboard />
+	// 			</PrivateRoute>
+	// 		</Layout>
+	// 	),
+	// },
 ]);
 function App() {
 	return (

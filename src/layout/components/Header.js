@@ -67,7 +67,15 @@ const Header = () => {
 						<Nav.Link as={LinkStyled} to="/">
 							Trang chủ
 						</Nav.Link>
-						<NavDropdown title="Dữ liệu" id="data-dropdown">
+						{!role && (
+							<Nav.Link as={LinkStyled} to={route.update}>
+								Cập nhật
+							</Nav.Link>
+						)}
+						<Nav.Link as={LinkStyled} to={route.chart}>
+							Biểu đồ
+						</Nav.Link>
+						{/* <NavDropdown title="Dữ liệu" id="data-dropdown">
 							{!role && (
 								<NavDropdown.Item>
 									<LinkStyled to={route.update}>
@@ -90,7 +98,7 @@ const Header = () => {
 									Dữ liệu thiết bị
 								</LinkStyled>
 							</NavDropdown.Item>
-						</NavDropdown>
+						</NavDropdown> */}
 						{!user ? (
 							<Nav.Link as={LinkStyled} to={route.login}>
 								Đăng nhập

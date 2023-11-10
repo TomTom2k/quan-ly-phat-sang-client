@@ -5,139 +5,64 @@ import { images } from '../assets';
 import Input from '../components/Input';
 import { AuthToken } from '../authToken';
 import userApi from '../api/userApi';
-import {
-	Bar,
-	CartesianGrid,
-	ComposedChart,
-	Legend,
-	Line,
-	ResponsiveContainer,
-	Tooltip,
-	XAxis,
-	YAxis,
-} from 'recharts';
-import { Brush } from 'react-bootstrap-icons';
 
-const tabs = {
-	combine: {
-		key: 'combine',
-		slogan: 'Tổng quan',
-		banner: images.bgHome,
-		title: 'Biểu đồ kết hợp',
-		component: '1',
-	},
-	consume: {
-		key: 'consume',
-		slogan: 'Tiêu thụ',
-		banner: images.bgData,
-		title: 'Biểu đồ tiêu thụ',
-		component: '2',
-	},
-	invoice: {
-		key: 'invoice',
-		slogan: 'Hóa đơn',
-		banner: images.bgData2,
-		title: 'Biểu đồ hóa đơn',
-		component: '3',
-	},
-	device: {
-		key: 'device',
-		slogan: 'Thiết bị',
-		banner: images.bgData3,
-		title: 'Biểu đồ thiết bị',
-		component: '4',
-	},
-};
-
-const data = [
-	{
-		month: '8',
-		year: '2021',
-		uv: 2560,
-	},
-	{
-		month: '9',
-		year: '2021',
-		uv: 2560,
-	},
-	{
-		month: '10',
-		year: '2021',
-		uv: 2560,
-	},
-	{
-		month: '11',
-		year: '2021',
-		uv: 2560,
-	},
-	{
-		month: '12',
-		year: '2021',
-		uv: 2560,
-	},
-	{
-		month: '1',
-		year: '2022',
-		uv: 2560,
-	},
-	{
-		month: '2',
-		year: '2022',
-		uv: 2560,
-	},
-	{
-		month: '3',
-		year: '2022',
-		uv: 2560,
-	},
-	{
-		month: '4',
-		year: '2022',
-		uv: 2560,
-	},
-	{
-		month: '5',
-		year: '2022',
-		uv: 2560,
-	},
-	{
-		month: '6',
-		year: '2022',
-		uv: 2560,
-	},
-	{
-		month: '7',
-		year: '2022',
-		uv: 2560,
-	},
-	{
-		month: '8',
-		year: '2022',
-		uv: 2560,
-	},
-	{
-		month: '9',
-		year: '2022',
-		uv: 2560,
-	},
-	{
-		month: '10',
-		year: '2022',
-		uv: 2560,
-	},
-	{
-		month: '11',
-		year: '2022',
-		uv: 0,
-	},
-	{
-		month: '12',
-		year: '2022',
-		uv: 0,
-	},
-];
+import analysisApi from '../api/analysisApi';
+import LoadingCus from '../components/LoadingCus';
+import CombineChart from '../components/dashBoardChart/CombineChart';
+import ConsumeChart from '../components/dashBoardChart/ConsumeChart';
+import InvoiceChart from '../components/dashBoardChart/InvoiceChart';
 
 const DashBoard = () => {
+	const [dataChart, setDataChart] = useState([]);
+
+	const tabs = {
+		combine: {
+			key: 'combine',
+			slogan: 'Tổng quan',
+			banner: images.bgHome,
+			title: 'Biểu đồ kết hợp',
+			calculationType: null,
+			component: (
+				<CombineChart
+					data={dataChart?.data}
+					describe={dataChart?.describe}
+				/>
+			),
+		},
+		consume: {
+			key: 'consume',
+			slogan: 'Tiêu thụ',
+			banner: images.bgData,
+			title: 'Biểu đồ tiêu thụ',
+			calculationType: 'tongGiaTri',
+			component: (
+				<ConsumeChart
+					data={dataChart?.data}
+					describe={dataChart?.describe}
+				/>
+			),
+		},
+		invoice: {
+			key: 'invoice',
+			slogan: 'Hóa đơn',
+			banner: images.bgData2,
+			title: 'Biểu đồ hóa đơn',
+			calculationType: 'tongThanhTien',
+			component: (
+				<InvoiceChart
+					data={dataChart?.data}
+					describe={dataChart?.describe}
+				/>
+			),
+		},
+		device: {
+			key: 'device',
+			slogan: 'Thiết bị',
+			banner: images.bgData3,
+			title: 'Biểu đồ thiết bị',
+			component: 'Comingson',
+		},
+	};
 	const { role } = useContext(AuthToken);
 	const [tabCurrent, setTabCurrent] = useState(tabs.combine.key);
 	// ref of input
@@ -159,6 +84,10 @@ const DashBoard = () => {
 		fetchListKhuVuc();
 		fetchListTram();
 	}, []);
+
+	useEffect(() => {
+		fetchDataChart();
+	}, [tabCurrent]);
 
 	// lấy danh sách khu vực
 	const fetchListKhuVuc = async () => {
@@ -183,6 +112,34 @@ const DashBoard = () => {
 			setIsLoading(false);
 		}
 	};
+	// lấy dữ liệu chart
+	const fetchDataChart = async (data) => {
+		setIsLoading(true);
+		try {
+			const res = await analysisApi.ChartKetHop(
+				data,
+				tabs[tabCurrent].calculationType
+			);
+			if (res.status === 201) {
+				setDataChart(res.data.data);
+			}
+		} catch (error) {
+			console.log('Error query data: ', error);
+		}
+		setIsLoading(false);
+	};
+
+	// submit
+	const handlerSubmit = (event) => {
+		event.preventDefault();
+		const data = {
+			khuVuc: selectedKhuVuc,
+			tram: selectedTram,
+			monthStart: monthStartRef.current.value,
+			monthEnd: monthEndRef.current.value,
+		};
+		fetchDataChart(data);
+	};
 
 	// Cập nhật giá trị của khu vực và danh sách trạm khi đổi khu vực
 	const handleChangeKhuVuc = (e) => {
@@ -198,6 +155,7 @@ const DashBoard = () => {
 	const handlerSelectAside = (eventKey) => {
 		setTabCurrent(eventKey);
 	};
+
 	return (
 		<>
 			<Banner
@@ -233,7 +191,7 @@ const DashBoard = () => {
 						{/* body */}
 						<Col sm={10}>
 							<Container className="mt-2">
-								<Form onSubmit={null}>
+								<Form onSubmit={handlerSubmit}>
 									<Row className="justify-content-between">
 										<Col md={12}>
 											<p className="text-primary h3">
@@ -359,90 +317,19 @@ const DashBoard = () => {
 								</Form>
 							</Container>
 							<Container>
-								<Row>
-									<Col
-										md={12}
-										className="overflow-x-auto user-select-none d-flex justify-content-center"
-									>
-										<ResponsiveContainer
-											width={data.length * 60}
-											aspect={2.3}
-										>
-											<ComposedChart
-												data={data}
-												margin={{
-													top: 5,
-													right: 30,
-													left: 20,
-													bottom: 15,
-												}}
-											>
-												<XAxis
-													xAxisId={0}
-													dy={3}
-													dx={-1}
-													label={{
-														value: 'Thời gian',
-														angle: 0,
-														position: 'left',
-													}}
-													interval={0}
-													dataKey="month"
-													tickLine={true}
-													tick={{
-														fontSize: 12,
-														angle: 0,
-													}}
-												/>
-
-												<XAxis
-													xAxisId={1}
-													dy={0}
-													dx={0}
-													label={{
-														value: '',
-														angle: 0,
-														position: 'bottom',
-													}}
-													interval={11}
-													dataKey="year"
-													tickLine={false}
-													tick={{
-														fontSize: 16,
-														angle: -1,
-													}}
-												/>
-												<YAxis />
-												<Tooltip />
-												<Legend
-													verticalAlign="top"
-													height={30}
-												/>
-												<CartesianGrid stroke="#f5f5f5" />
-												<Brush
-													dataKey="month"
-													height={300}
-													stroke="#8884d8"
-												/>
-												<Bar
-													dataKey="uv"
-													barSize={20}
-													fill="#413ea0"
-												/>
-												<Line
-													type="monotone"
-													dataKey="uv"
-													stroke="#ff7300"
-												/>
-											</ComposedChart>
-										</ResponsiveContainer>
-									</Col>
-								</Row>
+								<Tab.Content>
+									{Object.values(tabs).map((tab) => (
+										<Tab.Pane eventKey={tab.key}>
+											{tab.component}
+										</Tab.Pane>
+									))}
+								</Tab.Content>
 							</Container>
 						</Col>
 					</Row>
 				</Tab.Container>
 			</Container>
+			{isLoading && <LoadingCus animation="border" variant="secondary" />}
 		</>
 	);
 };
