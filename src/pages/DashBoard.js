@@ -1,0 +1,337 @@
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Button, Col, Container, Form, Nav, Row, Tab } from 'react-bootstrap';
+import Banner from '../components/Banner';
+import { images } from '../assets';
+import Input from '../components/Input';
+import { AuthToken } from '../authToken';
+import userApi from '../api/userApi';
+
+import analysisApi from '../api/analysisApi';
+import LoadingCus from '../components/LoadingCus';
+import CombineChart from '../components/dashBoardChart/CombineChart';
+import ConsumeChart from '../components/dashBoardChart/ConsumeChart';
+import InvoiceChart from '../components/dashBoardChart/InvoiceChart';
+
+const DashBoard = () => {
+	const [dataChart, setDataChart] = useState([]);
+
+	const tabs = {
+		combine: {
+			key: 'combine',
+			slogan: 'Tổng quan',
+			banner: images.bgHome,
+			title: 'Biểu đồ kết hợp',
+			calculationType: null,
+			component: (
+				<CombineChart
+					data={dataChart?.data}
+					describe={dataChart?.describe}
+				/>
+			),
+		},
+		consume: {
+			key: 'consume',
+			slogan: 'Tiêu thụ',
+			banner: images.bgData,
+			title: 'Biểu đồ tiêu thụ',
+			calculationType: 'tongGiaTri',
+			component: (
+				<ConsumeChart
+					data={dataChart?.data}
+					describe={dataChart?.describe}
+				/>
+			),
+		},
+		invoice: {
+			key: 'invoice',
+			slogan: 'Hóa đơn',
+			banner: images.bgData2,
+			title: 'Biểu đồ hóa đơn',
+			calculationType: 'tongThanhTien',
+			component: (
+				<InvoiceChart
+					data={dataChart?.data}
+					describe={dataChart?.describe}
+				/>
+			),
+		},
+		device: {
+			key: 'device',
+			slogan: 'Thiết bị',
+			banner: images.bgData3,
+			title: 'Biểu đồ thiết bị',
+			component: 'Comingson',
+		},
+	};
+	const { role } = useContext(AuthToken);
+	const [tabCurrent, setTabCurrent] = useState(tabs.combine.key);
+	// ref of input
+	const monthStartRef = useRef(null);
+	const monthEndRef = useRef(null);
+
+	// state of input
+	const [listDiaPhuonng, setListDiaPhuonng] = useState([]);
+	const [selectedDiaPhuonng, setSelectedDiaPhuonng] = useState('');
+	const [listKhuVuc, setListKhuVuc] = useState([]);
+	const [selectedKhuVuc, setSelectedKhuVuc] = useState('');
+	const [listTram, setListTram] = useState([]);
+	const [selectedTram, setSelectedTram] = useState('');
+
+	const [isLoading, setIsLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
+
+	useEffect(() => {
+		fetchListKhuVuc();
+		fetchListTram();
+	}, []);
+
+	useEffect(() => {
+		fetchDataChart();
+	}, [tabCurrent]);
+
+	// lấy danh sách khu vực
+	const fetchListKhuVuc = async () => {
+		try {
+			setIsLoading(true);
+			const res = await userApi.getKhuVuc();
+			setListKhuVuc(res.data.data.khu_vuc_data);
+			setIsLoading(false);
+		} catch (error) {
+			console.log(error);
+			setIsLoading(false);
+		}
+	};
+	// lấy danh sách trạm
+	const fetchListTram = async (tramId) => {
+		try {
+			setIsLoading(true);
+			const res = await userApi.getTram(tramId);
+			setListTram(res.data.data.tram_data);
+			setIsLoading(false);
+		} catch (error) {
+			setIsLoading(false);
+		}
+	};
+	// lấy dữ liệu chart
+	const fetchDataChart = async (data) => {
+		setIsLoading(true);
+		try {
+			const res = await analysisApi.ChartKetHop(
+				data,
+				tabs[tabCurrent].calculationType
+			);
+			if (res.status === 201) {
+				setDataChart(res.data.data);
+			}
+		} catch (error) {
+			console.log('Error query data: ', error);
+		}
+		setIsLoading(false);
+	};
+
+	// submit
+	const handlerSubmit = (event) => {
+		event.preventDefault();
+		const data = {
+			khuVuc: selectedKhuVuc,
+			tram: selectedTram,
+			monthStart: monthStartRef.current.value,
+			monthEnd: monthEndRef.current.value,
+		};
+		fetchDataChart(data);
+	};
+
+	// Cập nhật giá trị của khu vực và danh sách trạm khi đổi khu vực
+	const handleChangeKhuVuc = (e) => {
+		setSelectedKhuVuc(e.target.value);
+		setSelectedTram('');
+		if (e.target.value !== '') fetchListTram(e.target.value);
+		else fetchListTram();
+	};
+	const handlerChangeTram = (e) => {
+		setSelectedTram(e.target.value);
+	};
+
+	const handlerSelectAside = (eventKey) => {
+		setTabCurrent(eventKey);
+	};
+
+	return (
+		<>
+			<Banner
+				image={tabs[tabCurrent].banner}
+				title={tabs[tabCurrent].slogan}
+			/>
+
+			<Container fluid>
+				<Tab.Container
+					id="left-tabs-example"
+					defaultActiveKey={tabs.combine.key}
+				>
+					<Row>
+						{/* aside */}
+						<Col sm={2} className="p-0">
+							<Nav
+								variant="pills"
+								className="flex-column position-sticky sticky-top"
+								onSelect={handlerSelectAside}
+							>
+								{Object.values(tabs).map((tab) => (
+									<Nav.Item key={tab && tab.key}>
+										<Nav.Link
+											eventKey={tab && tab.key}
+											className="rounded-0"
+										>
+											{tab && tab.title}
+										</Nav.Link>
+									</Nav.Item>
+								))}
+							</Nav>
+						</Col>
+						{/* body */}
+						<Col sm={10}>
+							<Container className="mt-2">
+								<Form onSubmit={handlerSubmit}>
+									<Row className="justify-content-between">
+										<Col md={12}>
+											<p className="text-primary h3">
+												Vị trí truy cập
+											</p>
+										</Col>
+										{role && (
+											<Col md={2}>
+												<Input label="Địa phương">
+													<Form.Select aria-label="Default select example">
+														<option value="">
+															Tất cả
+														</option>
+														<option value="1">
+															Cần Thơ
+														</option>
+														<option value="2">
+															Đà Nẵng
+														</option>
+														<option value="3">
+															Nha Trang
+														</option>
+														<option value="3">
+															Thành phố Hồ Chí
+															Minh
+														</option>
+													</Form.Select>
+												</Input>
+											</Col>
+										)}
+										<Col md={5}>
+											<Input label="Khu vực">
+												<Form.Select
+													aria-label="Default select example"
+													onChange={
+														handleChangeKhuVuc
+													}
+												>
+													<option value="">
+														Tất cả
+													</option>
+													{listKhuVuc?.map(
+														(khuvuc) => (
+															<option
+																key={
+																	khuvuc.khu_vuc_id
+																}
+																value={
+																	khuvuc.khu_vuc_id
+																}
+															>
+																{
+																	khuvuc.ten_khu_vuc
+																}
+															</option>
+														)
+													)}
+												</Form.Select>
+											</Input>
+										</Col>
+										<Col md={5}>
+											<Input label="Trạm">
+												<Form.Select
+													aria-label="Default select example"
+													onChange={handlerChangeTram}
+												>
+													<option value="">
+														Tất cả
+													</option>
+													{listTram?.map((tram) => (
+														<option
+															key={tram.tram_id}
+															value={tram.tram_id}
+														>
+															{tram.ten_tram} -{' '}
+															{tram.dia_chi}
+														</option>
+													))}
+												</Form.Select>
+											</Input>
+										</Col>
+									</Row>
+									<Row className="mt-5">
+										<Container md={12}>
+											<p className="text-primary h3">
+												Thời gian truy cập
+											</p>
+										</Container>
+										<Container md={12}>
+											<Row className="justify-content-between">
+												<Col md={3}>
+													<Input label="Bắt đầu">
+														<Form.Control
+															type="month"
+															ref={monthStartRef}
+														/>
+													</Input>
+												</Col>
+												<Col md={3}>
+													<Input label="Kết thúc">
+														<Form.Control
+															type="month"
+															ref={monthEndRef}
+														/>
+													</Input>
+												</Col>
+											</Row>
+										</Container>
+										<Container md={12}>
+											<Row className="justify-content-end border-top mt-5">
+												<Col md={2}>
+													<Button
+														variant="primary"
+														type="submit"
+														className="mt-5 w-100"
+													>
+														Truy cập
+													</Button>
+												</Col>
+											</Row>
+										</Container>
+									</Row>
+								</Form>
+							</Container>
+							<Container>
+								<Tab.Content>
+									{Object.values(tabs).map((tab) => (
+										<Tab.Pane eventKey={tab.key}>
+											{tab.component}
+										</Tab.Pane>
+									))}
+								</Tab.Content>
+							</Container>
+						</Col>
+					</Row>
+				</Tab.Container>
+			</Container>
+			{isLoading && <LoadingCus animation="border" variant="secondary" />}
+		</>
+	);
+};
+
+export default DashBoard;

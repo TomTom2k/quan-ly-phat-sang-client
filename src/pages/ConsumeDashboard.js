@@ -83,7 +83,7 @@ const ConsumeDashboard = () => {
 		try {
 			setIsLoading(true);
 			const res = await userApi.getKhuVuc();
-			setListKhuVuc(res.data.khu_vuc_data);
+			setListKhuVuc(res.data.data.khu_vuc_data);
 			setIsLoading(false);
 		} catch (error) {
 			console.log(error);
@@ -95,7 +95,7 @@ const ConsumeDashboard = () => {
 		try {
 			setIsLoading(true);
 			const res = await userApi.getTram(tramId);
-			setListTram(res.data.tram_data);
+			setListTram(res.data.data.tram_data);
 			setIsLoading(false);
 		} catch (error) {
 			setIsLoading(false);
@@ -188,7 +188,7 @@ const ConsumeDashboard = () => {
 												onChange={handleChangeKhuVuc}
 											>
 												<option value="">Tất cả</option>
-												{listKhuVuc.map((khuvuc) => (
+												{listKhuVuc?.map((khuvuc) => (
 													<option
 														key={khuvuc.khu_vuc_id}
 														value={
@@ -208,7 +208,7 @@ const ConsumeDashboard = () => {
 												onChange={handlerChangeTram}
 											>
 												<option value="">Tất cả</option>
-												{listTram.map((tram) => (
+												{listTram?.map((tram) => (
 													<option
 														key={tram.tram_id}
 														value={tram.tram_id}
@@ -279,7 +279,7 @@ const ConsumeDashboard = () => {
 								id="listChart"
 								className="mb-3"
 							>
-								{charts.map((chart) => (
+								{charts?.map((chart) => (
 									<Tab
 										eventKey={chart.key}
 										title={chart.title}
