@@ -16,13 +16,13 @@ const AuthProvider = ({ children }) => {
 	const login = async (data) => {
 		const res = await authApi.login(data);
 
-		if (res && res.data.tokens) {
-			const authToken = res.data.tokens.access;
+		console.log(res);
+		if (res.data && res.data.data.tokens) {
+			const authToken = res.data.data.tokens.access;
 			const decode = decodeJwtPayload(authToken);
 
 			// Đặt token vào cookie "authToken" và thời gian sống là 7 ngày
 			Cookies.set('authToken', authToken, { expires: 7 });
-
 			setUser(authToken);
 			setRole(decode?.is_staff);
 		}
