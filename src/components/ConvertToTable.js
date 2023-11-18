@@ -8,7 +8,6 @@ const ConvertToTable = ({ df, calculationType }) => {
 		tongGiaTri: 'Giá Trị',
 		tongThanhTien: 'Thành Tiền',
 	};
-	console.log(calculationType);
 
 	return (
 		<>
