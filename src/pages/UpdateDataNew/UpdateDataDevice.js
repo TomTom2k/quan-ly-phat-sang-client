@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Row, Col, Container, Button, Form, Table } from 'react-bootstrap';
+import {
+	Row,
+	Col,
+	Container,
+	Button,
+	Form,
+	Table,
+	Tabs,
+	Tab,
+} from 'react-bootstrap';
 import styled from 'styled-components';
 
 import fileApi from '../../api/fileApi';
@@ -8,6 +17,7 @@ import { files } from '../../assets';
 import AlterCus from '../../components/AlterCus';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import LoadingCus from '../../components/LoadingCus';
+import ConvertDfToTable from '../../components/ConvertDfToTable';
 
 const renderTable = (sheet) => {
 	const cols = Object.keys(sheet);
@@ -36,7 +46,11 @@ const renderTable = (sheet) => {
 
 const UpdateDataDevice = () => {
 	const [selectedFile, setSelectedFile] = useState(null);
+
 	const [data, setData] = useState(null);
+	const [existingData, setExistingData] = useState(null);
+	const [newData, setNewData] = useState(null);
+
 	const [sheet, setSheet] = useState(0);
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [error, setError] = useState(false);
@@ -67,14 +81,17 @@ const UpdateDataDevice = () => {
 		setIsLoading(true);
 		try {
 			const response = await fileApi.uploadThietBi(selectedFile);
-			if ((response.status = 201)) {
+			if (response.status === 201) {
 				setData(response.data.data);
+				setData(response.data.data);
+				setExistingData(response.data.existing_data);
+				setNewData(response.data.new_data);
 				setIsSuccess(true);
 			} else {
-				showAlter(setError, 'Tải file không thành công');
-				console.log('error: ', response.data);
+				throw new Error('Tải file không thành công');
 			}
 		} catch (error) {
+			showAlter(setError, 'Tải file không thành công');
 			console.error('Error uploading file:', error);
 		}
 		setIsLoading(false);
@@ -172,7 +189,29 @@ const UpdateDataDevice = () => {
 								</Form.Select>
 							</Col>
 						</Row>
-						<Row className="mt-2">{renderTable(data[sheet])}</Row>
+						<Tabs
+							defaultActiveKey="data"
+							id="uncontrolled-tab-example"
+							className="mt-3"
+						>
+							<Tab eventKey="data" title="Dữ liệu upload">
+								<Row>{ConvertDfToTable(data[sheet])}</Row>
+							</Tab>
+							<Tab
+								eventKey="newData"
+								title="Dữ liệu mới thêm vào"
+							>
+								<Row>{ConvertDfToTable(newData[sheet])}</Row>
+							</Tab>
+							<Tab
+								eventKey="existingData"
+								title="Dữ liệu đã tồn tại"
+							>
+								<Row>
+									{ConvertDfToTable(existingData[sheet])}
+								</Row>
+							</Tab>
+						</Tabs>
 					</>
 				)}
 			</Container>
