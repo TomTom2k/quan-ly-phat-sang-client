@@ -14,9 +14,9 @@ import route from './configs/route';
 import InvoiceDashboard from './pages/InvoiceDashboard';
 import DeviceDashboard from './pages/DeviceDashboard';
 import ConsumeDashboard from './pages/ConsumeDashboard';
-import UpdateData from './pages/UpdateData';
 import UpdateDataNew from './pages/UpdateDataNew';
 import { AuthToken } from './authToken';
+import DashBoard from './pages/DashBoard';
 
 const PrivateRoute = ({ children, requiredRole }) => {
 	const { role } = useContext(AuthToken);
@@ -57,44 +57,44 @@ const router = createBrowserRouter([
 		),
 	},
 	{
-		path: route.invoice,
+		path: route.chart,
 		element: (
 			<Layout>
 				<PrivateRoute requiredRole={undefined}>
-					<InvoiceDashboard />
-				</PrivateRoute>
-			</Layout>
-		),
-	},
-	{
-		path: route.device,
-		element: (
-			<Layout>
-				<PrivateRoute requiredRole={undefined}>
-					<DeviceDashboard />
-				</PrivateRoute>
-			</Layout>
-		),
-	},
-	{
-		path: route.consume,
-		element: (
-			<Layout>
-				<PrivateRoute requiredRole={undefined}>
-					<ConsumeDashboard />
+					<DashBoard />
 				</PrivateRoute>
 			</Layout>
 		),
 	},
 	// {
-	//     path: route.data,
-	//     element: (
-	//         <Layout>
-	//             <PrivateRoute requiredRole={undefined}>
-	//                 <UpdateDataNew />
-	//             </PrivateRoute>
-	//         </Layout>
-	//     ),
+	// 	path: route.invoice,
+	// 	element: (
+	// 		<Layout>
+	// 			<PrivateRoute requiredRole={undefined}>
+	// 				<InvoiceDashboard />
+	// 			</PrivateRoute>
+	// 		</Layout>
+	// 	),
+	// },
+	// {
+	// 	path: route.device,
+	// 	element: (
+	// 		<Layout>
+	// 			<PrivateRoute requiredRole={undefined}>
+	// 				<DeviceDashboard />
+	// 			</PrivateRoute>
+	// 		</Layout>
+	// 	),
+	// },
+	// {
+	// 	path: route.consume,
+	// 	element: (
+	// 		<Layout>
+	// 			<PrivateRoute requiredRole={undefined}>
+	// 				<ConsumeDashboard />
+	// 			</PrivateRoute>
+	// 		</Layout>
+	// 	),
 	// },
 ]);
 function App() {

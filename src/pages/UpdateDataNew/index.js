@@ -19,19 +19,19 @@ const UpdateDataNew = () => {
 				<Row>
 					<Col lg={12}>
 						<Tabs
-							defaultActiveKey="profile"
+							defaultActiveKey="device"
 							id="justify-tab-example"
 							className="mb-3"
 							justify
 						>
-							<Tab eventKey="home" title="Cập nhật dữ liệu mới">
-								<UpdateDataConsume />
+							<Tab eventKey="device" title="Dữ liệu thiết bị">
+								<UpdateDataDevice />
 							</Tab>
 							<Tab
-								eventKey="profile"
-								title="Cập nhật dữ liệu thiết bị mới"
+								eventKey="electricity"
+								title="Dữ liệu tiêu thụ"
 							>
-								<UpdateDataDevice />
+								<UpdateDataConsume />
 							</Tab>
 						</Tabs>
 					</Col>
