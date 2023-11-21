@@ -105,19 +105,32 @@ const DashBoard = () => {
 	const [errorMessage, setErrorMessage] = useState('');
 
 	useEffect(() => {
+		if (role) fetchListDiaPhuong();
 		fetchListKhuVuc();
 		fetchListTram();
-	}, []);
+	}, [role]);
 
 	useEffect(() => {
 		fetchDataChart();
 	}, [tabCurrent]);
 
 	// lấy danh sách khu vực
-	const fetchListKhuVuc = async () => {
+	const fetchListDiaPhuong = async () => {
 		try {
 			setIsLoading(true);
-			const res = await userApi.getKhuVuc();
+			const res = await userApi.getDiaPhuong();
+			setListDiaPhuonng(res.data.data.user_data);
+			setIsLoading(false);
+		} catch (error) {
+			console.log(error);
+			setIsLoading(false);
+		}
+	};
+	// lấy danh sách khu vực
+	const fetchListKhuVuc = async (userId) => {
+		try {
+			setIsLoading(true);
+			const res = await userApi.getKhuVuc(userId);
 			setListKhuVuc(res.data.data.khu_vuc_data);
 			setIsLoading(false);
 		} catch (error) {
@@ -136,6 +149,7 @@ const DashBoard = () => {
 			setIsLoading(false);
 		}
 	};
+
 	// lấy dữ liệu chart
 	const fetchDataChart = async (data) => {
 		setIsLoading(true);
@@ -157,6 +171,7 @@ const DashBoard = () => {
 	const handlerSubmit = (event) => {
 		event.preventDefault();
 		const data = {};
+		if (selectedDiaPhuonng) data.user_id = selectedDiaPhuonng;
 		if (selectedKhuVuc) data.khuVuc = selectedKhuVuc;
 		if (selectedTram) data.tram = selectedTram;
 		if (monthStartRef.current.value)
@@ -166,7 +181,13 @@ const DashBoard = () => {
 		fetchDataChart(data);
 	};
 
-	// Cập nhật giá trị của khu vực và danh sách trạm khi đổi khu vực
+	const handleChangeDiaPhuong = (e) => {
+		setSelectedDiaPhuonng(e.target.value);
+		setSelectedKhuVuc('');
+		setSelectedTram('');
+		if (e.target.value !== '') fetchListKhuVuc(e.target.value);
+		else fetchListKhuVuc();
+	};
 	const handleChangeKhuVuc = (e) => {
 		setSelectedKhuVuc(e.target.value);
 		setSelectedTram('');
@@ -242,23 +263,31 @@ const DashBoard = () => {
 										{role && (
 											<Col md={2}>
 												<Input label="Địa phương">
-													<Form.Select aria-label="Default select example">
+													<Form.Select
+														aria-label="Default select example"
+														onChange={
+															handleChangeDiaPhuong
+														}
+													>
 														<option value="">
 															Tất cả
 														</option>
-														<option value="1">
-															Cần Thơ
-														</option>
-														<option value="2">
-															Đà Nẵng
-														</option>
-														<option value="3">
-															Nha Trang
-														</option>
-														<option value="3">
-															Thành phố Hồ Chí
-															Minh
-														</option>
+														{listDiaPhuonng?.map(
+															(diaPhuong) => (
+																<option
+																	key={
+																		diaPhuong.user_id
+																	}
+																	value={
+																		diaPhuong.user_id
+																	}
+																>
+																	{
+																		diaPhuong.name
+																	}
+																</option>
+															)
+														)}
 													</Form.Select>
 												</Input>
 											</Col>
