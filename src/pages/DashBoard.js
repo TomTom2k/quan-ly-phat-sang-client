@@ -24,6 +24,7 @@ import ConsumeChart from '../components/dashBoardChart/ConsumeChart';
 import InvoiceChart from '../components/dashBoardChart/InvoiceChart';
 import { FaChartBar, FaChartLine, FaChartArea } from 'react-icons/fa';
 import { BsFillBarChartLineFill } from 'react-icons/bs';
+import DeviceChart from '../components/dashBoardChart/DeviceChart';
 
 const AsideStyled = styled.div`
 	padding: 0;
@@ -84,7 +85,7 @@ const DashBoard = () => {
 			banner: images.bgData3,
 			icon: <FaChartArea />,
 			title: 'Biểu đồ thiết bị',
-			component: 'Comingson',
+			component: <DeviceChart />,
 		},
 	};
 	const { role } = useContext(AuthToken);

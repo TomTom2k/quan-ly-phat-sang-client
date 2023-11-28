@@ -12,7 +12,70 @@ import * as XLSX from 'xlsx';
 
 import ConvertToTable from '../ConvertToTable';
 
-const ConsumeChart = ({ data, describe }) => {
+const data = [
+	{
+		year: 2019,
+		month: 1,
+		soLuongTru: 32,
+		soLuongDen: 64,
+	},
+	{
+		year: 2019,
+		month: 2,
+		soLuongTru: 24,
+		soLuongDen: 72,
+	},
+	{
+		year: 2019,
+		month: 3,
+		soLuongTru: 22,
+		soLuongDen: 22,
+	},
+	{
+		year: 2019,
+		month: 4,
+		soLuongTru: 32,
+		soLuongDen: 64,
+	},
+	{
+		year: 2019,
+		month: 5,
+		soLuongTru: 42,
+		soLuongDen: 84,
+	},
+	{
+		year: 2019,
+		month: 6,
+		soLuongTru: 27,
+		soLuongDen: 81,
+	},
+	{
+		year: 2019,
+		month: 7,
+		soLuongTru: 29,
+		soLuongDen: 58,
+	},
+	{
+		year: 2019,
+		month: 8,
+		soLuongTru: 30,
+		soLuongDen: 30,
+	},
+	{
+		year: 2019,
+		month: 9,
+		soLuongTru: 31,
+		soLuongDen: 62,
+	},
+	{
+		year: 2019,
+		month: 10,
+		soLuongTru: 44,
+		soLuongDen: 44,
+	},
+];
+
+const DeviceChart = () => {
 	const [isShow, setIsShow] = useState(true);
 
 	const exportToExcel = () => {
@@ -20,7 +83,8 @@ const ConsumeChart = ({ data, describe }) => {
 		const renamedData = data.map((item) => ({
 			Năm: item.year,
 			Tháng: item.month,
-			'Tổng Giá Trị': item.tongGiaTri,
+			'Số lượng trụ': item.soLuongTru,
+			'Số lượng bộ đèn': item.soLuongDen,
 		}));
 
 		// Chuyển đổi dữ liệu thành mảng 2D
@@ -37,16 +101,15 @@ const ConsumeChart = ({ data, describe }) => {
 		XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
 		// Tạo tệp Excel và lưu nó vào ổ đĩa
-		XLSX.writeFile(wb, 'Dữ liệu tiêu thụ.xlsx', {
+		XLSX.writeFile(wb, 'Dữ liệu thiêt bị.xlsx', {
 			bookType: 'xlsx',
 			bookSST: false,
 			type: 'binary',
 		});
 	};
-
 	return (
 		<Container className="mt-5">
-			<Row className="justify-content-end g-5">
+			{/* <Row className="justify-content-end g-5">
 				<Col md={2}>
 					<Row>
 						<Button onClick={() => setIsShow(!isShow)}>
@@ -59,12 +122,12 @@ const ConsumeChart = ({ data, describe }) => {
 						<Button onClick={exportToExcel}>Xuất file</Button>
 					</Row>
 				</Col>
-			</Row>
+			</Row> */}
 			<Row>
-				<h4 className="text-center">Khai thác dữ liệu tiêu thụ</h4>
+				<h4 className="text-center">Khai thác thiết bị</h4>
 			</Row>
 			<Row className="align-items-center justify-content-between gx-5">
-				<Col md={isShow ? 8 : 12}>
+				<Col md={12}>
 					<Row className="overflow-x-auto user-select-none justify-content-center">
 						<ComposedChart
 							width={
@@ -116,28 +179,33 @@ const ConsumeChart = ({ data, describe }) => {
 									angle: -1,
 								}}
 							/>
-							<YAxis yAxisId="giaTri" />
+							<YAxis />
 							<Tooltip />
 							<CartesianGrid stroke="#f5f5f5" />
 							<Bar
-								dataKey="tongGiaTri"
-								name="Tổng giá trị"
-								yAxisId="giaTri"
+								dataKey="soLuongTru"
+								name="Số lượng trụ"
 								barSize={20}
 								fill="#413ea0"
+							/>
+							<Bar
+								dataKey="soLuongDen"
+								name="Số lượng đèn"
+								barSize={20}
+								fill="#82ca9d"
 							/>
 						</ComposedChart>
 					</Row>
 				</Col>
-				<Col md={4} className="mr-5">
+				{/* <Col md={4} className="mr-5">
 					<ConvertToTable
 						df={describe}
 						calculationType="tongGiaTri"
 					/>
-				</Col>
+				</Col> */}
 			</Row>
 		</Container>
 	);
 };
 
-export default ConsumeChart;
+export default DeviceChart;
