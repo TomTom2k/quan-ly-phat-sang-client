@@ -16,7 +16,6 @@ const AuthProvider = ({ children }) => {
 	const login = async (data) => {
 		const res = await authApi.login(data);
 
-		console.log(res);
 		if (res.data && res.data.data.tokens) {
 			const authToken = res.data.data.tokens.access;
 			const decode = decodeJwtPayload(authToken);

@@ -8,8 +8,10 @@ const images = {
 const icons = {};
 
 const files = {
-	thietBi: require('./files/thiet_bi_temp.xlsx'),
-	tieuThu: require('./files/tieu_thu_temp.xlsx'),
+	demoTB: require('./files/DemoTB.xlsx'),
+	demoTT: require('./files/DemoTT.xlsx'),
+	tmpTB: require('./files/TemplateTB.xlsx'),
+	tmpTT: require('./files/TemplateTT.xlsx'),
 };
 
 export { images, icons, files };
