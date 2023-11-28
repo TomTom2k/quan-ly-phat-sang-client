@@ -27,10 +27,12 @@ import { BsFillBarChartLineFill } from 'react-icons/bs';
 import DeviceChart from '../components/dashBoardChart/DeviceChart';
 
 const AsideStyled = styled.div`
+	background-color: #fff;
 	padding: 0;
 	width: 3rem;
-	top: 17rem;
-	position: absolute !important;
+	top: 16rem;
+	position: sticky;
+	top: 0;
 `;
 
 const DashBoard = () => {
@@ -390,7 +392,10 @@ const DashBoard = () => {
 							<Container>
 								<Tab.Content>
 									{Object.values(tabs).map((tab) => (
-										<Tab.Pane eventKey={tab.key}>
+										<Tab.Pane
+											eventKey={tab.key}
+											key={tab.key}
+										>
 											{tab.component}
 										</Tab.Pane>
 									))}

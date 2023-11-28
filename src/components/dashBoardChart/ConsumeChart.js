@@ -46,7 +46,7 @@ const ConsumeChart = ({ data, describe }) => {
 
 	return (
 		<Container className="mt-5">
-			<Row className="justify-content-end g-5">
+			<Row className="justify-content-end gx-5 gy-2">
 				<Col md={2}>
 					<Row>
 						<Button onClick={() => setIsShow(!isShow)}>
@@ -60,7 +60,7 @@ const ConsumeChart = ({ data, describe }) => {
 					</Row>
 				</Col>
 			</Row>
-			<Row>
+			<Row className="mt-5">
 				<h4 className="text-center">Khai thác dữ liệu tiêu thụ</h4>
 			</Row>
 			<Row className="align-items-center justify-content-between gx-5">
@@ -129,12 +129,14 @@ const ConsumeChart = ({ data, describe }) => {
 						</ComposedChart>
 					</Row>
 				</Col>
-				<Col md={4} className="mr-5">
-					<ConvertToTable
-						df={describe}
-						calculationType="tongGiaTri"
-					/>
-				</Col>
+				{isShow && (
+					<Col md={4} className="mr-5">
+						<ConvertToTable
+							df={describe}
+							calculationType="tongGiaTri"
+						/>
+					</Col>
+				)}
 			</Row>
 		</Container>
 	);
