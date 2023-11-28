@@ -154,7 +154,7 @@ const UpdateDataDevice = () => {
 								Tải về dữ liệu mẫu để tham khảo và nhập liệu và
 								Excel template được cho sẵn
 							</p>
-							<a href={files.thietBi} download>
+							<a href={files.tmpTB} download>
 								<Button
 									className="w-100"
 									variant="outline-primary"
@@ -162,7 +162,7 @@ const UpdateDataDevice = () => {
 									Download Excel template
 								</Button>
 							</a>
-							<a href={files.thietBi} download>
+							<a href={files.demoTB} download>
 								<Button
 									className="w-100"
 									variant="outline-primary"
