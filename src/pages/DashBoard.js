@@ -27,8 +27,9 @@ import { BsFillBarChartLineFill } from "react-icons/bs";
 
 const AsideStyled = styled.div`
     padding: 0;
-    width: 3rem;
+    width: 4rem;
     top: 17rem;
+    font-size: 1.5rem;
     position: absolute !important;
 `;
 
@@ -41,7 +42,7 @@ const DashBoard = () => {
             slogan: "Tổng quan",
             banner: images.bgHome,
             icon: <FaChartBar />,
-            title: "Biểu đồ kết hợp",
+            title: "Biểu đồ tổng quan",
             calculationType: null,
             component: (
                 <CombineChart
@@ -103,6 +104,30 @@ const DashBoard = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+
+    const asideRef = useRef(null);
+    const [isFixed, setIsFixed] = useState(false);
+    const [fixedTop, setFixedTop] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const offsetTop = asideRef.current.offsetTop;
+
+            // Kiểm tra nếu người dùng đã kéo xuống đủ và AsideStyled chưa được cố định
+            if (window.scrollY >= offsetTop && !isFixed) {
+                setIsFixed(true);
+                setFixedTop(window.scrollY); // Lưu vị trí hiện tại khi đụng top
+            } else if (window.scrollY < offsetTop && isFixed) {
+                setIsFixed(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [isFixed]);
 
     useEffect(() => {
         fetchListKhuVuc();
@@ -194,7 +219,14 @@ const DashBoard = () => {
                 >
                     <Row>
                         {/* aside */}
-                        <AsideStyled>
+                        <AsideStyled
+                            ref={asideRef}
+                            style={{
+                                position: isFixed ? "fixed" : "absolute",
+                                top: isFixed ? `${fixedTop}px` : "17rem",
+                                transition: "top 0.3s ease, position 0.3s ease",
+                            }}
+                        >
                             <Col className="p-0">
                                 <Nav
                                     variant="pills"
