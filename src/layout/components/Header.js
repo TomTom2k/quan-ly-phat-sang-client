@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
@@ -31,6 +31,8 @@ const LogoStyled = styled.div`
 `;
 const NavStyled = styled(Navbar.Collapse)`
     justify-content: end;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
     .nav-link {
         color: #333;
         font-weight: 600;
@@ -52,55 +54,56 @@ const LinkStyled = styled(Link)`
 
 const Header = () => {
     let { user, role, logout } = useContext(AuthToken);
+    const [expanded, setExpanded] = useState(false);
     let navigate = useNavigate();
 
+    const closeNavbar = () => setExpanded(false);
     return (
-        <HeaderStyled expand="lg" className="bg-body-tertiary">
+        <HeaderStyled
+            expand="lg"
+            className="bg-body-tertiary"
+            expanded={expanded}
+        >
             <Container>
                 <LogoStyled href="#">
                     <img src={images.logoUAH} alt="#" />
                     <p> Quản lý chiếu sáng</p>
                 </LogoStyled>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle
+                    aria-controls="basic-navbar-nav"
+                    onClick={() => setExpanded(!expanded)}
+                />
                 <NavStyled id="basic-navbar-nav">
                     <Nav>
-                        <Nav.Link as={LinkStyled} to="/">
+                        <Nav.Link
+                            as={LinkStyled}
+                            to={route.home}
+                            onClick={closeNavbar}
+                        >
                             Trang chủ
                         </Nav.Link>
                         {!role && (
-                            <Nav.Link as={LinkStyled} to={route.update}>
+                            <Nav.Link
+                                as={LinkStyled}
+                                to={route.update}
+                                onClick={closeNavbar}
+                            >
                                 Cập nhật
                             </Nav.Link>
                         )}
-                        <Nav.Link as={LinkStyled} to={route.chart}>
-                            Khai thác
+                        <Nav.Link
+                            as={LinkStyled}
+                            to={route.chart}
+                            onClick={closeNavbar}
+                        >
+                            Biểu đồ
                         </Nav.Link>
-                        {/* <NavDropdown title="Dữ liệu" id="data-dropdown">
-							{!role && (
-								<NavDropdown.Item>
-									<LinkStyled to={route.update}>
-										Cập nhật dữ liệu
-									</LinkStyled>
-								</NavDropdown.Item>
-							)}
-							<NavDropdown.Item>
-								<LinkStyled to={route.consume}>
-									Dữ liệu tiêu thụ
-								</LinkStyled>
-							</NavDropdown.Item>
-							<NavDropdown.Item>
-								<LinkStyled to={route.invoice}>
-									Dữ liệu hóa đơn
-								</LinkStyled>
-							</NavDropdown.Item>
-							<NavDropdown.Item>
-								<LinkStyled to={route.device}>
-									Dữ liệu thiết bị
-								</LinkStyled>
-							</NavDropdown.Item>
-						</NavDropdown> */}
                         {!user ? (
-                            <Nav.Link as={LinkStyled} to={route.login}>
+                            <Nav.Link
+                                as={LinkStyled}
+                                to={route.login}
+                                onClick={closeNavbar}
+                            >
                                 Đăng nhập
                             </Nav.Link>
                         ) : (
@@ -109,6 +112,8 @@ const Header = () => {
                                     onClick={() => {
                                         logout();
                                         navigate(route.login);
+
+                                        closeNavbar();
                                     }}
                                     href={route.login}
                                     as={LinkStyled}

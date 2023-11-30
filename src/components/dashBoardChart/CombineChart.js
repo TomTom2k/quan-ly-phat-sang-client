@@ -47,7 +47,7 @@ const CombineChart = ({ data, describe }) => {
 	};
 	return (
 		<Container className="mt-5">
-			<Row className="justify-content-end g-5">
+			<Row className="justify-content-end gx-5 gy-2">
 				<Col md={2}>
 					<Row>
 						<Button onClick={() => setIsShow(!isShow)}>
@@ -61,7 +61,7 @@ const CombineChart = ({ data, describe }) => {
 					</Row>
 				</Col>
 			</Row>
-			<Row>
+			<Row className="mt-5">
 				<h4 className="text-center">
 					Khai thác dữ liệu tiêu thụ và thành tiền
 				</h4>
