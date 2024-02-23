@@ -3,6 +3,7 @@ const route = {
 	login: '/dang-nhap',
 	update: '/cap-nhat',
 	chart: '/bieu-do',
+	visual: '/truc-quan',
 };
 
 export default route;

@@ -59,6 +59,54 @@ const UpdateDataConsume = () => {
 		}
 		setIsLoading(false);
 	};
+	const handlerSaveAll = async () => {
+		setIsLoading(true);
+		try {
+			const res = await fileApi.confirmTieuThu({ confirm: true });
+			if (res.status !== 200) {
+				showAlter(setError, 'Lưu dữ liệu không thành công');
+			} else {
+				showAlter(setSuccess, 'Lưu dữ liệu thành công');
+			}
+		} catch (error) {
+			console.error('Error saving data:', error);
+		}
+		setIsLoading(false);
+	};
+	const handlerSaveNew = async () => {
+		setIsLoading(true);
+		try {
+			const res = await fileApi.confirmTieuThu({
+				confirm: true,
+				type: 'new',
+			});
+			if (res.status !== 200) {
+				showAlter(setError, 'Lưu dữ liệu không thành công');
+			} else {
+				showAlter(setSuccess, 'Lưu dữ liệu thành công');
+			}
+		} catch (error) {
+			console.error('Error saving data:', error);
+		}
+		setIsLoading(false);
+	};
+	const handlerSaveExisting = async () => {
+		setIsLoading(true);
+		try {
+			const res = await fileApi.confirmTieuThu({
+				confirm: true,
+				type: 'existing',
+			});
+			if (res.status !== 200) {
+				showAlter(setError, 'Lưu dữ liệu không thành công');
+			} else {
+				showAlter(setSuccess, 'Lưu dữ liệu thành công');
+			}
+		} catch (error) {
+			console.error('Error saving data:', error);
+		}
+		setIsLoading(false);
+	};
 
 	return (
 		<>
@@ -133,6 +181,31 @@ const UpdateDataConsume = () => {
 										</option>
 									))}
 								</Form.Select>
+							</Col>
+							<Col md={2}></Col>
+							<Col md={2}>
+								<Button
+									className="w-100"
+									onClick={handlerSaveAll}
+								>
+									Lưu tất cả
+								</Button>
+							</Col>
+							<Col md={2}>
+								<Button
+									className="w-100"
+									onClick={handlerSaveNew}
+								>
+									Lưu dữ liệu mới
+								</Button>
+							</Col>
+							<Col md={2}>
+								<Button
+									className="w-100"
+									onClick={handlerSaveExisting}
+								>
+									Lưu dữ liệu tồn tại
+								</Button>
 							</Col>
 						</Row>
 						<Tabs

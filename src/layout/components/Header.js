@@ -108,6 +108,13 @@ const Header = () => {
 								>
 									Biểu đồ
 								</Nav.Link>
+								<Nav.Link
+									as={LinkStyled}
+									to={route.visual}
+									onClick={closeNavbar}
+								>
+									Trực quan
+								</Nav.Link>
 								<NavDropdown title="Tài khoản" id="account">
 									<NavDropdown.Item
 										onClick={() => {

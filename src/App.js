@@ -14,6 +14,7 @@ import route from './configs/route';
 import UpdateDataNew from './pages/UpdateDataNew';
 import { AuthToken } from './authToken';
 import DashBoard from './pages/DashBoard';
+import DataVisualization from './pages/DataVisualization';
 
 const PrivateRoute = ({ children, requiredRole }) => {
 	const { role } = useContext(AuthToken);
@@ -59,6 +60,16 @@ const router = createBrowserRouter([
 			<Layout>
 				<PrivateRoute requiredRole={undefined}>
 					<DashBoard />
+				</PrivateRoute>
+			</Layout>
+		),
+	},
+	{
+		path: route.visual,
+		element: (
+			<Layout>
+				<PrivateRoute requiredRole={undefined}>
+					<DataVisualization />
 				</PrivateRoute>
 			</Layout>
 		),
