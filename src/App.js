@@ -7,17 +7,15 @@ import {
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Layout from "./layout/Layout";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import route from "./configs/route";
-import InvoiceDashboard from "./pages/InvoiceDashboard";
-import DeviceDashboard from "./pages/DeviceDashboard";
-import ConsumeDashboard from "./pages/ConsumeDashboard";
-import CompareDashboard from "./pages/CompareDashboard";
-import UpdateDataNew from "./pages/UpdateDataNew";
-import { AuthToken } from "./authToken";
-import DashBoard from "./pages/DashBoard";
+
+import Layout from './layout/Layout';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import route from './configs/route';
+import UpdateDataNew from './pages/UpdateDataNew';
+import { AuthToken } from './authToken';
+import DashBoard from './pages/DashBoard';
+import DataVisualization from './pages/DataVisualization';
 
 const PrivateRoute = ({ children, requiredRole }) => {
     const { role } = useContext(AuthToken);
@@ -31,82 +29,53 @@ const PrivateRoute = ({ children, requiredRole }) => {
     }
 };
 const router = createBrowserRouter([
-    {
-        path: route.home,
-        element: (
-            <Layout>
-                <Home />
-            </Layout>
-        ),
-    },
-    {
-        path: route.login,
-        element: (
-            <Layout>
-                <Login />
-            </Layout>
-        ),
-    },
-    {
-        path: route.update,
-        element: (
-            <Layout>
-                <PrivateRoute requiredRole={false}>
-                    <UpdateDataNew />
-                </PrivateRoute>
-            </Layout>
-        ),
-    },
-    {
-        path: route.chart,
-        element: (
-            <Layout>
-                <PrivateRoute requiredRole={undefined}>
-                    <DashBoard />
-                </PrivateRoute>
-            </Layout>
-        ),
-    },
-    {
-        path: route.compare,
-        element: (
-            <Layout>
-                <PrivateRoute requiredRole={undefined}>
-                    <CompareDashboard />
-                </PrivateRoute>
-            </Layout>
-        ),
-    },
-    // {
-    // 	path: route.invoice,
-    // 	element: (
-    // 		<Layout>
-    // 			<PrivateRoute requiredRole={undefined}>
-    // 				<InvoiceDashboard />
-    // 			</PrivateRoute>
-    // 		</Layout>
-    // 	),
-    // },
-    // {
-    // 	path: route.device,
-    // 	element: (
-    // 		<Layout>
-    // 			<PrivateRoute requiredRole={undefined}>
-    // 				<DeviceDashboard />
-    // 			</PrivateRoute>
-    // 		</Layout>
-    // 	),
-    // },
-    // {
-    // 	path: route.consume,
-    // 	element: (
-    // 		<Layout>
-    // 			<PrivateRoute requiredRole={undefined}>
-    // 				<ConsumeDashboard />
-    // 			</PrivateRoute>
-    // 		</Layout>
-    // 	),
-    // },
+	{
+		path: route.home,
+		element: (
+			<Layout>
+				<Home />
+			</Layout>
+		),
+	},
+	{
+		path: route.login,
+		element: (
+			<Layout>
+				<Login />
+			</Layout>
+		),
+	},
+	{
+		path: route.update,
+		element: (
+			<Layout>
+				<PrivateRoute requiredRole={false}>
+					<UpdateDataNew />
+				</PrivateRoute>
+			</Layout>
+		),
+	},
+	{
+		path: route.chart,
+		element: (
+			<Layout>
+				<PrivateRoute requiredRole={undefined}>
+					<DashBoard />
+				</PrivateRoute>
+			</Layout>
+		),
+	},
+	{
+		path: route.visual,
+		element: (
+			<Layout>
+				<PrivateRoute requiredRole={undefined}>
+					<DataVisualization />
+				</PrivateRoute>
+			</Layout>
+		),
+	},
+
 ]);
 function App() {
     return (

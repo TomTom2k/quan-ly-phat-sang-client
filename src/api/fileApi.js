@@ -18,7 +18,7 @@ const fileApi = {
 
 		return axiosClient.post(url, formData, config);
 	},
-	confirmThietBi: () => {
+	confirmThietBi: (data) => {
 		const url = '/thiet-bi-upload';
 		const token = Cookies.get('authToken');
 		const config = {
@@ -27,7 +27,7 @@ const fileApi = {
 			},
 		};
 
-		return axiosClient.put(url, { confirm: true }, config);
+		return axiosClient.put(url, data, config);
 	},
 	uploadTieuThu: (file) => {
 		const url = '/dien-nang-upload';

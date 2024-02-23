@@ -57,83 +57,85 @@ const Header = () => {
     const [expanded, setExpanded] = useState(false);
     let navigate = useNavigate();
 
-    const closeNavbar = () => setExpanded(false);
-    return (
-        <HeaderStyled
-            expand="lg"
-            className="bg-body-tertiary"
-            expanded={expanded}
-        >
-            <Container>
-                <LogoStyled href="#">
-                    <img src={images.logoUAH} alt="#" />
-                    <p> Quản lý chiếu sáng</p>
-                </LogoStyled>
-                <Navbar.Toggle
-                    aria-controls="basic-navbar-nav"
-                    onClick={() => setExpanded(!expanded)}
-                />
-                <NavStyled id="basic-navbar-nav">
-                    <Nav>
-                        <Nav.Link
-                            as={LinkStyled}
-                            to={route.home}
-                            onClick={closeNavbar}
-                        >
-                            Trang chủ
-                        </Nav.Link>
-                        {!role && (
-                            <Nav.Link
-                                as={LinkStyled}
-                                to={route.update}
-                                onClick={closeNavbar}
-                            >
-                                Cập nhật
-                            </Nav.Link>
-                        )}
-                        <Nav.Link
-                            as={LinkStyled}
-                            to={route.chart}
-                            onClick={closeNavbar}
-                        >
-                            Biểu đồ
-                        </Nav.Link>
-                        <Nav.Link
-                            as={LinkStyled}
-                            to={route.compare}
-                            onClick={closeNavbar}
-                        >
-                            So sánh
-                        </Nav.Link>
-                        {!user ? (
-                            <Nav.Link
-                                as={LinkStyled}
-                                to={route.login}
-                                onClick={closeNavbar}
-                            >
-                                Đăng nhập
-                            </Nav.Link>
-                        ) : (
-                            <NavDropdown title="Tài khoản" id="account">
-                                <NavDropdown.Item
-                                    onClick={() => {
-                                        logout();
-                                        navigate(route.login);
+	const closeNavbar = () => setExpanded(false);
+	return (
+		<HeaderStyled
+			expand="lg"
+			className="bg-body-tertiary"
+			expanded={expanded}
+		>
+			<Container>
+				<LogoStyled href="#">
+					<img src={images.logoUAH} alt="#" />
+					<p> Quản lý chiếu sáng</p>
+				</LogoStyled>
+				<Navbar.Toggle
+					aria-controls="basic-navbar-nav"
+					onClick={() => setExpanded(!expanded)}
+				/>
+				<NavStyled id="basic-navbar-nav">
+					<Nav>
+						<Nav.Link
+							as={LinkStyled}
+							to={route.home}
+							onClick={closeNavbar}
+						>
+							Trang chủ
+						</Nav.Link>
+						{!user ? (
+							<Nav.Link
+								as={LinkStyled}
+								to={route.login}
+								onClick={closeNavbar}
+							>
+								Đăng nhập
+							</Nav.Link>
+						) : (
+							<>
+								{!role && (
+									<Nav.Link
+										as={LinkStyled}
+										to={route.update}
+										onClick={closeNavbar}
+									>
+										Cập nhật
+									</Nav.Link>
+								)}
+								<Nav.Link
+									as={LinkStyled}
+									to={route.chart}
+									onClick={closeNavbar}
+								>
+									Biểu đồ
+								</Nav.Link>
+								<Nav.Link
+									as={LinkStyled}
+									to={route.visual}
+									onClick={closeNavbar}
+								>
+									Trực quan
+								</Nav.Link>
+								<NavDropdown title="Tài khoản" id="account">
+									<NavDropdown.Item
+										onClick={() => {
+											logout();
+											navigate(route.login);
 
-                                        closeNavbar();
-                                    }}
-                                    href={route.login}
-                                    as={LinkStyled}
-                                >
-                                    Đăng xuất
-                                </NavDropdown.Item>
-                            </NavDropdown>
-                        )}
-                    </Nav>
-                </NavStyled>
-            </Container>
-        </HeaderStyled>
-    );
+											closeNavbar();
+										}}
+										href={route.login}
+										as={LinkStyled}
+									>
+										Đăng xuất
+									</NavDropdown.Item>
+								</NavDropdown>
+							</>
+						)}
+					</Nav>
+				</NavStyled>
+			</Container>
+		</HeaderStyled>
+	);
 };
 
 export default Header;

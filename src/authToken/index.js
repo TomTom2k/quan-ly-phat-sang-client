@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import Cookies from 'js-cookie';
 import authApi from '../api/authApi';
 import decodeJwtPayload from '../util/decodeJwt';
