@@ -8,8 +8,8 @@ import {
 	Table,
 	Tabs,
 	Tab,
+	ButtonGroup,
 } from 'react-bootstrap';
-import styled from 'styled-components';
 
 import fileApi from '../../api/fileApi';
 import { files } from '../../assets';
@@ -19,31 +19,6 @@ import ConfirmDialog from '../../components/ConfirmDialog';
 import LoadingCus from '../../components/LoadingCus';
 import ConvertDfToTable from '../../components/ConvertDfToTable';
 
-const renderTable = (sheet) => {
-	const cols = Object.keys(sheet);
-
-	return (
-		<Table striped bordered hover size="sm" responsive>
-			<thead>
-				<tr>
-					{cols.map((col, index) => (
-						<th key={index}>{col}</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{Array.from({ length: 10 }).map((_, rowIndex) => (
-					<tr key={rowIndex}>
-						{cols.map((col, colIndex) => (
-							<td key={colIndex}>{sheet[col][rowIndex]}</td>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</Table>
-	);
-};
-
 const UpdateDataDevice = () => {
 	const [selectedFile, setSelectedFile] = useState(null);
 
@@ -52,7 +27,8 @@ const UpdateDataDevice = () => {
 	const [newData, setNewData] = useState(null);
 
 	const [sheet, setSheet] = useState(0);
-	const [isSuccess, setIsSuccess] = useState(false);
+
+	const [success, setSuccess] = useState(false);
 	const [error, setError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -60,7 +36,6 @@ const UpdateDataDevice = () => {
 		callback(data);
 		setTimeout(() => callback(false), 1000);
 	};
-
 	const handleFileChange = (event) => {
 		const file = event.target.files[0];
 		if (file) {
@@ -69,7 +44,6 @@ const UpdateDataDevice = () => {
 			setSelectedFile(null);
 		}
 	};
-
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
@@ -86,7 +60,10 @@ const UpdateDataDevice = () => {
 				setData(response.data.data);
 				setExistingData(response.data.existing_data);
 				setNewData(response.data.new_data);
-				setIsSuccess(true);
+				showAlter(
+					setSuccess,
+					'Tải file thành công. Hãy chọn hình thức lưu'
+				);
 			} else {
 				throw new Error('Tải file không thành công');
 			}
@@ -97,21 +74,52 @@ const UpdateDataDevice = () => {
 		setIsLoading(false);
 	};
 
-	const handlerCancel = () => {
-		setIsSuccess(false);
-	};
-
-	const handleConfirm = async () => {
+	const handlerSaveAll = async () => {
 		setIsLoading(true);
 		try {
-			const res = await fileApi.confirmThietBi();
+			const res = await fileApi.confirmThietBi({ confirm: true });
 			if (res.status !== 200) {
 				showAlter(setError, 'Lưu dữ liệu không thành công');
+			} else {
+				showAlter(setSuccess, 'Lưu dữ liệu thành công');
 			}
 		} catch (error) {
 			console.error('Error saving data:', error);
 		}
-		setIsSuccess(false);
+		setIsLoading(false);
+	};
+	const handlerSaveNew = async () => {
+		setIsLoading(true);
+		try {
+			const res = await fileApi.confirmThietBi({
+				confirm: true,
+				type: 'new',
+			});
+			if (res.status !== 200) {
+				showAlter(setError, 'Lưu dữ liệu không thành công');
+			} else {
+				showAlter(setSuccess, 'Lưu dữ liệu thành công');
+			}
+		} catch (error) {
+			console.error('Error saving data:', error);
+		}
+		setIsLoading(false);
+	};
+	const handlerSaveExisting = async () => {
+		setIsLoading(true);
+		try {
+			const res = await fileApi.confirmThietBi({
+				confirm: true,
+				type: 'existing',
+			});
+			if (res.status !== 200) {
+				showAlter(setError, 'Lưu dữ liệu không thành công');
+			} else {
+				showAlter(setSuccess, 'Lưu dữ liệu thành công');
+			}
+		} catch (error) {
+			console.error('Error saving data:', error);
+		}
 		setIsLoading(false);
 	};
 	return (
@@ -188,6 +196,31 @@ const UpdateDataDevice = () => {
 									))}
 								</Form.Select>
 							</Col>
+							<Col md={2}></Col>
+							<Col md={2}>
+								<Button
+									className="w-100"
+									onClick={handlerSaveAll}
+								>
+									Lưu tất cả
+								</Button>
+							</Col>
+							<Col md={2}>
+								<Button
+									className="w-100"
+									onClick={handlerSaveNew}
+								>
+									Lưu dữ liệu mới
+								</Button>
+							</Col>
+							<Col md={2}>
+								<Button
+									className="w-100"
+									onClick={handlerSaveExisting}
+								>
+									Lưu dữ liệu tồn tại
+								</Button>
+							</Col>
 						</Row>
 						<Tabs
 							defaultActiveKey="data"
@@ -218,13 +251,8 @@ const UpdateDataDevice = () => {
 			<AlterCus show={!!error} variant="danger">
 				{error}
 			</AlterCus>
-			<ConfirmDialog
-				show={isSuccess}
-				onConfirm={handleConfirm}
-				onClose={handlerCancel}
-			>
-				Tải lên thành công. Xác nhận lưu?
-			</ConfirmDialog>
+			<AlterCus show={!!success}>{success}</AlterCus>
+
 			{isLoading && (
 				<LoadingCus animation="border" variant="secondary">
 					<span className="visually-hidden">Loading...</span>

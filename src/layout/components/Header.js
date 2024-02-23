@@ -82,22 +82,6 @@ const Header = () => {
 						>
 							Trang chủ
 						</Nav.Link>
-						{!role && (
-							<Nav.Link
-								as={LinkStyled}
-								to={route.update}
-								onClick={closeNavbar}
-							>
-								Cập nhật
-							</Nav.Link>
-						)}
-						<Nav.Link
-							as={LinkStyled}
-							to={route.chart}
-							onClick={closeNavbar}
-						>
-							Biểu đồ
-						</Nav.Link>
 						{!user ? (
 							<Nav.Link
 								as={LinkStyled}
@@ -107,20 +91,38 @@ const Header = () => {
 								Đăng nhập
 							</Nav.Link>
 						) : (
-							<NavDropdown title="Tài khoản" id="account">
-								<NavDropdown.Item
-									onClick={() => {
-										logout();
-										navigate(route.login);
-
-										closeNavbar();
-									}}
-									href={route.login}
+							<>
+								{!role && (
+									<Nav.Link
+										as={LinkStyled}
+										to={route.update}
+										onClick={closeNavbar}
+									>
+										Cập nhật
+									</Nav.Link>
+								)}
+								<Nav.Link
 									as={LinkStyled}
+									to={route.chart}
+									onClick={closeNavbar}
 								>
-									Đăng xuất
-								</NavDropdown.Item>
-							</NavDropdown>
+									Biểu đồ
+								</Nav.Link>
+								<NavDropdown title="Tài khoản" id="account">
+									<NavDropdown.Item
+										onClick={() => {
+											logout();
+											navigate(route.login);
+
+											closeNavbar();
+										}}
+										href={route.login}
+										as={LinkStyled}
+									>
+										Đăng xuất
+									</NavDropdown.Item>
+								</NavDropdown>
+							</>
 						)}
 					</Nav>
 				</NavStyled>

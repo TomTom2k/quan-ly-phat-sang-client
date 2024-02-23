@@ -1,20 +1,9 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import {
-	Row,
-	Col,
-	Container,
-	Button,
-	Form,
-	Table,
-	Tabs,
-	Tab,
-} from 'react-bootstrap';
+import { Row, Col, Container, Button, Form, Tabs, Tab } from 'react-bootstrap';
 import fileApi from '../../api/fileApi';
 import { files } from '../../assets';
 import AlterCus from '../../components/AlterCus';
 import LoadingCus from '../../components/LoadingCus';
-import ConfirmDialog from '../../components/ConfirmDialog';
 import ConvertDfToTable from '../../components/ConvertDfToTable';
 
 const UpdateDataConsume = () => {
@@ -26,15 +15,14 @@ const UpdateDataConsume = () => {
 
 	const [sheet, setSheet] = useState(0);
 
-	const [isSuccess, setIsSuccess] = useState(false);
+	const [success, setSuccess] = useState(false);
 	const [error, setError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const showAlter = (callback, data) => {
 		callback(data);
-		setTimeout(() => callback(false), 1000);
+		setTimeout(() => callback(false), 3000);
 	};
-
 	const handleFileChange = (event) => {
 		const file = event.target.files[0];
 		if (file) {
@@ -43,7 +31,6 @@ const UpdateDataConsume = () => {
 			setSelectedFile(null);
 		}
 	};
-
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
@@ -59,7 +46,10 @@ const UpdateDataConsume = () => {
 				setData(response.data.data);
 				setExistingData(response.data.existing_data);
 				setNewData(response.data.new_data);
-				setIsSuccess(true);
+				showAlter(
+					setSuccess,
+					'Tải file thành công. Hãy chọn hình thức lưu'
+				);
 			} else {
 				throw new Error('Tải file không thành công');
 			}
@@ -70,23 +60,6 @@ const UpdateDataConsume = () => {
 		setIsLoading(false);
 	};
 
-	const handlerCancel = () => {
-		setIsSuccess(false);
-	};
-
-	const handleConfirm = async () => {
-		setIsLoading(true);
-		try {
-			const res = await fileApi.confirmTieuThu();
-			if (res.status !== 200) {
-				showAlter(setError, 'Lưu dữ liệu không thành công');
-			}
-		} catch (error) {
-			console.error('Error saving data:', error);
-		}
-		setIsSuccess(false);
-		setIsLoading(false);
-	};
 	return (
 		<>
 			<Container>
@@ -191,13 +164,7 @@ const UpdateDataConsume = () => {
 			<AlterCus show={!!error} variant="danger">
 				{error}
 			</AlterCus>
-			<ConfirmDialog
-				show={isSuccess}
-				onConfirm={handleConfirm}
-				onClose={handlerCancel}
-			>
-				Tải lên thành công. Xác nhận lưu?
-			</ConfirmDialog>
+			<AlterCus show={!!success}>{success}</AlterCus>
 			{isLoading && (
 				<LoadingCus animation="border" variant="secondary">
 					<span className="visually-hidden">Loading...</span>

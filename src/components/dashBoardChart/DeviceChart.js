@@ -109,7 +109,7 @@ const DeviceChart = () => {
 	};
 	return (
 		<Container className="mt-5">
-			{/* <Row className="justify-content-end g-5">
+			<Row className="justify-content-end g-5">
 				<Col md={2}>
 					<Row>
 						<Button onClick={() => setIsShow(!isShow)}>
@@ -122,7 +122,7 @@ const DeviceChart = () => {
 						<Button onClick={exportToExcel}>Xuất file</Button>
 					</Row>
 				</Col>
-			</Row> */}
+			</Row>
 			<Row>
 				<h4 className="text-center">Khai thác thiết bị</h4>
 			</Row>
