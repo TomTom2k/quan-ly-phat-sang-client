@@ -98,6 +98,13 @@ const Header = () => {
                         >
                             Biểu đồ
                         </Nav.Link>
+                        <Nav.Link
+                            as={LinkStyled}
+                            to={route.compare}
+                            onClick={closeNavbar}
+                        >
+                            So sánh
+                        </Nav.Link>
                         {!user ? (
                             <Nav.Link
                                 as={LinkStyled}
