@@ -1,61 +1,61 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { images } from '../../assets';
-import { useContext } from 'react';
-import { AuthToken } from '../../authToken';
-import route from '../../configs/route';
+import { images } from "../../assets";
+import { useContext } from "react";
+import { AuthToken } from "../../authToken";
+import route from "../../configs/route";
 
 const HeaderStyled = styled(Navbar)`
-	background-color: #fff !important;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-	height: 60px;
-	z-index: 100000000000000000000;
+    background-color: #fff !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    height: 60px;
+    z-index: 100000000000000000000;
 `;
 const LogoStyled = styled.div`
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-	p {
-		margin-bottom: 0;
-		font-size: 1.25rem;
-		font-weight: 600;
-		margin-left: 5px;
-	}
-	img {
-		width: 3rem;
-	}
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    p {
+        margin-bottom: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-left: 5px;
+    }
+    img {
+        width: 3rem;
+    }
 `;
 const NavStyled = styled(Navbar.Collapse)`
-	justify-content: end;
-	background-color: rgba(255, 255, 255, 0.8);
-	backdrop-filter: blur(8px);
-	.nav-link {
-		color: #333;
-		font-weight: 600;
-		font-size: 1.225rem;
-		margin-left: 1rem;
+    justify-content: end;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    .nav-link {
+        color: #333;
+        font-weight: 600;
+        font-size: 1.225rem;
+        margin-left: 1rem;
 
-		&.active {
-			font-weight: 600;
-		}
-	}
-	.nav-link:hover {
-		color: var(--primary);
-	}
+        &.active {
+            font-weight: 600;
+        }
+    }
+    .nav-link:hover {
+        color: var(--primary);
+    }
 `;
 const LinkStyled = styled(Link)`
-	text-decoration: none;
-	color: var(--bs-nav-link-color);
+    text-decoration: none;
+    color: var(--bs-nav-link-color);
 `;
 
 const Header = () => {
-	let { user, role, logout } = useContext(AuthToken);
-	const [expanded, setExpanded] = useState(false);
-	let navigate = useNavigate();
+    let { user, role, logout } = useContext(AuthToken);
+    const [expanded, setExpanded] = useState(false);
+    let navigate = useNavigate();
 
 	const closeNavbar = () => setExpanded(false);
 	return (
