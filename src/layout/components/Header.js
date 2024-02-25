@@ -106,7 +106,7 @@ const Header = () => {
 									to={route.chart}
 									onClick={closeNavbar}
 								>
-									Trực quan
+									Khai thác
 								</Nav.Link>
 								<Nav.Link
 									as={LinkStyled}

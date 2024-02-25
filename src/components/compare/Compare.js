@@ -5,7 +5,7 @@ import Input from '../Input';
 import AlterCus from '../AlterCus';
 import LoadingCus from '../LoadingCus';
 import analysisApi from '../../api/analysisApi';
-import { Area, ComposedChart, Legend, XAxis, YAxis } from 'recharts';
+import { Area, ComposedChart, Legend, Line, XAxis, YAxis } from 'recharts';
 
 function formatDate(month, year) {
 	return `${year}-${(month + 1).toString().padStart(2, '0')}`;
@@ -169,7 +169,7 @@ const Compare = () => {
 									}}
 								/>
 								<Legend verticalAlign="bottom" height={40} />
-								<Area
+								<Line
 									type="linear"
 									dataKey="dntt1"
 									stroke="#8884d8"
@@ -177,7 +177,7 @@ const Compare = () => {
 									fillOpacity={0.3}
 									name="Điện năm tiêu thụ năm đầu tiên"
 								/>
-								<Area
+								<Line
 									type="linear"
 									dataKey="dntt2"
 									stroke="#82ca9d"
