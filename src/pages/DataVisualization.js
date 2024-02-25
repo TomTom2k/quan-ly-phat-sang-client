@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import LoadingCus from '../components/LoadingCus';
 import AlterCus from '../components/AlterCus';
 import { Area, ComposedChart, XAxis, YAxis } from 'recharts';
 import Input from '../components/Input';
+import visualApi from '../api/visualApi';
 
 const DataVisualization = () => {
+	const yearInputRef = useRef(null);
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [data, setData] = useState(null);
+	const [sheetIndex, setSheetIndex] = useState(0);
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
@@ -20,31 +23,31 @@ const DataVisualization = () => {
 			setSelectedFile(null);
 		}
 	};
-	const handleSubmit = (event) => {
+	const handleChangeDiaPhuong = (e) => {
+		setSheetIndex(e.target.value);
+	};
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		setIsLoading(true);
-		try {
-			setData([
-				{ month: 1, dnttExp: 180, dnttAct: 60 },
-				{ month: 2, dnttExp: 210, dnttAct: 70 },
-				{ month: 3, dnttExp: 150, dnttAct: 50 },
-				{ month: 4, dnttExp: 150, dnttAct: 50 },
-				{ month: 5, dnttExp: 150, dnttAct: 50 },
-				{ month: 6, dnttExp: 150, dnttAct: 50 },
-				{ month: 7, dnttExp: 150, dnttAct: 50 },
-				{ month: 8, dnttExp: 150, dnttAct: 50 },
-				{ month: 9, dnttExp: 150, dnttAct: 50 },
-				{ month: 10, dnttExp: 150, dnttAct: 50 },
-				{ month: 11, dnttExp: 150, dnttAct: 50 },
-				{ month: 12, dnttExp: 150, dnttAct: 50 },
-			]);
-		} catch (error) {
-			setErrorMessage('Tải file lên không thành công');
+		if (!yearInputRef.current.value) {
+			setErrorMessage('Vui lòng nhập năm muốn dự đoán');
 			setTimeout(() => setErrorMessage(''), 2000);
-		} finally {
-			setIsLoading(false);
+		} else {
+			setIsLoading(true);
+			try {
+				const res = await visualApi.uploadFile(
+					selectedFile,
+					yearInputRef.current.value
+				);
+				setData(res.data.result);
+			} catch (error) {
+				setErrorMessage('Tải file lên không thành công');
+				setTimeout(() => setErrorMessage(''), 2000);
+			} finally {
+				setIsLoading(false);
+			}
 		}
 	};
+	console.log(data[sheetIndex]);
 	return (
 		<Container>
 			<Row className="mt-4 g-4">
@@ -64,6 +67,15 @@ const DataVisualization = () => {
 								onChange={handleFileChange}
 							/>
 						</Form.Group>
+						<Input label="Năm">
+							<Form.Control
+								type="number"
+								min="1900"
+								max="3000"
+								step="1"
+								ref={yearInputRef}
+							/>
+						</Input>
 						<Button
 							variant="primary"
 							type="submit"
@@ -79,92 +91,81 @@ const DataVisualization = () => {
 							<h4 className="text-primary">Tùy chọn</h4>
 						</Col>
 						<Col md={12}>
-							<Input label="Địa phương">
+							<Input label="Khu vực">
 								<Form.Select
 									aria-label="Default select example"
-									// onChange={handleChangeDiaPhuong}
+									onChange={handleChangeDiaPhuong}
 								>
-									<option value="">Tất cả</option>
+									{data?.map((sheet, index) => (
+										<option key={index} value={index}>
+											{sheet.khu_vuc}
+										</option>
+									))}
 								</Form.Select>
 							</Input>
-						</Col>
-						<Col md={6}>
-							<Input label="Năm">
-								<Form.Control
-									type="number"
-									min="1900"
-									max="3000"
-									step="1"
-								/>
-							</Input>
-						</Col>
-						<Col md={6} className="d-flex align-items-end">
-							<Button className="w-100">Trực quan</Button>
 						</Col>
 					</Row>
 				</Col>
 			</Row>
 			<hr />
-			<Row className="mt-4">
-				<Col md={12}>
-					<Row className="overflow-x-auto user-select-none justify-content-center">
-						<ComposedChart
-							width={
-								data?.length !== 0
-									? Math.max(data?.length * 60, 820)
-									: '100%'
-							}
-							height={400}
-							data={data}
-							margin={{
-								top: 30,
-								right: 50,
-								left: 20,
-								bottom: 15,
-							}}
-						>
-							<XAxis
-								xAxisId={0}
-								dy={3}
-								dx={-1}
-								label={{
-									value: 'Tháng',
-									angle: 0,
-									position: 'right',
+			{data && (
+				<Row className="mt-4">
+					<Col md={12}>
+						<Row className="overflow-x-auto user-select-none justify-content-center">
+							<ComposedChart
+								width={data?.length !== 0 ? 820 : '100%'}
+								height={400}
+								data={data[sheetIndex].dntt_theo_thang}
+								margin={{
+									top: 30,
+									right: 50,
+									left: 20,
+									bottom: 15,
 								}}
-								interval={0}
-								dataKey="month"
-								tickLine={true}
-								tick={{
-									fontSize: 12,
-									angle: 0,
-								}}
-							/>
-							<YAxis
-								label={{
-									value: 'kwh',
-									angle: 0,
-									position: 'top',
-								}}
-							/>
-							<Area
-								type="linear"
-								dataKey="dnttAct"
-								stroke="#8884d8"
-								fill="#8884d8"
-								fillOpacity={0.3}
-							/>
-							<Area
-								type="linear"
-								dataKey="dnttExp"
-								stroke="#82ca9d"
-								fill="#82ca9d"
-								fillOpacity={0.3}
-							/>
-						</ComposedChart>
-					</Row>
-				</Col>
-			</Row>
+							>
+								<XAxis
+									xAxisId={0}
+									dy={3}
+									dx={-1}
+									label={{
+										value: 'Tháng',
+										angle: 0,
+										position: 'left',
+									}}
+									interval={0}
+									dataKey="thang"
+									tickLine={true}
+									tick={{
+										fontSize: 12,
+										angle: 0,
+									}}
+								/>
+								<YAxis
+									label={{
+										value: 'kwh',
+										angle: 0,
+										position: 'top',
+									}}
+								/>
+								<Area
+									type="linear"
+									dataKey="dntt_cu"
+									stroke="#8884d8"
+									fill="#8884d8"
+									fillOpacity={0.3}
+								/>
+								<Area
+									type="linear"
+									dataKey="dntt_moi"
+									stroke="#82ca9d"
+									fill="#82ca9d"
+									fillOpacity={0.3}
+								/>
+							</ComposedChart>
+						</Row>
+					</Col>
+				</Row>
+			)}
 			<AlterCus show={!!errorMessage} variant="danger">
 				{errorMessage}
 			</AlterCus>
