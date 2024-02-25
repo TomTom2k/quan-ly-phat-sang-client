@@ -47,7 +47,7 @@ const DataVisualization = () => {
 			}
 		}
 	};
-	console.log(data[sheetIndex]);
+
 	return (
 		<Container>
 			<Row className="mt-4 g-4">
@@ -85,27 +85,29 @@ const DataVisualization = () => {
 						</Button>
 					</Form>
 				</Col>
-				<Col md={6}>
-					<Row className="g-2">
-						<Col md={12}>
-							<h4 className="text-primary">Tùy chọn</h4>
-						</Col>
-						<Col md={12}>
-							<Input label="Khu vực">
-								<Form.Select
-									aria-label="Default select example"
-									onChange={handleChangeDiaPhuong}
-								>
-									{data?.map((sheet, index) => (
-										<option key={index} value={index}>
-											{sheet.khu_vuc}
-										</option>
-									))}
-								</Form.Select>
-							</Input>
-						</Col>
-					</Row>
-				</Col>
+				{data && (
+					<Col md={6}>
+						<Row className="g-2">
+							<Col md={12}>
+								<h4 className="text-primary">Tùy chọn</h4>
+							</Col>
+							<Col md={12}>
+								<Input label="Khu vực">
+									<Form.Select
+										aria-label="Default select example"
+										onChange={handleChangeDiaPhuong}
+									>
+										{data?.map((sheet, index) => (
+											<option key={index} value={index}>
+												{sheet.khu_vuc}
+											</option>
+										))}
+									</Form.Select>
+								</Input>
+							</Col>
+						</Row>
+					</Col>
+				)}
 			</Row>
 			<hr />
 			{data && (
