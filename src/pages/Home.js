@@ -63,7 +63,7 @@ const TextStyle = styled.div`
     }
 `;
 const LinkStyles = styled.div`
-    padding: 1.5rem 0;
+    padding: 0 0 1.5rem 0;
     p,
     a {
         color: rgba(33, 33, 33, 1);
