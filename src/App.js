@@ -1,11 +1,12 @@
-import { useContext } from 'react';
+import { useContext } from "react";
 import {
-	createBrowserRouter,
-	RouterProvider,
-	Routes,
-	Navigate,
-} from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+    createBrowserRouter,
+    RouterProvider,
+    Routes,
+    Navigate,
+} from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 import Layout from './layout/Layout';
 import Home from './pages/Home';
@@ -17,15 +18,15 @@ import DashBoard from './pages/DashBoard';
 import DataVisualization from './pages/DataVisualization';
 
 const PrivateRoute = ({ children, requiredRole }) => {
-	const { role } = useContext(AuthToken);
-	if (
-		(requiredRole === undefined && role !== null) ||
-		requiredRole === role
-	) {
-		return children;
-	} else {
-		return <Navigate to={route.login} />;
-	}
+    const { role } = useContext(AuthToken);
+    if (
+        (requiredRole === undefined && role !== null) ||
+        requiredRole === role
+    ) {
+        return children;
+    } else {
+        return <Navigate to={route.login} />;
+    }
 };
 const router = createBrowserRouter([
 	{
@@ -74,15 +75,16 @@ const router = createBrowserRouter([
 			</Layout>
 		),
 	},
+
 ]);
 function App() {
-	return (
-		<>
-			<RouterProvider router={router}>
-				<Routes />
-			</RouterProvider>
-		</>
-	);
+    return (
+        <>
+            <RouterProvider router={router}>
+                <Routes />
+            </RouterProvider>
+        </>
+    );
 }
 
 export default App;
