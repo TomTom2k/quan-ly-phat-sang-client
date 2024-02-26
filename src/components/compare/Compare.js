@@ -6,6 +6,7 @@ import AlterCus from '../AlterCus';
 import LoadingCus from '../LoadingCus';
 import analysisApi from '../../api/analysisApi';
 import { Area, ComposedChart, Legend, Line, XAxis, YAxis } from 'recharts';
+import axios from 'axios';
 
 function formatDate(month, year) {
 	return `${year}-${(month + 1).toString().padStart(2, '0')}`;
@@ -14,8 +15,6 @@ function formatDate(month, year) {
 const Compare = () => {
 	const year1Ref = useRef(null);
 	const year2Ref = useRef(null);
-	const [data1, setData1] = useState(null);
-	const [data2, setData2] = useState(null);
 	const [dataChart, setDataChart] = useState(null);
 
 	const [isLoading, setIsLoading] = useState(false);
@@ -32,36 +31,55 @@ const Compare = () => {
 		} else {
 			setIsLoading(true);
 			try {
-				// Lấy năm đầu
-				const res1 = await analysisApi.ChartKetHop(
-					{
-						monthStart: formatDate(0, year1Ref.current.value),
-						monthEnd: formatDate(11, year1Ref.current.value),
-					},
-					'tongGiaTri'
-				);
-				setData1(res1.data?.data.data);
-				// Lấy năm thứ 2
-				const res2 = await analysisApi.ChartKetHop(
-					{
-						monthStart: formatDate(0, year2Ref.current.value),
-						monthEnd: formatDate(11, year2Ref.current.value),
-					},
-					'tongGiaTri'
-				);
-				setData2(res2.data?.data.data);
-				if (data1 && data2) {
-					let data = [];
-					data1.forEach((item, index) => {
-						let combinedItem = {
-							month: item.month,
-							dntt1: item.tongGiaTri,
-							dntt2: data2[index].tongGiaTri,
-						};
-						data.push(combinedItem);
-					});
-					setDataChart(data);
-				}
+				axios
+					.all([
+						analysisApi.ChartKetHop(
+							{
+								monthStart: formatDate(
+									0,
+									year1Ref.current.value
+								),
+								monthEnd: formatDate(
+									11,
+									year1Ref.current.value
+								),
+							},
+							'tongGiaTri'
+						),
+						analysisApi.ChartKetHop(
+							{
+								monthStart: formatDate(
+									0,
+									year2Ref.current.value
+								),
+								monthEnd: formatDate(
+									11,
+									year2Ref.current.value
+								),
+							},
+							'tongGiaTri'
+						),
+					])
+					.then(
+						axios.spread((...allData) => {
+							const res1 = allData[0];
+							const res2 = allData[1];
+
+							if (res1.data?.data.data && res2.data?.data.data) {
+								let data = [];
+								res1.data?.data.data.forEach((item, index) => {
+									let combinedItem = {
+										month: item.month,
+										dntt1: item.tongGiaTri,
+										dntt2: res2.data?.data.data[index]
+											.tongGiaTri,
+									};
+									data.push(combinedItem);
+								});
+								setDataChart(data);
+							}
+						})
+					);
 			} catch (error) {
 				setErrorMessage('Lấy dữ liệu không thành công');
 				setTimeout(() => setErrorMessage(''), 2000);
@@ -116,7 +134,7 @@ const Compare = () => {
 								type="submit"
 								className="mt-4"
 							>
-								Upload file hoàn chỉnh
+								So sánh
 							</Button>
 						</Col>
 					</Row>
