@@ -17,8 +17,7 @@ const Footer = () => {
 	return (
 		<FooterStyle>
 			<p>
-				Bản quyền © 2023 thuộc về Trường Đại Học Kiến Trúc Thành phố Hồ
-				Chí Minh
+				Bản quyền © 2024 thuộc về câu lạc bộ Programming Lab H3.2 Trường Đại học thành phố Hồ Chí Minh
 			</p>
 		</FooterStyle>
 	);

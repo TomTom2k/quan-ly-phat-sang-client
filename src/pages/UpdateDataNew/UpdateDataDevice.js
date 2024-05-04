@@ -124,6 +124,9 @@ const UpdateDataDevice = () => {
 	};
 	return (
 		<>
+		<h3 style={{marginTop: "20px",display: "flex",alignItems: "center",justifyContent: "center",color: "#fff",backgroundColor: "#156700",height: "50px"}}>
+			Dữ liệu thiết bị chiếu sáng
+		</h3>
 			<Container>
 				<Row className="justify-content-center">
 					<Col lg={8}>
@@ -147,7 +150,7 @@ const UpdateDataDevice = () => {
 									<Button
 										variant="primary"
 										type="submit"
-										className="mt-4"
+										className="mt-4 w-50"
 									>
 										Upload file hoàn chỉnh
 									</Button>
@@ -162,22 +165,30 @@ const UpdateDataDevice = () => {
 								Tải về dữ liệu mẫu để tham khảo và nhập liệu và
 								Excel template được cho sẵn
 							</p>
-							<a href={files.tmpTB} download>
+							<Row>
+								<Col lg ={6}>
+									<a href={files.tmpTB} download>
+										<Button
+											className="w-100"
+											variant="outline-primary"
+											style={{fontSize: "15px"}}
+										>
+											Download Excel template
+										</Button>
+									</a>
+								</Col>
+								<Col lg={6}>
+								<a href={files.demoTB} download>
 								<Button
 									className="w-100"
 									variant="outline-primary"
-								>
-									Download Excel template
-								</Button>
-							</a>
-							<a href={files.demoTB} download>
-								<Button
-									className="w-100"
-									variant="outline-primary"
+									style={{fontSize: "15px"}}
 								>
 									Download dữ liệu mẫu
 								</Button>
 							</a>
+								</Col>
+							</Row>
 						</div>
 					</Col>
 				</Row>

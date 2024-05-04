@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col,Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CaretRightFill } from "react-bootstrap-icons";
 import styled from "styled-components";
@@ -8,35 +8,6 @@ import styled from "styled-components";
 import { images } from "../assets";
 
 const HomeStyles = styled.div``;
-const BannerImg = styled.div`
-    position: relative;
-    height: 22rem;
-    width: 100%;
-    overflow: hidden;
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    p {
-        position: absolute;
-        bottom: 0;
-        color: #ffff;
-        font-size: 2.4rem;
-        text-align: center;
-        letter-spacing: 2px;
-        font-weight: 700;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 11rem;
-        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.65);
-        @media (max-width: 600px) {
-            display: none;
-        }
-    }
-`;
 const BodyStyles = styled.div`
     width: 100%;
 `;
@@ -70,20 +41,67 @@ const LinkStyles = styled.div`
     }
 `;
 
+const CarouselStyle = styled(Carousel)`
+    img{
+        width:100%;
+        height:300px;
+        object-fit: inherit;
+    }
+`
+const SloganStyle = styled.div`
+    position: absolute;
+    top: 94px;
+    left: 133px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #318B00;
+    width: 500px;
+    text-align: center;
+    text-shadow: 3px 2px 7px #00000045;
+`
+const SloganStyle1 = styled.div`
+    position: absolute;
+    top: 94px;
+    left: 360px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #e7e7e7;
+    width: 500px;
+    text-align: center;
+    text-shadow: 3px 2px 7px #00000045;
+`
+const SloganStyle2 = styled.div`
+    position: absolute;
+    top: 58px;
+    left: 289px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #34241C;
+    width: 500px;
+    text-align: center;
+    text-shadow: 3px 2px 7px #00000045;
+`    
 const Home = () => {
     return (
         <HomeStyles className="mb-4">
-            <BannerImg>
-                <img src={images.bgHome} alt=""></img>
-                <p>
-                    Nghiên cứu xây dựng công cụ quản lý tiêu thụ năng lượng
-                    trong chiếu sáng công cộng tại Việt Nam
-                </p>
-            </BannerImg>
+            <CarouselStyle >
+                <Carousel.Item>
+                    <SloganStyle>QUẢN LÝ LƯỢNG DỮ LIỆU VỀ ĐIỆN NĂNG CHIẾU SÁNG CÔNG CỘNG</SloganStyle>
+                    <img src={images.bannerH1} alt="#" />
+                </Carousel.Item>
+                <Carousel.Item>
+                    <SloganStyle1> HỆ THỐNG QUẢN LÝ CHIẾU SÁNG CẤP QUỐC GIA</SloganStyle1>
+                    <img src={images.bannerH2} alt="#" />
+                </Carousel.Item>
+                <Carousel.Item>
+                <SloganStyle2>THỐNG KÊ RÕ RÀNG VỀ CÁC THIẾT BỊ ĐƯỢC SỬ DỤNG QUA CÁC THÁNG VÀ NĂM</SloganStyle2>
+                    <img src={images.bannerH3} alt="#" />
+                </Carousel.Item>
+            </CarouselStyle>
             <BodyStyles>
                 <Container fluid="md">
                     {/* Phần giới thiệu nhiệm vụ */}
-                    <Row className="border-bottom border-primary">
+                    <Row className="border-bottom border-warning">
                         <Col>
                             <TextStyle>
                                 <h3>Giới thiệu nhiệm vụ</h3>
@@ -99,8 +117,8 @@ const Home = () => {
                                     <Col type="a" start="1">
                                         <p>
                                             <CaretRightFill
-                                                size={10}
-                                                color="#36c136"
+                                                size={13}
+                                                color="#F5B618"
                                                 className="m-2"
                                             />
                                             Thu thập dữ liệu về mức độ chiếu
@@ -110,8 +128,8 @@ const Home = () => {
 
                                         <p>
                                             <CaretRightFill
-                                                size={10}
-                                                color="#36c136"
+                                                size={13}
+                                                color="#F5B618"
                                                 className="m-2"
                                             />
                                             Ghi nhận các thông số kỹ thuật liên
@@ -125,8 +143,8 @@ const Home = () => {
                                         <Col>
                                             <p>
                                                 <CaretRightFill
-                                                    size={10}
-                                                    color="#36c136"
+                                                    size={13}
+                                                    color="#F5B618"
                                                     className="m-2"
                                                 />
                                                 Phát triển hệ thống quản lý dữ
@@ -135,8 +153,8 @@ const Home = () => {
                                             </p>
                                             <p>
                                                 <CaretRightFill
-                                                    size={10}
-                                                    color="#36c136"
+                                                    size={13}
+                                                    color="#F5B618"
                                                     className="m-2"
                                                 />
                                                 Đảm bảo tính bảo mật và quyền
@@ -150,8 +168,8 @@ const Home = () => {
                                         <Col>
                                             <p>
                                                 <CaretRightFill
-                                                    size={10}
-                                                    color="#36c136"
+                                                    size={13}
+                                                    color="#F5B618"
                                                     className="m-2"
                                                 />
                                                 Tạo giao diện trang web để hiển
@@ -161,8 +179,8 @@ const Home = () => {
                                             </p>
                                             <p>
                                                 <CaretRightFill
-                                                    size={10}
-                                                    color="#36c136"
+                                                    size={13}
+                                                    color="#F5B618"
                                                     className="m-2"
                                                 />
                                                 Cho phép người dùng tìm kiếm và
@@ -176,8 +194,8 @@ const Home = () => {
                                         <Col>
                                             <p>
                                                 <CaretRightFill
-                                                    size={10}
-                                                    color="#36c136"
+                                                    size={13}
+                                                    color="#F5B618"
                                                     className="m-2"
                                                 />
                                                 Cung cấp công cụ để phân tích số
@@ -185,8 +203,8 @@ const Home = () => {
                                             </p>
                                             <p>
                                                 <CaretRightFill
-                                                    size={10}
-                                                    color="#36c136"
+                                                    size={13}
+                                                    color="#F5B618"
                                                     className="m-2"
                                                 />
                                                 Hỗ trợ việc nghiên cứu và đánh
@@ -219,7 +237,7 @@ const Home = () => {
                         </Col>
                     </Row>
                     {/* Phần tổng quan web */}
-                    <Row className="border-bottom border-primary">
+                    <Row className="border-bottom border-warning">
                         <Col>
                             <TextStyle>
                                 <h3>Tổng quan về quản lý chiếu sáng</h3>
@@ -447,7 +465,7 @@ const Home = () => {
                         </Col>
                     </Row>
                     {/* phần Hướng dẫn sử dụng */}
-                    <Row className="border-bottom border-primary">
+                    <Row className="border-bottom border-warning">
                         <Col>
                             <TextStyle>
                                 <h3>Hướng dẫn sử dụng</h3>

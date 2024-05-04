@@ -16,6 +16,8 @@ import UpdateDataNew from './pages/UpdateDataNew';
 import { AuthToken } from './authToken';
 import DashBoard from './pages/DashBoard';
 import DataVisualization from './pages/DataVisualization';
+import UpdateDataConsume from "./pages/UpdateDataNew/UpdateDataConsume";
+import UpdateDataDevice from "./pages/UpdateDataNew/UpdateDataDevice";
 
 const PrivateRoute = ({ children, requiredRole }) => {
     const { role } = useContext(AuthToken);
@@ -40,17 +42,35 @@ const router = createBrowserRouter([
 	{
 		path: route.login,
 		element: (
-			<Layout>
 				<Login />
+		),
+	},
+	// {
+	// 	path: route.update,
+	// 	element: (
+	// 		<Layout>
+	// 			<PrivateRoute requiredRole={false}>
+	// 				<UpdateDataNew />
+	// 			</PrivateRoute>
+	// 		</Layout>
+	// 	),
+	// },
+	{
+		path: route.updateConsume,
+		element: (
+			<Layout>
+				<PrivateRoute requiredRole={false}>
+					<UpdateDataConsume/>
+				</PrivateRoute>
 			</Layout>
 		),
 	},
 	{
-		path: route.update,
+		path: route.updateDevice,
 		element: (
 			<Layout>
 				<PrivateRoute requiredRole={false}>
-					<UpdateDataNew />
+					<UpdateDataDevice/>
 				</PrivateRoute>
 			</Layout>
 		),

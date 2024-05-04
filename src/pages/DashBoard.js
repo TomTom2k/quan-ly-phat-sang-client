@@ -34,6 +34,18 @@ const AsideStyled = styled.div`
     position: sticky;
     top: 0;
 `;
+const TitleStyle = styled.div`
+    background-color: #026700;
+    color: #fff;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 22px;
+    font-size: 24px;
+    margin:20px 0;
+    width: 34%;
+    border-radius: 0 0 100px 0;
+`
 
 const DashBoard = () => {
     const [dataChart, setDataChart] = useState([]);
@@ -207,10 +219,7 @@ const DashBoard = () => {
 
     return (
         <>
-            <Banner
-                image={tabs[tabCurrent].banner}
-                title={tabs[tabCurrent].slogan}
-            />
+            <TitleStyle>Biểu đồ thể hiện điện năng tiêu thụ và thành tiền</TitleStyle>
 
             <Container fluid>
                 <Tab.Container
@@ -295,7 +304,7 @@ const DashBoard = () => {
                                                 </Input>
                                             </Col>
                                         )}
-                                        <Col md={5}>
+                                        <Col md={4}>
                                             <Input label="Khu vực">
                                                 <Form.Select
                                                     aria-label="Default select example"
@@ -325,7 +334,7 @@ const DashBoard = () => {
                                                 </Form.Select>
                                             </Input>
                                         </Col>
-                                        <Col md={5}>
+                                        <Col md={4}>
                                             <Input label="Trạm">
                                                 <Form.Select
                                                     aria-label="Default select example"
@@ -355,15 +364,16 @@ const DashBoard = () => {
                                         </Container>
                                         <Container md={12}>
                                             <Row className="justify-content-between">
-                                                <Col md={3}>
+                                                <Col md={4}>
                                                     <Input label="Bắt đầu">
                                                         <Form.Control
                                                             type="month"
                                                             ref={monthStartRef}
+                                                            className="col-md-5"
                                                         />
                                                     </Input>
                                                 </Col>
-                                                <Col md={3}>
+                                                <Col md={4}>
                                                     <Input label="Kết thúc">
                                                         <Form.Control
                                                             type="month"

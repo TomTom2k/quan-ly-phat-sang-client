@@ -110,13 +110,16 @@ const UpdateDataConsume = () => {
 
 	return (
 		<>
+			<h3 style={{marginTop: "20px",display: "flex",alignItems: "center",justifyContent: "center",color: "#fff",backgroundColor: "#156700",height: "50px"}}>
+				Dữ liệu điện năng tiêu thụ
+			</h3>
 			<Container>
 				<Row className="justify-content-center">
-					<Col lg={8}>
+					<Col lg={7}>
 						<Row>
 							<Col>
 								<p className="h4 text-primary">
-									Tải lên điện năng tiêu thụ
+									Tải lên danh sách điện năng tiêu thụ
 								</p>
 								<p>
 									Chọn file điện năng tiêu thụ theo mẫu để tải
@@ -133,7 +136,7 @@ const UpdateDataConsume = () => {
 									<Button
 										variant="primary"
 										type="submit"
-										className="mt-4"
+										className="mt-4 w-50"
 									>
 										Upload file hoàn chỉnh
 									</Button>
@@ -141,35 +144,40 @@ const UpdateDataConsume = () => {
 							</Col>
 						</Row>
 					</Col>
-					<Col lg={4}>
+					<Col lg={5}>
 						<div className="d-grid gap-2">
 							<p className="h4 text-primary">Dữ liệu mẫu</p>
 							<p>
 								Tải về dữ liệu mẫu để tham khảo và nhập liệu và
 								Excel template được cho sẵn
 							</p>
-							<a href={files.tmpTT} download>
-								<Button
-									className="w-100"
-									variant="outline-primary"
-								>
-									Download Excel template
-								</Button>
-							</a>
-							<a href={files.demoTT} download>
-								<Button
-									className="w-100"
-									variant="outline-primary"
-								>
-									Download dữ liệu mẫu
-								</Button>
-							</a>
+							<Row>
+								<Col lg={6}><a href={files.tmpTT} download>
+									<Button
+										className="w-100"
+										variant="outline-primary"
+										style={{fontSize: "15px"}}
+									>
+										Download Excel template
+									</Button>
+								</a></Col>
+								<Col lg={6}><a href={files.demoTT} download>
+									<Button
+										className="w-100"
+										variant="outline-primary"
+										style={{fontSize: "15px"}}
+									>
+										Download dữ liệu mẫu
+									</Button>
+								</a>
+							</Col>
+							</Row>
 						</div>
 					</Col>
 				</Row>
 				{data && (
 					<>
-						<Row className="mt-2">
+						<Row className="mt-3">
 							<Col md={4}>
 								<Form.Select
 									aria-label="Default select example"
